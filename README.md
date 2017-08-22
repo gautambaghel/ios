@@ -1,2 +1,2 @@
 
-This repositiory is to practice on making an ios app.
+This repositiory is to practice making an ios app.
