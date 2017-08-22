@@ -38,7 +38,15 @@ class ViewController: UIViewController {
             return Double(display.text!)!
         }
         set{
-            display.text = String(newValue)
+            
+            let str = String(newValue)
+            let last2 = str.substring(from:str.index(str.endIndex, offsetBy: -2))
+            
+            if last2 == ".0"{
+                display.text = String(Int(newValue))
+            } else{
+                display.text = String(newValue)
+            }
         }
     }
     
@@ -57,7 +65,7 @@ class ViewController: UIViewController {
         }
         
         if let result = brain.result{
-            displayValue = result
+                displayValue = result
         }
     }
   

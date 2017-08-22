@@ -32,7 +32,7 @@ struct CalculatorBrain {
     "➗"  : Operation.binaryOperation({$0 / $1}),
     "➕"  : Operation.binaryOperation({$0 + $1}),
     "➖"  : Operation.binaryOperation({$0 - $1}),
-    "="   : Operation.equals,
+    "="   : Operation.equals
     ]
     
     mutating func performOpetation(_ symbol: String){
@@ -70,10 +70,10 @@ struct CalculatorBrain {
     let function: (Double, Double) -> Double
     let firstOperand: Double
     
-    func perform(with secondOperand: Double) -> Double{
+    func perform(with secondOperand: Double) -> Double {
               return function(firstOperand, secondOperand)
       }
-    
+
     }
     
     mutating func setOperand(_ operand: Double){
