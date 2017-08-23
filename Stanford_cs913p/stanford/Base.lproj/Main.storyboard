@@ -21,6 +21,11 @@
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="2Mc-5b-02M">
                                 <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" " textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rrd-Z7-Sbp">
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Tn7-4m-k3G">
                                         <color key="backgroundColor" red="0.17367982905215773" green="0.72028109213796621" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="27"/>
@@ -32,7 +37,7 @@
                                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="WAO-he-QEV">
                                                 <subviews>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6Xw-VR-Pio">
-                                                        <color key="backgroundColor" red="0.95958312711658023" green="0.91722229702336566" blue="0.55001477319604475" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <color key="backgroundColor" red="0.89501302699999996" green="0.95958312710000004" blue="0.33900025639999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <fontDescription key="fontDescription" name=".SFNSDisplay" family=".SF NS Display" pointSize="23"/>
                                                         <state key="normal" title="AC">
                                                             <color key="titleColor" red="0.10013573990000001" green="0.58050412269999996" blue="0.94438315949999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -196,7 +201,7 @@
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Vle-Hh-LMY">
                                                         <color key="backgroundColor" red="0.97020893670207253" green="0.97020893670207253" blue="0.97020893670207253" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <fontDescription key="fontDescription" name=".SFNSDisplay" family=".SF NS Display" pointSize="23"/>
-                                                        <state key="normal" title="x²">
+                                                        <state key="normal" title="π">
                                                             <color key="titleColor" red="0.10013573990000001" green="0.58050412269999996" blue="0.94438315949999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         </state>
                                                         <connections>
@@ -316,6 +321,7 @@
                     <connections>
                         <outlet property="acButton" destination="6Xw-VR-Pio" id="ctH-vZ-8V1"/>
                         <outlet property="display" destination="Tn7-4m-k3G" id="slB-0x-8UO"/>
+                        <outlet property="pendingDisplay" destination="Rrd-Z7-Sbp" id="rRX-DE-Lvo"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

@@ -12,6 +12,7 @@ class ViewController: UIViewController {
 
     @IBOutlet weak var display: UILabel!
     @IBOutlet weak var acButton: UIButton!
+    @IBOutlet weak var pendingDisplay: UILabel!
     
     var userIsInMiddleOfTyping = false
     var dotAlreadyPresent = false
@@ -67,6 +68,10 @@ class ViewController: UIViewController {
         if let result = brain.result{
                 displayValue = result
         }
+        
+        if let description = brain.getDescription() {
+            pendingDisplay!.text = description
+        }
     }
   
     
@@ -75,7 +80,8 @@ class ViewController: UIViewController {
         dotAlreadyPresent = false
         userIsInMiddleOfTyping = false
         display!.text = "0"
-        brain.resetBrain()
+        pendingDisplay!.text = " "
+        brain.resetCalculator()
         acButton.setTitle("AC", for: UIControlState.normal)
     }
     
