@@ -9,7 +9,7 @@
 import UIKit
 
 class ViewController: UIViewController {
-
+    
     @IBOutlet weak var display: UILabel!
     @IBOutlet weak var acButton: UIButton!
     @IBOutlet weak var pendingDisplay: UILabel!
@@ -66,14 +66,14 @@ class ViewController: UIViewController {
         }
         
         if let result = brain.result{
-                displayValue = result
+            displayValue = result
         }
         
         if let description = brain.getDescription() {
             pendingDisplay!.text = description
         }
     }
-  
+    
     
     @IBAction func clearDisplay(_ sender: UIButton) {
         
@@ -100,9 +100,8 @@ class ViewController: UIViewController {
                 display!.text = "0."
                 userIsInMiddleOfTyping = true
                 dotAlreadyPresent = true
-        
+                
             }
-            
         }
     }
 }

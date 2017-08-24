@@ -12,8 +12,8 @@ struct CalculatorBrain {
     
     private var accumulator: Double?
     var resultIsPending: Bool = false
-    private var description: String??
-    private var storedDescription: String??
+    private var description: String?? = ""
+    private var storedDescription: String?? = ""
     
     private enum Operation{
         case constant(Double)
@@ -31,10 +31,10 @@ struct CalculatorBrain {
         "sin" : Operation.unaryOperation(sin),
         "tan" : Operation.unaryOperation(tan),
         "±"   : Operation.unaryOperation({-$0}),
-        "✖️"  : Operation.binaryOperation({$0 * $1}),
-        "➗"  : Operation.binaryOperation({$0 / $1}),
-        "➕"  : Operation.binaryOperation({$0 + $1}),
-        "➖"  : Operation.binaryOperation({$0 - $1}),
+        "✖️"  : Operation.binaryOperation(*),
+        "➗"  : Operation.binaryOperation(/),
+        "➕"  : Operation.binaryOperation(+),
+        "➖"  : Operation.binaryOperation(-),
         "="   : Operation.equals
     ]
     
@@ -86,7 +86,7 @@ struct CalculatorBrain {
         let function: ((Double, Double) -> Double)
         let firstOperand: Double
         
-        mutating func perform(with secondOperand: Double) -> Double {
+        func perform(with secondOperand: Double) -> Double {
             return function(firstOperand, secondOperand)
         }
     }
