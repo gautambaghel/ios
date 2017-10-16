@@ -85,6 +85,20 @@ class ViewController: UIViewController {
         acButton.setTitle("AC", for: UIControlState.normal)
     }
     
+    @IBAction func performMemoryOperation(_ sender: UIButton) {
+        
+        let dictionary: Dictionary<String, Double> = [brain.getM(): displayValue]
+        let result: (Double?, Bool, String) = brain.evaluate(using: dictionary)
+        display!.text = String(describing: result.0)
+        userIsInMiddleOfTyping = result.1
+        pendingDisplay!.text = result.2
+    }
+    
+    @IBAction func saveInMemory(_ sender: UIButton) {
+        
+        
+    }
+    
     @IBAction func insertDot(_ sender: UIButton) {
         
         if !dotAlreadyPresent{

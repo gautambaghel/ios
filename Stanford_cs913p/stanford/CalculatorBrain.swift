@@ -14,6 +14,7 @@ struct CalculatorBrain {
     var resultIsPending: Bool = false
     private var description: String?? = ""
     private var storedDescription: String?? = ""
+    private var M: String?
     
     private enum Operation{
         case constant(Double)
@@ -102,10 +103,25 @@ struct CalculatorBrain {
         }
     }
     
+    func setOperand(variable named: String){
+        
+    }
+    
+    func evaluate(using variables: Dictionary<String,Double>? = nil)
+        -> (result: Double?, isPending: Bool, description: String)
+    {
+         
+        return (1,true,"Hello")
+    }
+    
     var result: Double? {
         get {
             return accumulator
         }
+    }
+    
+    func getM() -> String {
+        return M!
     }
     
     mutating func resetCalculator(){

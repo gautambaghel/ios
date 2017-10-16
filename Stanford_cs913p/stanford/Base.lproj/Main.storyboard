@@ -34,6 +34,51 @@
                                     </label>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="FZ3-mD-pW7">
                                         <subviews>
+                                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="13" translatesAutoresizingMaskIntoConstraints="NO" id="Wqv-c3-d3b">
+                                                <subviews>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Dra-1j-fVH">
+                                                        <color key="backgroundColor" red="0.7520054069352331" green="0.7520054069352331" blue="0.7520054069352331" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <fontDescription key="fontDescription" name=".SFNSDisplay" family=".SF NS Display" pointSize="23"/>
+                                                        <state key="normal" title="M">
+                                                            <color key="titleColor" red="0.10013573990000001" green="0.58050412269999996" blue="0.94438315949999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        </state>
+                                                        <connections>
+                                                            <action selector="saveInMemory:" destination="BYZ-38-t0r" eventType="touchUpInside" id="RtJ-cq-A1p"/>
+                                                        </connections>
+                                                    </button>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Irz-DN-BTW">
+                                                        <color key="backgroundColor" red="0.7520054069352331" green="0.7520054069352331" blue="0.7520054069352331" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <fontDescription key="fontDescription" name=".SFNSDisplay" family=".SF NS Display" pointSize="23"/>
+                                                        <state key="normal" title="→M">
+                                                            <color key="titleColor" red="0.10013573990000001" green="0.58050412269999996" blue="0.94438315949999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        </state>
+                                                        <connections>
+                                                            <action selector="performMemoryOperation:" destination="BYZ-38-t0r" eventType="touchUpInside" id="0Ly-Mq-7Pg"/>
+                                                        </connections>
+                                                    </button>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Sbq-UQ-xxL">
+                                                        <color key="backgroundColor" red="0.7520054069352331" green="0.7520054069352331" blue="0.7520054069352331" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <fontDescription key="fontDescription" name=".SFNSDisplay" family=".SF NS Display" pointSize="23"/>
+                                                        <state key="normal" title="x">
+                                                            <color key="titleColor" red="0.10013573990000001" green="0.58050412269999996" blue="0.94438315949999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        </state>
+                                                    </button>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ArJ-IH-gvz">
+                                                        <color key="backgroundColor" red="0.7520054069352331" green="0.7520054069352331" blue="0.7520054069352331" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <fontDescription key="fontDescription" name=".SFNSDisplay" family=".SF NS Display" pointSize="23"/>
+                                                        <state key="normal" title="y">
+                                                            <color key="titleColor" red="0.10013573990000001" green="0.58050412269999996" blue="0.94438315949999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        </state>
+                                                    </button>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EYY-dy-7dg">
+                                                        <color key="backgroundColor" red="0.7520054069352331" green="0.7520054069352331" blue="0.7520054069352331" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <fontDescription key="fontDescription" name=".SFNSDisplay" family=".SF NS Display" pointSize="23"/>
+                                                        <state key="normal" title="⇤">
+                                                            <color key="titleColor" red="0.10013573990000001" green="0.58050412269999996" blue="0.94438315949999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        </state>
+                                                    </button>
+                                                </subviews>
+                                            </stackView>
                                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="WAO-he-QEV">
                                                 <subviews>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6Xw-VR-Pio">
