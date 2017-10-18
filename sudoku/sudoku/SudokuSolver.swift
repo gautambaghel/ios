@@ -23,8 +23,8 @@ struct SudokuSolver {
      */
     mutating func completed() -> Bool {
         
-        for i in 0...9 {
-            for j in 0...9 {
+        for i in 0..<9 {
+            for j in 0..<9 {
                 if(puzzle[i][j] > 9 || puzzle[i][j] < 1){
                     return false;
                 }
@@ -35,7 +35,7 @@ struct SudokuSolver {
     
     mutating func checkPuzzle() -> Bool {
     // use checkRow to check each row
-    for i in 0...9 {
+    for i in 0..<9 {
         if(!checkRow(thisRow: i)) {
                 return false;
         }
@@ -43,7 +43,7 @@ struct SudokuSolver {
     
     // use checkColumn to check each column
     
-    for i in 0...9 {
+    for i in 0..<9 {
         if(!checkColumn(thisColumn: i)) {
                 return false;
         }
@@ -67,7 +67,7 @@ struct SudokuSolver {
      */
     private mutating func checkRow(thisRow r: Int ) -> Bool {
         resetCheck();
-        for c in 0...9{
+        for c in 0..<9{
             if( !digitCheck( thisDigit: puzzle[r][c] ) ){
                 return false;
             }
@@ -82,7 +82,7 @@ struct SudokuSolver {
      */
     private mutating func checkColumn( thisColumn c: Int ) -> Bool {
         resetCheck();
-        for r in 0...9 {
+        for r in 0..<9 {
             if( !digitCheck( thisDigit: puzzle[r][c] ) ){
                 return false;
             }
@@ -97,8 +97,8 @@ struct SudokuSolver {
      */
     private mutating func checkSquare(thisRow row: Int, thisColumn column: Int) -> Bool {
         resetCheck();
-        for r in 0...3 {
-            for c in 0...3 {
+        for r in 0..<3 {
+            for c in 0..<3 {
                 if( !digitCheck( thisDigit: puzzle[r + row][c + column] ) ){
                     return false;
                 }
