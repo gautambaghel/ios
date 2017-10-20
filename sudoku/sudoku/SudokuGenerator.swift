@@ -40,7 +40,7 @@
         
             var tmp: Int
             var current: Int
-            var top: Int = toCheck.count;
+            let top: Int = toCheck.count;
             
             for i in stride(from: top - 1 , to: 0, by: -1) {
                 
@@ -52,7 +52,7 @@
             }
             
             for aToCheck in toCheck {
-                if (legalMove(x, y, aToCheck)) {
+                if (legalMove(parX: x, parY: y,current: aToCheck)) {
                     board[x][y] = aToCheck;
                     if (x == 8) {
                         if (y == 8){

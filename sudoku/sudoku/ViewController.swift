@@ -11,6 +11,10 @@ import UIKit
 class ViewController: UIViewController {
 
     
-
+    override func viewDidLoad() {
+       var board = SudokuGenrator();
+       print("\(board.nextBoard(35))") 
+        
+    }
 }
 
