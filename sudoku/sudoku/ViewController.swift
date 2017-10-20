@@ -10,10 +10,19 @@ import UIKit
 
 class ViewController: UIViewController {
 
+    @IBOutlet var tiles: [UITextField]!
     
     override func viewDidLoad() {
        var board = SudokuGenrator();
-       print("\(board.nextBoard(35))") 
+       board.printBoard(board.nextBoard(35))
+        
+        for (index, tile) in tiles.enumerated() {
+            
+            let thisRow = index / 9
+            let thisColumn = index % 9
+            
+            tile.text = String(board.getThisElement(row: thisRow, column: thisColumn))
+        }
         
     }
 }

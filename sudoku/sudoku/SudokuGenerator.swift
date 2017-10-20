@@ -158,7 +158,7 @@
         /**
          * Prints a representation of board on stdout
          */
-        func printBoard() {
+        func printBoard(_ board: [[Int]]) {
             for i in 0..<9  {
                 for j in 0..<9 {
                 print("\(board[i][j]) ")
@@ -172,6 +172,9 @@
             return board;
         }
 
+        func getThisElement(row x: Int, column y: Int) -> Int{
+            return board[x][y];
+        }
         
     }
 
