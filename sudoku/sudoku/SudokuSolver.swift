@@ -13,8 +13,8 @@ struct SudokuSolver {
     
     
     // ***** Instance Variables *****
-    private var puzzle: [[Int]]
-    private var digits: [Bool]
+    var puzzle: [[Int]]
+    var digits: [Bool]
     
     /**
      *check to be sure there is an entry 1-9 in each position in the matrix
@@ -127,7 +127,7 @@ struct SudokuSolver {
      *Resets digits to false
      */
     private mutating func resetCheck() {
-        digits.removeAll();
+        digits = Array(repeating: false, count: 10)
     }
     
 }

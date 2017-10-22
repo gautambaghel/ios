@@ -10,7 +10,7 @@
 
     struct SudokuGenrator{
 
-        private var board = [[Int]](repeating: [Int](repeating: 0, count: 9), count: 9)
+        public private(set) var board = [[Int]](repeating: [Int](repeating: 0, count: 9), count: 9)
 
         /**
          * Driver method for nextBoard.
@@ -158,7 +158,7 @@
         /**
          * Prints a representation of board on stdout
          */
-        func printBoard(_ board: [[Int]]) {
+        func printBoard() {
             for i in 0..<9  {
                 for j in 0..<9 {
                 print("\(board[i][j]) ")
@@ -168,12 +168,12 @@
             print("\n")
         }
 
-        func getBoard() -> [[Int]]{
-            return board;
-        }
-
         func getThisElement(row x: Int, column y: Int) -> Int{
             return board[x][y];
+        }
+        
+        mutating func setThisElement(row x: Int, column y: Int, value v: Int) {
+            board[x][y] = v;
         }
         
     }
