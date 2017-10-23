@@ -19,12 +19,21 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // yellow backgorund view boards
         for board in smallBoards {
             board.layer.cornerRadius = 10;
             board.layer.masksToBounds = true;
         }
         
-        startGame()
+        
+        let preferences = UserDefaults.standard
+        let continueGameKey = "continueGame"
+        
+        if let gameData = preferences.string(forKey: continueGameKey) {
+            continueGame(Data: gameData)
+        }else {
+            startNewGame()
+        }
     }
     
     @IBAction func tileTapped(_ sender: UITextField) {
@@ -64,7 +73,7 @@ class ViewController: UIViewController {
             let refreshAlert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
             
             refreshAlert.addAction(UIAlertAction(title: "Play Again", style: .default, handler: { (action: UIAlertAction!) in
-                self.startGame()
+                self.startNewGame()
             }))
             
             refreshAlert.addAction(UIAlertAction(title: "Back", style: .cancel, handler: { (action: UIAlertAction!) in
@@ -72,7 +81,7 @@ class ViewController: UIViewController {
             }))
             
             present(refreshAlert, animated: true, completion: nil)
-
+            
         } else {
             let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
             alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
@@ -87,7 +96,7 @@ class ViewController: UIViewController {
         let refreshAlert = UIAlertController(title: "Resetting Board!", message: "Are you sure?", preferredStyle: UIAlertControllerStyle.alert)
         
         refreshAlert.addAction(UIAlertAction(title: "Yeah!", style: .default, handler: { (action: UIAlertAction!) in
-            self.startGame()
+            self.startNewGame()
         }))
         
         refreshAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action: UIAlertAction!) in
@@ -95,11 +104,11 @@ class ViewController: UIViewController {
         }))
         
         present(refreshAlert, animated: true, completion: nil)
-
+        
     }
     
     
-    func startGame(){
+    func startNewGame(){
         
         board.nextBoard(35)
         board.printBoard()
@@ -114,17 +123,75 @@ class ViewController: UIViewController {
             tile.textAlignment = .center
             
             if element != 0 {
-                tile.borderStyle = UITextBorderStyle.line
-                tile.isUserInteractionEnabled = false
+                makeThisTileFixed(Tile: tile)
                 tile.text = String(element)
-                tile.backgroundColor = UIColor(white: 1, alpha: 0.5)
+                board.setThisElementState(row: thisRow, column: thisColumn, state: "FIXED")
+                
             } else {
-                tile.borderStyle = UITextBorderStyle.roundedRect
-                tile.isUserInteractionEnabled = true
+                makeThisTileVariable(Tile: tile)
                 tile.text = ""
             }
-            
         }
     }
+    
+    func continueGame(Data gameData: String){
+        board.putState(Data: gameData)
+        
+        for (index, tile) in tiles.enumerated() {
+            
+            let thisRow = index / 9
+            let thisColumn = index % 9
+            let element = board.getThisElement(row: thisRow, column: thisColumn)
+            let state = board.getThisElementState(row: thisRow, column: thisColumn)
+            
+            // center every alphabet
+            tile.textAlignment = .center
+            
+            if state == "FIXED" {
+                
+                makeThisTileFixed(Tile: tile)
+                tile.text = String(element)
+                
+            } else {
+                
+                makeThisTileVariable(Tile: tile)
+                
+                if element == 0 {
+                    tile.text = ""
+                } else {
+                    tile.text = String(element)
+                }
+                
+            }
+        }
+    }
+    
+    func makeThisTileFixed(Tile tile: UITextField){
+        tile.borderStyle = UITextBorderStyle.line
+        tile.isUserInteractionEnabled = false
+        tile.backgroundColor = UIColor(white: 1, alpha: 0.5)
+    }
+    
+    
+    func makeThisTileVariable(Tile tile: UITextField){
+        tile.borderStyle = UITextBorderStyle.roundedRect
+        tile.isUserInteractionEnabled = true
+        tile.backgroundColor = UIColor.lightText
+    }
+    
+    func saveGame(){
+        let preferences = UserDefaults.standard
+        let continueGameKey = "continueGame"
+        
+        preferences.set(board.getState(), forKey: continueGameKey)
+        //  Save to disk
+        preferences.synchronize()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        saveGame()
+    }
+    
 }
 
