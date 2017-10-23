@@ -12,6 +12,7 @@ class ViewController: UIViewController {
     
     @IBOutlet var tiles: [UITextField]!
     @IBOutlet var smallBoards: [UIView]!
+    @IBOutlet weak var menuButton: UIButton!
     
     private var board = SudokuGenrator()
     
@@ -59,19 +60,42 @@ class ViewController: UIViewController {
             won = true
         }
         
-        let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
-        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
-        self.present(alert, animated: true, completion: nil)
-        
         if(won){
-            startGame()
+            let refreshAlert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
+            
+            refreshAlert.addAction(UIAlertAction(title: "Play Again", style: .default, handler: { (action: UIAlertAction!) in
+                self.startGame()
+            }))
+            
+            refreshAlert.addAction(UIAlertAction(title: "Back", style: .cancel, handler: { (action: UIAlertAction!) in
+                self.menuButton.sendActions(for: .touchUpInside)
+            }))
+            
+            present(refreshAlert, animated: true, completion: nil)
+
+        } else {
+            let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
+            alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+            
         }
         
     }
     
     @IBAction func retry(_ sender: UIButton) {
         
-        startGame()
+        let refreshAlert = UIAlertController(title: "Reset Board?", message: "Are you sure?", preferredStyle: UIAlertControllerStyle.alert)
+        
+        refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in
+            self.startGame()
+        }))
+        
+        refreshAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action: UIAlertAction!) in
+            print("Handle Cancel Logic here")
+        }))
+        
+        present(refreshAlert, animated: true, completion: nil)
+
     }
     
     
