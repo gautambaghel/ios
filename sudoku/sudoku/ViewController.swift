@@ -19,7 +19,7 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // yellow backgorund view boards
+        // yellow background view boards
         for board in smallBoards {
             board.layer.cornerRadius = 10;
             board.layer.masksToBounds = true;
@@ -192,6 +192,7 @@ class ViewController: UIViewController {
         super.viewWillDisappear(animated)
         saveGame()
     }
+    
     
 }
 
