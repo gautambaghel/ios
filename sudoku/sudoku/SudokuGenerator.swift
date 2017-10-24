@@ -23,7 +23,7 @@ struct SudokuGenrator{
      */
     mutating func nextBoard(_ difficulty: Int) -> [[Int]] {
         board = [[Int]](repeating: [Int](repeating: 0, count: 9), count: 9)
-        nextCell(parX: 0, parY: 0)
+        _ = nextCell(parX: 0, parY: 0)
         makeHoles(theseHoles: difficulty)
         return board
     }

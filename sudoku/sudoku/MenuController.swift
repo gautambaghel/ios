@@ -25,4 +25,8 @@ class MenuController: UIViewController {
         }
     }
     
+    @IBAction func exitButton(_ sender: UIButton) {
+        UIControl().sendAction(#selector(URLSessionTask.suspend), to: UIApplication.shared, for: nil)
+    }
+    
 }

@@ -110,7 +110,7 @@ class ViewController: UIViewController {
     
     func startNewGame(){
         
-        board.nextBoard(35)
+        _ = board.nextBoard(35)
         board.printBoard()
         
         for (index, tile) in tiles.enumerated() {
