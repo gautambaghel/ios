@@ -42,7 +42,9 @@
                                     <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                                 <connections>
-                                    <segue destination="agZ-02-Ydm" kind="show" id="u4N-Ht-iGz"/>
+                                    <segue destination="agZ-02-Ydm" kind="popoverPresentation" popoverAnchorView="4cR-lX-Ak7" id="u4N-Ht-iGz">
+                                        <popoverArrowDirection key="popoverArrowDirection" left="YES"/>
+                                    </segue>
                                 </connections>
                             </button>
                             <view userInteractionEnabled="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qGJ-xH-MRh">
@@ -1122,7 +1124,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="noG-gJ-taH">
-                                <frame key="frameInset" minX="40" minY="220" width="240" height="128"/>
+                                <frame key="frameInset" minX="30" minY="41" width="240" height="128"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
                                     <pickerView contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Qhp-yo-TSM">
@@ -1205,7 +1207,9 @@
                                     <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBound" value="YES"/>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
-                                    <segue destination="BYZ-38-t0r" kind="show" id="SyE-AR-OEK"/>
+                                    <segue destination="BYZ-38-t0r" kind="popoverPresentation" popoverAnchorView="HkX-4u-M4V" id="SyE-AR-OEK">
+                                        <popoverArrowDirection key="popoverArrowDirection" right="YES"/>
+                                    </segue>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5CD-jH-Q5q">
@@ -1224,9 +1228,7 @@
                                     <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBound" value="YES"/>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
-                                    <segue destination="YKW-pI-Tmp" kind="popoverPresentation" popoverAnchorView="5CD-jH-Q5q" id="nDH-uj-XXq">
-                                        <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
-                                    </segue>
+                                    <action selector="settingsButton:" destination="agZ-02-Ydm" eventType="touchUpInside" id="woH-6g-Rf8"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YAI-OZ-ypn">
@@ -1253,6 +1255,9 @@
                     </view>
                     <connections>
                         <outlet property="background" destination="ZfQ-se-t4M" id="ZfT-ba-blt"/>
+                        <segue destination="YKW-pI-Tmp" kind="popoverPresentation" identifier="settingsSegue" popoverAnchorView="5CD-jH-Q5q" id="fmR-G9-qSr">
+                            <popoverArrowDirection key="popoverArrowDirection" down="YES"/>
+                        </segue>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Wek-ie-b2G" userLabel="First Responder" sceneMemberID="firstResponder"/>

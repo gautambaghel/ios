@@ -8,8 +8,8 @@
 
 import UIKit
 
-class MenuController: UIViewController {
-
+class MenuController: UIViewController, UIPopoverPresentationControllerDelegate {
+    
     @IBOutlet weak var background: UIImageView!
     
     override func viewDidLoad() {
@@ -29,4 +29,20 @@ class MenuController: UIViewController {
         UIControl().sendAction(#selector(URLSessionTask.suspend), to: UIApplication.shared, for: nil)
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "settingsSegue"{
+            let dest = segue.destination
+            if let pop = dest.popoverPresentationController{
+                pop.delegate = self
+            }
+        }
+    }
+    
+    func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
+        return .none
+    }
+    
+    @IBAction func settingsButton(_ sender: UIButton) {
+        self.performSegue(withIdentifier: "settingsSegue", sender: self)
+    }
 }

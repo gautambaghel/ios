@@ -65,7 +65,6 @@
 				C71043EB1F952B05004A83D7 /* Supporting Files */,
 				C71043DB1F952AB7004A83D7 /* ViewController.swift */,
 				C71043DD1F952AB7004A83D7 /* Main.storyboard */,
-				C71043E01F952AB7004A83D7 /* Assets.xcassets */,
 				C71043EC1F953CCC004A83D7 /* SudokuSolver.swift */,
 				C79A41C11F97AAB000AD7024 /* SudokuGenerator.swift */,
 				C77F44CA1F9E9D150037CE11 /* MenuController.swift */,
@@ -77,6 +76,7 @@
 		C71043EB1F952B05004A83D7 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				C71043E01F952AB7004A83D7 /* Assets.xcassets */,
 				C71043D91F952AB7004A83D7 /* AppDelegate.swift */,
 				C71043E21F952AB7004A83D7 /* LaunchScreen.storyboard */,
 				C71043E51F952AB7004A83D7 /* Info.plist */,

@@ -107,7 +107,6 @@ class ViewController: UIViewController {
         
     }
     
-    
     func startNewGame(){
         
         _ = board.nextBoard(35)
@@ -172,7 +171,6 @@ class ViewController: UIViewController {
         tile.backgroundColor = UIColor(white: 1, alpha: 0.5)
     }
     
-    
     func makeThisTileVariable(Tile tile: UITextField){
         tile.borderStyle = UITextBorderStyle.roundedRect
         tile.isUserInteractionEnabled = true
@@ -192,7 +190,6 @@ class ViewController: UIViewController {
         super.viewWillDisappear(animated)
         saveGame()
     }
-    
     
 }
 
