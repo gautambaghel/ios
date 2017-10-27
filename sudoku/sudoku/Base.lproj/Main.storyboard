@@ -1135,6 +1135,9 @@
                                     <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="E2I-hO-Qe3">
                                         <frame key="frameInset" minX="183" minY="59" width="51" height="31"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <connections>
+                                            <action selector="musicSwitchToggle:" destination="YKW-pI-Tmp" eventType="valueChanged" id="k7o-9X-lVz"/>
+                                        </connections>
                                     </switch>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="LEVEL" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gix-67-ELV">
                                         <frame key="frameInset" minX="8" minY="19" width="101" height="27"/>
@@ -1158,6 +1161,7 @@
                     </view>
                     <connections>
                         <outlet property="levelPicker" destination="Qhp-yo-TSM" id="XBz-dK-D8U"/>
+                        <outlet property="musicSwitch" destination="E2I-hO-Qe3" id="NrN-9F-olP"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WDO-L9-qmx" userLabel="First Responder" sceneMemberID="firstResponder"/>
