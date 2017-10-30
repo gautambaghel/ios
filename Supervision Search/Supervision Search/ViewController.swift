@@ -5,14 +5,16 @@
 //  Created by Gautam on 10/25/17.
 //  Copyright © 2017 Gautam. All rights reserved.
 //
-
 import UIKit
 import AVFoundation
 
-class ViewController: UIViewController {
+class ViewController: UIViewController , UIScrollViewDelegate{
     
     @IBOutlet weak var findButton: UIButton!
+    @IBOutlet weak var cameraPreview: UIView!
     var imageView: UIImageView?
+    var scrollView: UIScrollView?
+    
     let stillImageOutput = AVCaptureStillImageOutput()
     
     override var prefersStatusBarHidden: Bool {
@@ -39,13 +41,15 @@ class ViewController: UIViewController {
                 }
                 
                 if let previewLayer = AVCaptureVideoPreviewLayer(session: captureSession) {
-                    previewLayer.bounds = view.bounds
+                    previewLayer.bounds = cameraPreview.bounds
                     previewLayer.videoGravity = AVLayerVideoGravityResizeAspectFill
-                    let cameraPreview = UIView(frame: CGRect(origin: CGPoint(x: 0,y :0), size: CGSize(width: view.bounds.size.width, height: view.bounds.size.height)))
-                    cameraPreview.layer.addSublayer(previewLayer)
-                    view.addSubview(cameraPreview)
+                    previewLayer.connection?.videoOrientation = .portrait
+                    cameraPreview.layer.insertSublayer(previewLayer, at: 0)
+                    previewLayer.frame = cameraPreview.frame
                     
-                    view.addSubview(findButton)
+                    // cameraPreview.layer.addSublayer(previewLayer)
+                    // view.addSubview(cameraPreview)
+                    
                 }
                 
             } catch {
@@ -67,12 +71,24 @@ class ViewController: UIViewController {
                 
                 let image: UIImage = UIImage(data: imageData!)!
                 self.imageView = UIImageView(image: image)
-                self.imageView!.frame = CGRect(origin: CGPoint(x: 0,y :0), size: CGSize(width: 100, height: 200))
+                let imageFrame = CGRect(origin: CGPoint(x: 0,y :0),
+                                               size: CGSize(width: self.view.bounds.width, height: self.view.bounds.height))
+                self.imageView!.frame = imageFrame
+                self.view.willRemoveSubview(self.cameraPreview)
                 self.view.addSubview(self.imageView!)
+                
+                let doubleTap = UITapGestureRecognizer(target: self, action: #selector(ViewController.doubleTapDetected))
+                doubleTap.numberOfTapsRequired = 2
+                self.imageView?.isUserInteractionEnabled = true
+                self.imageView?.addGestureRecognizer(doubleTap)
+                
             }
         }
     }
     
+    func doubleTapDetected() {
+        print("Imageview Clicked")
+    }
     
 }
 

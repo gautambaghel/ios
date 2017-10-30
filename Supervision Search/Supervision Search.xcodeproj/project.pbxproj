@@ -271,6 +271,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 87WM9EFVDN;
 				INFOPLIST_FILE = "Supervision Search/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "edu.harvard.meeei.Supervision-Search";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -284,6 +285,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 87WM9EFVDN;
 				INFOPLIST_FILE = "Supervision Search/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "edu.harvard.meeei.Supervision-Search";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -310,6 +312,7 @@
 				C77F44EB1FA0E5710037CE11 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
