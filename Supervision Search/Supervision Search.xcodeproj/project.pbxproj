@@ -7,6 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C73598231FA905020021A9DC /* ImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C73598221FA905020021A9DC /* ImageViewController.swift */; };
+		C7413D561FA92A87007867A0 /* AnalyzeImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7413D501FA92A87007867A0 /* AnalyzeImage.swift */; };
+		C7413D571FA92A87007867A0 /* GetThumbnail.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7413D511FA92A87007867A0 /* GetThumbnail.swift */; };
+		C7413D581FA92A87007867A0 /* ListDomainSpecificModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7413D521FA92A87007867A0 /* ListDomainSpecificModels.swift */; };
+		C7413D591FA92A87007867A0 /* OCR.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7413D531FA92A87007867A0 /* OCR.swift */; };
+		C7413D5A1FA92A87007867A0 /* RecognizeDomainSpecificContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7413D541FA92A87007867A0 /* RecognizeDomainSpecificContent.swift */; };
+		C7413D5B1FA92A87007867A0 /* TagImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7413D551FA92A87007867A0 /* TagImage.swift */; };
+		C7413D601FA92ACF007867A0 /* CognitiveServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7413D5E1FA92ACF007867A0 /* CognitiveServices.swift */; };
+		C7413D611FA92ACF007867A0 /* JSONNSDataExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7413D5F1FA92ACF007867A0 /* JSONNSDataExtension.swift */; };
+		C7413D641FA92AF9007867A0 /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7413D631FA92AF9007867A0 /* StringExtension.swift */; };
 		C77F44DB1FA0E5710037CE11 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C77F44DA1FA0E5710037CE11 /* AppDelegate.swift */; };
 		C77F44DD1FA0E5710037CE11 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C77F44DC1FA0E5710037CE11 /* ViewController.swift */; };
 		C77F44E01FA0E5710037CE11 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C77F44DE1FA0E5710037CE11 /* Main.storyboard */; };
@@ -15,6 +25,16 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		C73598221FA905020021A9DC /* ImageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageViewController.swift; sourceTree = "<group>"; };
+		C7413D501FA92A87007867A0 /* AnalyzeImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AnalyzeImage.swift; path = ../../SDK/CognitiveServices/ComputerVision/AnalyzeImage.swift; sourceTree = "<group>"; };
+		C7413D511FA92A87007867A0 /* GetThumbnail.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GetThumbnail.swift; path = ../../SDK/CognitiveServices/ComputerVision/GetThumbnail.swift; sourceTree = "<group>"; };
+		C7413D521FA92A87007867A0 /* ListDomainSpecificModels.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ListDomainSpecificModels.swift; path = ../../SDK/CognitiveServices/ComputerVision/ListDomainSpecificModels.swift; sourceTree = "<group>"; };
+		C7413D531FA92A87007867A0 /* OCR.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OCR.swift; path = ../../SDK/CognitiveServices/ComputerVision/OCR.swift; sourceTree = "<group>"; };
+		C7413D541FA92A87007867A0 /* RecognizeDomainSpecificContent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RecognizeDomainSpecificContent.swift; path = ../../SDK/CognitiveServices/ComputerVision/RecognizeDomainSpecificContent.swift; sourceTree = "<group>"; };
+		C7413D551FA92A87007867A0 /* TagImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TagImage.swift; path = ../../SDK/CognitiveServices/ComputerVision/TagImage.swift; sourceTree = "<group>"; };
+		C7413D5E1FA92ACF007867A0 /* CognitiveServices.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CognitiveServices.swift; path = ../../SDK/CognitiveServices/CognitiveServices.swift; sourceTree = "<group>"; };
+		C7413D5F1FA92ACF007867A0 /* JSONNSDataExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = JSONNSDataExtension.swift; path = ../../SDK/CognitiveServices/JSONNSDataExtension.swift; sourceTree = "<group>"; };
+		C7413D631FA92AF9007867A0 /* StringExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StringExtension.swift; path = "../../SDK/Swift Extensions/StringExtension.swift"; sourceTree = "<group>"; };
 		C77F44D71FA0E5710037CE11 /* Supervision Search.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Supervision Search.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C77F44DA1FA0E5710037CE11 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C77F44DC1FA0E5710037CE11 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -35,6 +55,46 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		C7413D5D1FA92AB8007867A0 /* ComputerVision */ = {
+			isa = PBXGroup;
+			children = (
+				C7413D501FA92A87007867A0 /* AnalyzeImage.swift */,
+				C7413D511FA92A87007867A0 /* GetThumbnail.swift */,
+				C7413D521FA92A87007867A0 /* ListDomainSpecificModels.swift */,
+				C7413D531FA92A87007867A0 /* OCR.swift */,
+				C7413D541FA92A87007867A0 /* RecognizeDomainSpecificContent.swift */,
+				C7413D551FA92A87007867A0 /* TagImage.swift */,
+			);
+			name = ComputerVision;
+			sourceTree = "<group>";
+		};
+		C7413D621FA92AD6007867A0 /* CognitiveServices */ = {
+			isa = PBXGroup;
+			children = (
+				C7413D5E1FA92ACF007867A0 /* CognitiveServices.swift */,
+				C7413D5F1FA92ACF007867A0 /* JSONNSDataExtension.swift */,
+				C7413D5D1FA92AB8007867A0 /* ComputerVision */,
+			);
+			name = CognitiveServices;
+			sourceTree = "<group>";
+		};
+		C7413D661FA92B17007867A0 /* Swift Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				C7413D631FA92AF9007867A0 /* StringExtension.swift */,
+			);
+			name = "Swift Extensions";
+			sourceTree = "<group>";
+		};
+		C7413D671FA92C83007867A0 /* SDK */ = {
+			isa = PBXGroup;
+			children = (
+				C7413D661FA92B17007867A0 /* Swift Extensions */,
+				C7413D621FA92AD6007867A0 /* CognitiveServices */,
+			);
+			name = SDK;
+			sourceTree = "<group>";
+		};
 		C77F44CE1FA0E5710037CE11 = {
 			isa = PBXGroup;
 			children = (
@@ -54,11 +114,13 @@
 		C77F44D91FA0E5710037CE11 /* Supervision Search */ = {
 			isa = PBXGroup;
 			children = (
+				C7413D671FA92C83007867A0 /* SDK */,
 				C77F44EC1FA0E5E70037CE11 /* Supporting Files */,
 				C77F44DA1FA0E5710037CE11 /* AppDelegate.swift */,
 				C77F44DC1FA0E5710037CE11 /* ViewController.swift */,
 				C77F44DE1FA0E5710037CE11 /* Main.storyboard */,
 				C77F44E11FA0E5710037CE11 /* Assets.xcassets */,
+				C73598221FA905020021A9DC /* ImageViewController.swift */,
 			);
 			path = "Supervision Search";
 			sourceTree = "<group>";
@@ -145,7 +207,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C7413D591FA92A87007867A0 /* OCR.swift in Sources */,
+				C7413D561FA92A87007867A0 /* AnalyzeImage.swift in Sources */,
+				C7413D571FA92A87007867A0 /* GetThumbnail.swift in Sources */,
 				C77F44DD1FA0E5710037CE11 /* ViewController.swift in Sources */,
+				C7413D611FA92ACF007867A0 /* JSONNSDataExtension.swift in Sources */,
+				C7413D601FA92ACF007867A0 /* CognitiveServices.swift in Sources */,
+				C7413D581FA92A87007867A0 /* ListDomainSpecificModels.swift in Sources */,
+				C73598231FA905020021A9DC /* ImageViewController.swift in Sources */,
+				C7413D641FA92AF9007867A0 /* StringExtension.swift in Sources */,
+				C7413D5B1FA92A87007867A0 /* TagImage.swift in Sources */,
+				C7413D5A1FA92A87007867A0 /* RecognizeDomainSpecificContent.swift in Sources */,
 				C77F44DB1FA0E5710037CE11 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

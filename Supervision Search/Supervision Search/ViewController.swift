@@ -8,13 +8,12 @@
 import UIKit
 import AVFoundation
 
-class ViewController: UIViewController , UIScrollViewDelegate{
+class ViewController: UIViewController {
     
     @IBOutlet weak var findButton: UIButton!
     @IBOutlet weak var cameraPreview: UIView!
-    var imageView: UIImageView?
-    var scrollView: UIScrollView?
-    
+
+    let cognitiveServices = CognitiveServices.sharedInstance
     let stillImageOutput = AVCaptureStillImageOutput()
     
     override var prefersStatusBarHidden: Bool {
@@ -47,9 +46,6 @@ class ViewController: UIViewController , UIScrollViewDelegate{
                     cameraPreview.layer.insertSublayer(previewLayer, at: 0)
                     previewLayer.frame = cameraPreview.frame
                     
-                    // cameraPreview.layer.addSublayer(previewLayer)
-                    // view.addSubview(cameraPreview)
-                    
                 }
                 
             } catch {
@@ -57,6 +53,7 @@ class ViewController: UIViewController , UIScrollViewDelegate{
             }
             
         }
+        
         
     }
     
@@ -67,28 +64,17 @@ class ViewController: UIViewController , UIScrollViewDelegate{
             
             stillImageOutput.captureStillImageAsynchronously(from: videoConnection) {
                 (imageDataSampleBuffer, error) -> Void in
+                
+                self.cameraPreview.removeFromSuperview()
                 let imageData = AVCaptureStillImageOutput.jpegStillImageNSDataRepresentation(imageDataSampleBuffer)
                 
-                let image: UIImage = UIImage(data: imageData!)!
-                self.imageView = UIImageView(image: image)
-                let imageFrame = CGRect(origin: CGPoint(x: 0,y :0),
-                                               size: CGSize(width: self.view.bounds.width, height: self.view.bounds.height))
-                self.imageView!.frame = imageFrame
-                self.view.willRemoveSubview(self.cameraPreview)
-                self.view.addSubview(self.imageView!)
-                
-                let doubleTap = UITapGestureRecognizer(target: self, action: #selector(ViewController.doubleTapDetected))
-                doubleTap.numberOfTapsRequired = 2
-                self.imageView?.isUserInteractionEnabled = true
-                self.imageView?.addGestureRecognizer(doubleTap)
-                
+                let nextViewController = self.storyboard?.instantiateViewController(withIdentifier: "ImageViewController") as! ImageViewController
+                nextViewController.imageData = imageData
+                self.present(nextViewController, animated:false, completion:nil)
+                              
             }
         }
     }
-    
-    func doubleTapDetected() {
-        print("Imageview Clicked")
-    }
-    
+      
 }
 
