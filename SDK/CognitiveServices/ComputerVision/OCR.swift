@@ -74,6 +74,10 @@ class OCR: NSObject {
         case emptyDictionary
     }
     
+    var wordCoordinates: [String:String] = [:]
+    var orientation: String = "Up"
+    var textAngle: Float = 0.0
+    
     /**
      Optical Character Recognition (OCR) detects text in an image and extracts the recognized characters into a machine-usable character stream.
      - parameter requestObject: The required information required to perform a request
@@ -127,8 +131,20 @@ class OCR: NSObject {
      - Parameter dictionary: The Dictionary created by `recognizeCharactersOnImageUrl()`.
      - Returns: An String Array extracted from the Dictionary.
      */
+    
+    
     func extractStringsFromDictionary(_ dictionary: [String : AnyObject]) -> [String] {
+        
+        if let a = dictionary["textAngle"] {
+            textAngle = a as! Float
+        }
+        
+        if let o = dictionary["orientation"] {
+            orientation = o as! String
+        }
+        
         if dictionary["regions"] != nil {
+            
             var extractedText : String = ""
             
             if let regionsz = dictionary["regions"] as? [AnyObject]{
@@ -143,8 +159,10 @@ class OCR: NSObject {
                                 if let dictionaryValue = wordsArr["words"] as? [AnyObject]{
                                     for a in dictionaryValue {
                                         if let z = a as? [String : String]{
-                                            print (z["text"]!)
-                                            extractedText += z["text"]! + " "
+                                            if let word = z["text"] {
+                                                wordCoordinates[word] = z["boundingBox"]!
+                                                extractedText += word + " "
+                                            }
                                         }
                                     }
                                 }
