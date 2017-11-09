@@ -127,7 +127,6 @@ class ImageViewController: UIViewController, UIScrollViewDelegate, UISearchBarDe
     }
 
     @IBAction func micPressed(_ sender: UIButton) {
-        self.imageView!.isHighlighted = true
     }
 
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
@@ -144,12 +143,10 @@ class ImageViewController: UIViewController, UIScrollViewDelegate, UISearchBarDe
             let width = Double(wordRect[2])!
             let height = Double(wordRect[3])!
             let rect = CGRect(x: x, y: y, width: width, height: height)
-            
-            highlightedImage = drawCustomImage(rect: rect, image: image!)
-            
+        
+            highlightedImage = drawHighlightedImage(rect: rect, image: image!)
             self.imageView!.image = highlightedImage
             startBlinking()
-            // setupImageInImageview()
         }
         
         dismissKeyboard()
@@ -175,6 +172,7 @@ class ImageViewController: UIViewController, UIScrollViewDelegate, UISearchBarDe
         
         angle = angle - self.ocr.textAngle
         image = rotateImage(image: image!, angle: angle)
+        self.imageView?.image = image
     }
     
     func radians(_ s1: Float) -> Float {
@@ -182,10 +180,17 @@ class ImageViewController: UIViewController, UIScrollViewDelegate, UISearchBarDe
     }
     
     func rotateImage(image: UIImage, angle: Float) -> UIImage {
+       
+        // TODO: Change the rotation context from 0,0 to center of the image
+        let cx = self.imageView!.frame.width
+        let cy = self.imageView!.frame.height
         
         UIGraphicsBeginImageContext(image.size)
         let context = UIGraphicsGetCurrentContext()
-        context!.rotate (by: CGFloat(radians(angle)))
+        var transform = CGAffineTransform.init(translationX: cx , y: cy)
+        transform = transform.rotated(by: CGFloat(radians(angle)))
+        transform = transform.translatedBy(x: -cx, y: -cy)
+        context!.concatenate(transform)
         image.draw(at: .zero)
         let resultImage = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
@@ -207,7 +212,7 @@ class ImageViewController: UIViewController, UIScrollViewDelegate, UISearchBarDe
         
     }
     
-    func drawCustomImage(rect: CGRect, image: UIImage) -> UIImage {
+    func drawHighlightedImage(rect: CGRect, image: UIImage) -> UIImage {
         
         // begin a graphics context of sufficient size
         UIGraphicsBeginImageContext(image.size)
