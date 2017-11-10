@@ -182,8 +182,8 @@ class ImageViewController: UIViewController, UIScrollViewDelegate, UISearchBarDe
     func rotateImage(image: UIImage, angle: Float) -> UIImage {
        
         // TODO: Change the rotation context from 0,0 to center of the image
-        let cx = self.imageView!.frame.width
-        let cy = self.imageView!.frame.height
+        let cx = image.size.width / 2
+        let cy = image.size.height / 2
         
         UIGraphicsBeginImageContext(image.size)
         let context = UIGraphicsGetCurrentContext()
