@@ -74,7 +74,7 @@ class OCR: NSObject {
         case emptyDictionary
     }
     
-    var wordCoordinates: [String:String] = [:]
+    var wordCoordinates: [String:[String]] = [:]
     var orientation: String = "Up"
     var textAngle: Float = 0.0
     
@@ -155,13 +155,25 @@ class OCR: NSObject {
                         let lines = reigons["lines"] as! NSArray
                         print (lines)
                         for words in lines{
-                            if let wordsArr = words as? [String:AnyObject]{
-                                if let dictionaryValue = wordsArr["words"] as? [AnyObject]{
+                            
+                            if let wordsArr = words as? [String:AnyObject] {
+                                if let dictionaryValue = wordsArr["words"] as? [AnyObject] {
+                                    
                                     for a in dictionaryValue {
-                                        if let z = a as? [String : String]{
+                                        if let z = a as? [String : AnyObject] {
+                                            
                                             if let word = z["text"] {
-                                                wordCoordinates[word] = z["boundingBox"]!
-                                                extractedText += word + " "
+                                                let strWord = String(describing: word)
+                                                let bBox = z["boundingBox"]! as? String
+                                                
+                                                if var existingCoord = wordCoordinates[strWord] {
+                                                    existingCoord.append(bBox!)
+                                                    wordCoordinates[strWord] = existingCoord
+                                                } else {
+                                                    let newArray: [String] = [bBox!]
+                                                    wordCoordinates[strWord] = newArray
+                                                }
+                                                extractedText += (strWord) + " "
                                             }
                                         }
                                     }
@@ -170,9 +182,10 @@ class OCR: NSObject {
                         }
                     }
                 }
-                
             }
+            
             // Get text from words
+            // print(extractedText)
             return [extractedText]
         }
         else

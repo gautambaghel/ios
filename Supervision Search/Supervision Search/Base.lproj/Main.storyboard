@@ -16,7 +16,7 @@
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xkY-PE-nt0">
@@ -65,7 +65,7 @@
                         <viewControllerLayoutGuide type="bottom" id="1Sl-zL-gN8"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="uSb-0J-HFo">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rdR-8c-5iQ">
@@ -137,12 +137,22 @@
                     <connections>
                         <outlet property="leftArrow" destination="fcn-ar-Hpa" id="PvK-O8-EsV"/>
                         <outlet property="mainView" destination="rdR-8c-5iQ" id="G8X-tj-o5Y"/>
+                        <outlet property="microphoneButton" destination="mdF-V8-jpk" id="QH8-bt-O9b"/>
                         <outlet property="noWordsFound" destination="P0R-hj-8vQ" id="kWX-L3-JEI"/>
                         <outlet property="rightArrow" destination="Sed-YP-IsQ" id="dkX-w6-nNf"/>
-                        <outlet property="searchBar" destination="knf-1y-nsg" id="cGG-X8-SNh"/>
+                        <outlet property="searchBar" destination="knf-1y-nsg" id="KwD-IE-jNq"/>
+                        <outlet property="searchDisplayController" destination="JIB-nf-wLw" id="AxU-5N-P8l"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SwQ-Gj-X9a" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <searchDisplayController id="JIB-nf-wLw">
+                    <connections>
+                        <outlet property="delegate" destination="1rE-OR-92F" id="DZq-PJ-NnT"/>
+                        <outlet property="searchContentsController" destination="1rE-OR-92F" id="4oB-7o-1hL"/>
+                        <outlet property="searchResultsDataSource" destination="1rE-OR-92F" id="ttV-vU-4hc"/>
+                        <outlet property="searchResultsDelegate" destination="1rE-OR-92F" id="ix6-XW-eBV"/>
+                    </connections>
+                </searchDisplayController>
             </objects>
             <point key="canvasLocation" x="952.5" y="75"/>
         </scene>

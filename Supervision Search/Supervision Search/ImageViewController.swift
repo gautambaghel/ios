@@ -8,9 +8,11 @@
 
 import UIKit
 import AVFoundation
+import Speech
 
-class ImageViewController: UIViewController, UIScrollViewDelegate, UISearchBarDelegate {
+class ImageViewController: UIViewController, UIScrollViewDelegate, UISearchBarDelegate , SFSpeechRecognizerDelegate {
 
+    @IBOutlet weak var microphoneButton: UIButton!
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var rightArrow: UIImageView!
     @IBOutlet weak var leftArrow: UIImageView!
@@ -19,6 +21,8 @@ class ImageViewController: UIViewController, UIScrollViewDelegate, UISearchBarDe
     var pointsToZoom: [CGPoint]?
     var wordsFound: [CGRect]?
     var wordCursor = 0
+    var firstTimePressFlag = true
+    var isBlinking = false
     
     var imageData: Data? = nil
     let synth = AVSpeechSynthesizer()
@@ -44,9 +48,16 @@ class ImageViewController: UIViewController, UIScrollViewDelegate, UISearchBarDe
     var image: UIImage?
     var highlightedImage: UIImage?
     var isHighlighted: Bool = false
-    
+    var textField: UILabel?
     
     @IBOutlet weak var mainView: UIView!
+    
+    // Speech stuff
+    private var speechRecognizer: SFSpeechRecognizer? = nil
+    
+    private var recognitionRequest: SFSpeechAudioBufferRecognitionRequest?
+    private var recognitionTask: SFSpeechRecognitionTask?
+    private var audioEngine: AVAudioEngine? = nil
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -72,6 +83,126 @@ class ImageViewController: UIViewController, UIScrollViewDelegate, UISearchBarDe
         }
         
         setupImageInImageview()
+        setupTextAboveSearchBar()
+        setupSpeechStuff()
+    }
+    
+    func setupTextAboveSearchBar () {
+        let customView = UIView(frame: CGRect(x: 0, y: 0, width: 25, height: 60))
+        customView.backgroundColor = UIColor.red
+        
+        textField = UILabel(frame: CGRect(x: 20, y: 0, width: 600, height: 60))
+        textField?.font = textField?.font.withSize(25)
+        textField?.textColor = .white
+        customView.addSubview(textField!)
+        searchBar.inputAccessoryView = customView
+    }
+    
+    func setupSpeechStuff() {
+        speechRecognizer = SFSpeechRecognizer(locale: Locale.init(identifier: "en-US"))!
+        audioEngine = AVAudioEngine()
+        
+        microphoneButton.isEnabled = false
+        speechRecognizer?.delegate = self
+        SFSpeechRecognizer.requestAuthorization { (authStatus) in
+            
+            var isButtonEnabled = false
+            
+            switch authStatus {
+            case .authorized:
+                isButtonEnabled = true
+                
+            case .denied:
+                isButtonEnabled = false
+                print("User denied access to speech recognition")
+                
+            case .restricted:
+                isButtonEnabled = false
+                print("Speech recognition restricted on this device")
+                
+            case .notDetermined:
+                isButtonEnabled = false
+                print("Speech recognition not yet authorized")
+            }
+            
+            OperationQueue.main.addOperation() {
+                self.microphoneButton.isEnabled = isButtonEnabled
+            }
+        }
+    }
+    
+    func startRecording() {
+        
+        if recognitionTask != nil {  //1
+            recognitionTask?.cancel()
+            recognitionTask = nil
+        }
+        
+        let audioSession = AVAudioSession.sharedInstance()  //2
+        do {
+            try audioSession.setCategory(AVAudioSessionCategoryRecord)
+            try audioSession.setMode(AVAudioSessionModeMeasurement)
+            try audioSession.setActive(true, with: .notifyOthersOnDeactivation)
+        } catch {
+            print("audioSession properties weren't set because of an error.")
+        }
+        
+        recognitionRequest = SFSpeechAudioBufferRecognitionRequest()  //3
+        
+        guard let inputNode = audioEngine?.inputNode else {
+            fatalError("Audio engine has no input node")
+        }  //4
+        
+        guard let recognitionRequest = recognitionRequest else {
+            fatalError("Unable to create an SFSpeechAudioBufferRecognitionRequest object")
+        } //5
+        
+        recognitionRequest.shouldReportPartialResults = true  //6
+        
+        recognitionTask = speechRecognizer?.recognitionTask(with: recognitionRequest, resultHandler: { (result, error) in  //7
+            
+            var isFinal = false  //8
+            
+            if result != nil {
+                
+                // TODO: self.textView.text = result?.bestTranscription.formattedString  //9
+                isFinal = (result?.isFinal)!
+            }
+            
+            if error != nil || isFinal {  //10
+                self.audioEngine?.stop()
+                inputNode.removeTap(onBus: 0)
+                
+                self.recognitionRequest = nil
+                self.recognitionTask = nil
+                
+                self.microphoneButton.isEnabled = true
+            }
+        })
+        
+        let recordingFormat = inputNode.outputFormat(forBus: 0)  //11
+        inputNode.installTap(onBus: 0, bufferSize: 1024, format: recordingFormat) { (buffer, when) in
+            self.recognitionRequest?.append(buffer)
+        }
+        
+        audioEngine?.prepare()  //12
+        
+        do {
+            try audioEngine?.start()
+        } catch {
+            print("audioEngine couldn't start because of an error.")
+        }
+        
+        // TODO: textView.text = "Say something, I'm listening!"
+        
+    }
+    
+    func speechRecognizer(_ speechRecognizer: SFSpeechRecognizer, availabilityDidChange available: Bool) {
+        if available {
+            microphoneButton.isEnabled = true
+        } else {
+            microphoneButton.isEnabled = false
+        }
     }
     
     func initNextWordMenu () {
@@ -168,6 +299,7 @@ class ImageViewController: UIViewController, UIScrollViewDelegate, UISearchBarDe
 
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         // Each letter added
+        textField?.text = searchBar.text!
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
@@ -178,6 +310,7 @@ class ImageViewController: UIViewController, UIScrollViewDelegate, UISearchBarDe
     
     func processAndSearch(this key: String) {
         
+        firstTimePressFlag = true
         pointsToZoom = [CGPoint]()
         wordsFound = [CGRect]()
         
@@ -189,40 +322,57 @@ class ImageViewController: UIViewController, UIScrollViewDelegate, UISearchBarDe
             
             if (similarCalc(for: key.lowercased(),with: cleanedWord) >= 0.6) {
                 
-                let wordRect = coordinates.characters.split{$0 == ","}.map(String.init)
-                let x = Double(wordRect[0])!
-                let y = Double(wordRect[1])!
-                let width = Double(wordRect[2])!
-                let height = Double(wordRect[3])!
-                
-                let rect = CGRect(x: x, y: y, width: width, height: height)
-                wordsFound?.append(rect)
-                
-                var pointToZoom = CGPoint(x: x + (width / 2), y: y + (height / 2))
-                pointToZoom = convertCoordinatesForView(givenPoint: pointToZoom)
-                pointsToZoom?.append(pointToZoom)
-                
+                for wordRect in coordinates {
+                    
+                    let wRect = wordRect.characters.split{$0 == ","}.map(String.init)
+                    let x = Double(wRect[0])!
+                    let y = Double(wRect[1])!
+                    let width = Double(wRect[2])!
+                    let height = Double(wRect[3])!
+                    
+                    let rect = CGRect(x: x, y: y, width: width, height: height)
+                    wordsFound?.append(rect)
+                    
+                    var pointToZoom = CGPoint(x: x + (width / 2), y: y + (height / 2))
+                    pointToZoom = convertCoordinatesForView(givenPoint: pointToZoom)
+                    pointsToZoom?.append(pointToZoom)
+                    
+                }
             }
         }
         
         if (pointsToZoom?.count)! > 0 {
-            
-            showNextWordMenu()
-            speak(this: "Word found")
+            pointsToZoom = pointsToZoom?.sorted(by: {$0.y < $1.y})
+            if (pointsToZoom?.count)! > 1 {
+                showNextWordMenu()
+                leftArrow(show: false)
+                speak(this: "\(key) found at \((pointsToZoom?.count)!) locations")
+            } else {
+                speak(this: "\(key) found")
+                hideNextWordMenu()
+            }
             
             highlightedImage = drawHighlightedImage(rects: wordsFound!, image: image!)
             self.imageView!.image = highlightedImage
-            startBlinking()
+            if !isBlinking {
+                self.startBlinking()
+            }
         } else {
             hideNextWordMenu()
+            speak(this: "\(key) not found")
         }
         
+    }
+    
+    func coordinateSorter(pointOne p: CGPoint, pointTwo p2: CGPoint) -> Bool {
+        
+        return false
     }
     
     func speak(this str: String) {
         
         myUtterance = AVSpeechUtterance(string: str)
-        myUtterance.rate = 0.3
+        myUtterance.rate = 0.4
         synth.speak(myUtterance)
     }
     
@@ -256,8 +406,8 @@ class ImageViewController: UIViewController, UIScrollViewDelegate, UISearchBarDe
         return Float(1.0 - (Double(dist) / Double(minLen)))
     }
     
-    func minOfThree(one on: Int, two tw: Int , three th: Int) -> Int{
-        var min = on
+    func minOfThree(one o: Int, two tw: Int , three th: Int) -> Int{
+        var min = o
         if (tw < min) {min = tw}
         if (th < min) {min = th}
         return min
@@ -357,7 +507,7 @@ class ImageViewController: UIViewController, UIScrollViewDelegate, UISearchBarDe
     }
     
     func startBlinking() {
-        
+        isBlinking = true
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.8, execute: {
             if self.isHighlighted {
                 self.imageView!.image = self.image
@@ -368,7 +518,6 @@ class ImageViewController: UIViewController, UIScrollViewDelegate, UISearchBarDe
             }
             self.startBlinking()
         })
-        
     }
     
     func drawHighlightedImage(rects: [CGRect], image: UIImage) -> UIImage {
@@ -403,23 +552,46 @@ class ImageViewController: UIViewController, UIScrollViewDelegate, UISearchBarDe
     
     func leftArrowPressed(recognizer: UITapGestureRecognizer) {
         
-        if (pointsToZoom != nil) && wordCursor < (pointsToZoom?.count)! {
+        if (pointsToZoom != nil) {
+            
+            if((wordCursor - 1) == 0){
+                leftArrow(show: false)
+            }
+            
+            wordCursor -= 1
             let p  = pointsToZoom![wordCursor]
-            let wordsDisplay = String(describing: pointsToZoom?.index(of: p)) + "/" + String(describing: pointsToZoom?.count)
+            let wordsDisplay = String(describing: ((pointsToZoom?.index(of: p))! + 1)) + "/" + String(describing: (pointsToZoom?.count)!)
             noWordsFound.text = wordsDisplay
             zoomAt(point: p)
-            wordCursor += 1
+            rightArrow(show: true)
         }
     }
     
     func rightArrowPressed(recognizer: UITapGestureRecognizer) {
         if (pointsToZoom != nil) && wordCursor < (pointsToZoom?.count)! {
+            
+            if((wordCursor + 1) == ((pointsToZoom?.count)! - 1)){
+                rightArrow(show: false)
+            }
+            
+            if firstTimePressFlag { firstTimePressFlag = false }
+            else { wordCursor += 1 }
+            
             let p  = pointsToZoom![wordCursor]
-            let wordsDisplay = String(describing: pointsToZoom?.index(of: p)) + "/" + String(describing: pointsToZoom?.count)
+            let wordsDisplay = String(describing: ((pointsToZoom?.index(of: p))! + 1)) + "/" + String(describing: (pointsToZoom?.count)!)
             noWordsFound.text = wordsDisplay
             zoomAt(point: p)
-            wordCursor += 1
+            
+            leftArrow(show: true)
         }
+    }
+    
+    func leftArrow(show s: Bool){
+        leftArrow.isHidden = !s
+    }
+    
+    func rightArrow(show s: Bool){
+        rightArrow.isHidden = !s
     }
     
     func zoomAt(point p: CGPoint) {
@@ -427,6 +599,7 @@ class ImageViewController: UIViewController, UIScrollViewDelegate, UISearchBarDe
             scrollView?.zoom(to: zoomRectForScale(scale: (scrollView?.maximumZoomScale)!, center: p), animated: true)
         } else {
             scrollView?.setZoomScale(1, animated: true)
+            scrollView?.zoom(to: zoomRectForScale(scale: (scrollView?.maximumZoomScale)!, center: p), animated: true)
         }
     }
     
