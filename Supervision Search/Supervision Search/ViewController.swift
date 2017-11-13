@@ -5,15 +5,18 @@
 //  Created by Gautam on 10/25/17.
 //  Copyright © 2017 Gautam. All rights reserved.
 //
-
 import UIKit
 import AVFoundation
 
 class ViewController: UIViewController {
     
     @IBOutlet weak var findButton: UIButton!
-    var imageView: UIImageView?
+    @IBOutlet weak var cameraPreview: UIView!
+
+    let cognitiveServices = CognitiveServices.sharedInstance
     let stillImageOutput = AVCaptureStillImageOutput()
+    
+    var videoDevice: AVCaptureDevice? = nil
     
     override var prefersStatusBarHidden: Bool {
         return true
@@ -22,16 +25,15 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         
         let captureSession = AVCaptureSession()
-        
         let devices = AVCaptureDevice.devices().filter{ ($0 as AnyObject).hasMediaType(AVMediaTypeVideo) && ($0 as AnyObject).position == AVCaptureDevicePosition.back }
         
         if let captureDevice = devices.first as? AVCaptureDevice{
             
+            videoDevice = captureDevice
             do {
                 try
-                    
                     captureSession.addInput(AVCaptureDeviceInput(device: captureDevice))
-                captureSession.sessionPreset = AVCaptureSessionPresetPhoto
+                captureSession.sessionPreset = AVCaptureSessionPresetHigh // AVCaptureSessionPresetPhoto
                 captureSession.startRunning()
                 stillImageOutput.outputSettings = [AVVideoCodecKey:AVVideoCodecJPEG]
                 if captureSession.canAddOutput(stillImageOutput) {
@@ -39,21 +41,21 @@ class ViewController: UIViewController {
                 }
                 
                 if let previewLayer = AVCaptureVideoPreviewLayer(session: captureSession) {
-                    previewLayer.bounds = view.bounds
+                    previewLayer.bounds =  cameraPreview.bounds
                     previewLayer.videoGravity = AVLayerVideoGravityResizeAspectFill
-                    let cameraPreview = UIView(frame: CGRect(origin: CGPoint(x: 0,y :0), size: CGSize(width: view.bounds.size.width, height: view.bounds.size.height)))
-                    cameraPreview.layer.addSublayer(previewLayer)
-                    view.addSubview(cameraPreview)
+                    previewLayer.connection?.videoOrientation = .portrait
+                    cameraPreview.layer.insertSublayer(previewLayer, at: 0)
+                    previewLayer.frame = CGRect(x: 0,y: 0,width: self.view.bounds.width,height: self.view.bounds.height)
+                    // cameraPreview.frame
                     
-                    view.addSubview(findButton)
+                    let pinch = UIPinchGestureRecognizer(target: self, action: #selector(ViewController.pinchDetected))
+                    cameraPreview.addGestureRecognizer(pinch)
                 }
                 
             } catch {
                 print("some error")
             }
-            
         }
-        
     }
     
     @IBAction func findPressed(_ sender: UIButton) {
@@ -63,16 +65,52 @@ class ViewController: UIViewController {
             
             stillImageOutput.captureStillImageAsynchronously(from: videoConnection) {
                 (imageDataSampleBuffer, error) -> Void in
+                
+                self.cameraPreview.removeFromSuperview()
                 let imageData = AVCaptureStillImageOutput.jpegStillImageNSDataRepresentation(imageDataSampleBuffer)
                 
-                let image: UIImage = UIImage(data: imageData!)!
-                self.imageView = UIImageView(image: image)
-                self.imageView!.frame = CGRect(origin: CGPoint(x: 0,y :0), size: CGSize(width: 100, height: 200))
-                self.view.addSubview(self.imageView!)
+                let nextViewController = self.storyboard?.instantiateViewController(withIdentifier: "ImageViewController") as! ImageViewController
+                nextViewController.imageData = imageData
+                self.present(nextViewController, animated:false, completion:nil)
+                              
             }
         }
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        AppUtility.lockOrientation(.portrait)
+        // Or to rotate and lock
+        // AppUtility.lockOrientation(.portrait, andRotateTo: .portrait)
+        
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        // Don't forget to reset when view is being removed
+        AppUtility.lockOrientation(.all)
+    }
+    
+    func pinchDetected (pinch: UIPinchGestureRecognizer) {
+        var device: AVCaptureDevice = self.videoDevice!
+        var vZoomFactor = pinch.scale
+        var error:NSError!
+        do{
+            try device.lockForConfiguration()
+            defer {device.unlockForConfiguration()}
+            if (vZoomFactor <= device.activeFormat.videoMaxZoomFactor && vZoomFactor >= 1.0){
+                device.ramp(toVideoZoomFactor: vZoomFactor, withRate: 1)
+                // device.videoZoomFactor = vZoomFactor
+            }
+            else if (vZoomFactor <= 1.0){ NSLog("Unable to set videoZoom: (max %f, asked %f)", device.activeFormat.videoMaxZoomFactor, vZoomFactor) }
+            else{ NSLog("Unable to set videoZoom: (max %f, asked %f)", device.activeFormat.videoMaxZoomFactor, vZoomFactor) }
+        }
+        
+          catch error as NSError{ NSLog("Unable to set videoZoom: %@", error.localizedDescription) }
+          catch _{ NSLog("Unable to set videoZoom: %@", error.localizedDescription) }
+    }
     
 }
 

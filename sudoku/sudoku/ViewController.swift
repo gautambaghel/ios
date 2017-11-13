@@ -93,7 +93,7 @@ class ViewController: UIViewController {
     
     @IBAction func retry(_ sender: UIButton) {
         
-        let refreshAlert = UIAlertController(title: "Resetting Board!", message: "Are you sure?", preferredStyle: UIAlertControllerStyle.alert)
+        let refreshAlert = UIAlertController(title: "Resetting Board", message: "Are you sure?", preferredStyle: UIAlertControllerStyle.alert)
         
         refreshAlert.addAction(UIAlertAction(title: "Yeah!", style: .default, handler: { (action: UIAlertAction!) in
             self.startNewGame()

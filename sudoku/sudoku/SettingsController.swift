@@ -11,7 +11,10 @@ import UIKit
 class SettingsController: UIViewController , UIPickerViewDelegate, UIPickerViewDataSource {
     
     @IBOutlet weak var levelPicker: UIPickerView!
-    var pickerData: [String] = [String]()
+    @IBOutlet weak var musicSwitch: UISwitch!
+    
+    private var pickerData: [String] = [String]()
+    static var settings = Settings()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,6 +25,12 @@ class SettingsController: UIViewController , UIPickerViewDelegate, UIPickerViewD
         
         // Input data into the Array:
         pickerData = ["EASY", "MEDIUM", "HARD"]
+        
+        if let i = pickerData.index(of: SettingsController.settings.level) {
+            levelPicker.selectRow(i, inComponent: 0, animated: true)
+        }
+        
+        musicSwitch.setOn(SettingsController.settings.music, animated: true)
         
     }
     
@@ -35,13 +44,8 @@ class SettingsController: UIViewController , UIPickerViewDelegate, UIPickerViewD
         return pickerData.count
     }
     
-    // The data to return for the row and component (column) that's being passed in
-    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return pickerData[row]
-    }
-    
     func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
-      
+        
         var label: UILabel
         if ((view as? UILabel) != nil) {
             label = view as! UILabel
@@ -52,6 +56,18 @@ class SettingsController: UIViewController , UIPickerViewDelegate, UIPickerViewD
         label.font = UIFont(name: "Papyrus", size: 17.0)
         label.text = pickerData[row]
         return label
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        SettingsController.settings.level = pickerData[row]
+    }
+    
+    @IBAction func musicSwitchToggle(_ sender: UISwitch) {
+        if sender.isOn {
+            SettingsController.settings.music = true
+        } else {
+            SettingsController.settings.music = false
+        }
     }
     
 }
