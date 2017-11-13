@@ -57,7 +57,7 @@ class ImageViewController: UIViewController, UIScrollViewDelegate, UISearchBarDe
     
     private var recognitionRequest: SFSpeechAudioBufferRecognitionRequest?
     private var recognitionTask: SFSpeechRecognitionTask?
-    private var audioEngine: AVAudioEngine? = nil
+    private var audioEngine = AVAudioEngine()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -84,7 +84,9 @@ class ImageViewController: UIViewController, UIScrollViewDelegate, UISearchBarDe
         
         setupImageInImageview()
         setupTextAboveSearchBar()
-        setupSpeechStuff()
+        if #available(iOS 10.0, *) {
+            setupSpeechStuff()
+        }
     }
     
     func setupTextAboveSearchBar () {
@@ -99,8 +101,7 @@ class ImageViewController: UIViewController, UIScrollViewDelegate, UISearchBarDe
     }
     
     func setupSpeechStuff() {
-        speechRecognizer = SFSpeechRecognizer(locale: Locale.init(identifier: "en-US"))!
-        audioEngine = AVAudioEngine()
+        speechRecognizer = SFSpeechRecognizer()
         
         microphoneButton.isEnabled = false
         speechRecognizer?.delegate = self
@@ -149,7 +150,7 @@ class ImageViewController: UIViewController, UIScrollViewDelegate, UISearchBarDe
         
         recognitionRequest = SFSpeechAudioBufferRecognitionRequest()  //3
         
-        guard let inputNode = audioEngine?.inputNode else {
+        guard let inputNode = audioEngine.inputNode else {
             fatalError("Audio engine has no input node")
         }  //4
         
@@ -170,7 +171,7 @@ class ImageViewController: UIViewController, UIScrollViewDelegate, UISearchBarDe
             }
             
             if error != nil || isFinal {  //10
-                self.audioEngine?.stop()
+                self.audioEngine.stop()
                 inputNode.removeTap(onBus: 0)
                 
                 self.recognitionRequest = nil
@@ -185,10 +186,10 @@ class ImageViewController: UIViewController, UIScrollViewDelegate, UISearchBarDe
             self.recognitionRequest?.append(buffer)
         }
         
-        audioEngine?.prepare()  //12
+        audioEngine.prepare()  //12
         
         do {
-            try audioEngine?.start()
+            try audioEngine.start()
         } catch {
             print("audioEngine couldn't start because of an error.")
         }
@@ -295,6 +296,18 @@ class ImageViewController: UIViewController, UIScrollViewDelegate, UISearchBarDe
     }
 
     @IBAction func micPressed(_ sender: UIButton) {
+        
+        if #available(iOS 10.0, *) {
+            if audioEngine.isRunning {
+                audioEngine.stop()
+                recognitionRequest?.endAudio()
+                microphoneButton.isEnabled = false
+                microphoneButton.setTitle("Start Recording", for: .normal)
+            } else {
+                startRecording()
+                microphoneButton.setTitle("Stop Recording", for: .normal)
+            }
+        }
     }
 
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
