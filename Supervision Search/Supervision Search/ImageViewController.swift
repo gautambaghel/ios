@@ -26,7 +26,6 @@ class ImageViewController: UIViewController, UIScrollViewDelegate, UISearchBarDe
     var isBlinking = false
     
     var imageData: Data? = nil
-    let synth = AVSpeechSynthesizer()
     
     var imageView: UIImageView? = {
         let v = UIImageView()
@@ -58,6 +57,9 @@ class ImageViewController: UIViewController, UIScrollViewDelegate, UISearchBarDe
     private var recognitionRequest: SFSpeechAudioBufferRecognitionRequest?
     private var recognitionTask: SFSpeechRecognitionTask?
     private var audioEngine = AVAudioEngine()
+    private let audioSession = AVAudioSession.sharedInstance()  //2
+    
+    private var alertController: UIAlertController? = nil
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -67,15 +69,18 @@ class ImageViewController: UIViewController, UIScrollViewDelegate, UISearchBarDe
         searchBar.delegate = self
         image = UIImage(data: imageData!)!
         
+        // start the spinner
+        Progress.shared.showProgressView(self.view)
+        
         // COGINITITON STUFF
         DispatchQueue.global(qos: .background).async {
-            
-            // let imageData = UIImagePNGRepresentation(UIImage(named: "ocrDemo")!)!
             let requestObject: OCRRequestObject = (resource: self.imageData!, language: .Automatic, detectOrientation: true)
             try! self.ocr.recognizeCharactersWithRequestObject(requestObject, completion: { (response) in
                 if (response != nil){
                     DispatchQueue.main.async {
                         let _ = self.ocr.extractStringFromDictionary(response!)
+                        
+                        Progress.shared.hideProgressView()
                         self.orientImage()
                     }
                 }
@@ -132,60 +137,77 @@ class ImageViewController: UIViewController, UIScrollViewDelegate, UISearchBarDe
     
     func startRecording() {
         
-        if recognitionTask != nil {  //1
+        if recognitionTask != nil {
             recognitionTask?.cancel()
             recognitionTask = nil
         }
         
-        let audioSession = AVAudioSession.sharedInstance()  //2
         do {
-            try audioSession.setCategory(AVAudioSessionCategoryRecord)
+            try audioSession.setCategory(AVAudioSessionModeDefault)
             try audioSession.setMode(AVAudioSessionModeMeasurement)
             try audioSession.setActive(true, with: .notifyOthersOnDeactivation)
         } catch {
             print("audioSession properties weren't set because of an error.")
         }
         
-        recognitionRequest = SFSpeechAudioBufferRecognitionRequest()  //3
+        recognitionRequest = SFSpeechAudioBufferRecognitionRequest()
         guard let inputNode = audioEngine.inputNode else {
             fatalError("Audio engine has no input node")
-        }  //4
+        }
         guard let recognitionRequest = recognitionRequest else {
             fatalError("Unable to create an SFSpeechAudioBufferRecognitionRequest object")
-        } //5
+        }
         
-        recognitionRequest.shouldReportPartialResults = true  //6
-        recognitionTask = speechRecognizer?.recognitionTask(with: recognitionRequest, resultHandler: { (result, error) in  //7
+        // TODO changed this false,  revert to true if needed
+        recognitionRequest.shouldReportPartialResults = false
+        recognitionTask = speechRecognizer?.recognitionTask(with: recognitionRequest, resultHandler: { (result, error) in
             
             if result != nil {
-                recognitionRequest.endAudio()
-                self.audioEngine.stop()
-                inputNode.removeTap(onBus: 0)
-                
-                self.recognitionRequest = nil
-                self.recognitionTask = nil
-                self.microphoneButton.isEnabled = true
-                
-                // TODO: self.textView.text = result?.bestTranscription.formattedString  //9
-                self.searchBar.text = result?.bestTranscription.formattedString
-                self.processAndSearch()
-                
-                // to play sound
-                self.playRecordStopSound()
+                self.stopMicAndProcess(result!, valid: true)
+            }
+            
+            if error != nil {
+                self.speak(this: "Sorry didn't catch that")
             }
         })
         
-        let recordingFormat = inputNode.outputFormat(forBus: 0)  //11
+        let recordingFormat = inputNode.outputFormat(forBus: 0)
         inputNode.installTap(onBus: 0, bufferSize: 1024, format: recordingFormat) { (buffer, when) in
             self.recognitionRequest?.append(buffer)
         }
-        audioEngine.prepare()  //12
+        audioEngine.prepare()
         do {
             try audioEngine.start()
         } catch {
             print("audioEngine couldn't start because of an error.")
         }
-        // TODO: textView.text = "Say something, I'm listening!"
+    }
+    
+    func stopMicAndProcess (_ result: SFSpeechRecognitionResult, valid resultIsValid: Bool) {
+        
+        guard let inputNode = audioEngine.inputNode else {
+            fatalError("Audio engine has no input node")
+        }
+        
+        self.alertController!.dismiss(animated: true, completion: nil)
+        self.recognitionRequest?.endAudio()
+        self.recognitionTask?.finish()
+        self.audioEngine.stop()
+        inputNode.removeTap(onBus: 0)
+        
+        self.recognitionRequest = nil
+        self.recognitionTask = nil
+        self.microphoneButton.isEnabled = true
+        
+        try? self.audioSession.setActive(false, with: .notifyOthersOnDeactivation)
+        
+        // to play sound
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: { self.playRecordStopSound()})
+        
+        if resultIsValid {
+           self.searchBar.text = result.bestTranscription.formattedString
+           self.processAndSearch()
+        }
     }
     
     func speechRecognizer(_ speechRecognizer: SFSpeechRecognizer, availabilityDidChange available: Bool) {
@@ -228,10 +250,10 @@ class ImageViewController: UIViewController, UIScrollViewDelegate, UISearchBarDe
         
         self.imageView!.image = image
         let imageFrame = CGRect(origin: CGPoint(x: 0,y :0),
-                                size: CGSize(width: self.view.bounds.width, height: self.view.bounds.height))
+                                size: CGSize(width: mainView.bounds.width, height: mainView.bounds.height))
         self.imageView!.frame = imageFrame
         
-        self.scrollView?.frame = self.view.bounds
+        self.scrollView?.frame = mainView.bounds
         //adding imageview as a subview of scroll view
         self.scrollView?.addSubview(self.imageView!)
         // content size of the scroll view is the size of the image
@@ -286,27 +308,44 @@ class ImageViewController: UIViewController, UIScrollViewDelegate, UISearchBarDe
     }
 
     @IBAction func micPressed(_ sender: UIButton) {
-        
-            if audioEngine.isRunning {
-                // to play sound
-                playRecordStopSound()
-                audioEngine.stop()
-                recognitionRequest?.endAudio()
-                microphoneButton.isEnabled = false
-            } else {
+    
+            if !audioSession.isOtherAudioPlaying && !audioEngine.isRunning {
                 playRecordStartSound()
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.2, execute: { self.startRecording()})
+                
+                alertController = UIAlertController(title: "Speak", message: "Go ahead, I'm listening", preferredStyle: .alert)
+                
+                let cancel = UIAlertAction(title: "Done", style: .cancel, handler:  { action in
+                    self.alertController?.dismiss(animated: true, completion: nil)
+                    self.stopMicAndProcess(SFSpeechRecognitionResult.init(), valid: false)
+                })
+                alertController!.addAction(cancel)
+                
+                present(alertController!, animated: true, completion: nil)
+                // DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: { self.startRecording()})
+                self.startRecording()
             }
     }
     
+    
     func playRecordStopSound() {
-        AudioServicesPlaySystemSound(1114)
+        let sound = 1114
+        AudioServicesPlaySystemSound(SystemSoundID(sound))
+        AudioServicesRemoveSystemSoundCompletion(SystemSoundID(sound));
+        AudioServicesDisposeSystemSoundID(SystemSoundID(sound))
     }
     
     func playRecordStartSound() {
-        AudioServicesPlaySystemSound(1113)
+        let sound = 1113
+        AudioServicesPlaySystemSound(SystemSoundID(sound))
+        AudioServicesRemoveSystemSoundCompletion(SystemSoundID(sound));
+        AudioServicesDisposeSystemSoundID(SystemSoundID(sound))
     }
 
+    func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
+        textField?.text = searchBar.text!
+        return true
+    }
+    
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         // Each letter added
         textField?.text = searchBar.text!
@@ -320,6 +359,9 @@ class ImageViewController: UIViewController, UIScrollViewDelegate, UISearchBarDe
     func processAndSearch() {
         
         let key = searchBar.text!
+        if key == "" {
+            return
+        }
         wordCursor = 0
         firstTimePressFlag = true
         pointsToZoom = [CGPoint]()
@@ -359,10 +401,11 @@ class ImageViewController: UIViewController, UIScrollViewDelegate, UISearchBarDe
                 leftArrow(show: false)
                 speak(this: "\(key) found at \((pointsToZoom?.count)!) locations")
             } else {
-                speak(this: "\(key) found")
+                speak(this: "\(key) found at one location")
                 hideNextWordMenu()
             }
             
+            noWordsFound.text = String(describing: (pointsToZoom?.count)!)
             highlightedImage = drawHighlightedImage(rects: wordsFound!, image: image!)
             self.imageView!.image = highlightedImage
             if !isBlinking {
@@ -377,6 +420,7 @@ class ImageViewController: UIViewController, UIScrollViewDelegate, UISearchBarDe
     
     func speak(this str: String) {
         
+        let synth = AVSpeechSynthesizer()
         let myUtterance = AVSpeechUtterance(string: str)
         // myUtterance.rate = 0.4
         synth.speak(myUtterance)

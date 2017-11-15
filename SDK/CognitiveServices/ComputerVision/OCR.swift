@@ -108,7 +108,7 @@ class OCR: NSObject {
         
         let task = URLSession.shared.dataTask(with: request){ data, response, error in
             if error != nil{
-                print("Error -> \(error)")
+                print("Error -> \(String(describing: error))")
                 completion(nil)
                 return
             }else{

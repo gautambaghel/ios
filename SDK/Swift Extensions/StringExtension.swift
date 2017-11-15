@@ -11,13 +11,16 @@ import AVFoundation
 
 extension String {
     var first: String {
-        return String(characters.prefix(1))
+        return String(prefix(1))
+        // return String(characters.prefix(1))
     }
     var last: String {
-        return String(characters.suffix(1))
+        return String(suffix(1))
+        // return String(characters.suffix(1))
     }
     var uppercaseFirst: String {
-        return first.uppercased() + String(characters.dropFirst())
+        return first.uppercased() + String(dropFirst())
+        // return first.uppercased() + String(characters.dropFirst())
     }
     
     

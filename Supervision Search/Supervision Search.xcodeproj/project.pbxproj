@@ -17,6 +17,7 @@
 		C7413D601FA92ACF007867A0 /* CognitiveServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7413D5E1FA92ACF007867A0 /* CognitiveServices.swift */; };
 		C7413D611FA92ACF007867A0 /* JSONNSDataExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7413D5F1FA92ACF007867A0 /* JSONNSDataExtension.swift */; };
 		C7413D641FA92AF9007867A0 /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7413D631FA92AF9007867A0 /* StringExtension.swift */; };
+		C75D08A01FBCEB170036FCEF /* Progress.swift in Sources */ = {isa = PBXBuildFile; fileRef = C75D089F1FBCEB170036FCEF /* Progress.swift */; };
 		C77F44DB1FA0E5710037CE11 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C77F44DA1FA0E5710037CE11 /* AppDelegate.swift */; };
 		C77F44DD1FA0E5710037CE11 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C77F44DC1FA0E5710037CE11 /* ViewController.swift */; };
 		C77F44E01FA0E5710037CE11 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C77F44DE1FA0E5710037CE11 /* Main.storyboard */; };
@@ -45,6 +46,7 @@
 		C7413D5E1FA92ACF007867A0 /* CognitiveServices.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CognitiveServices.swift; path = ../../SDK/CognitiveServices/CognitiveServices.swift; sourceTree = "<group>"; };
 		C7413D5F1FA92ACF007867A0 /* JSONNSDataExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = JSONNSDataExtension.swift; path = ../../SDK/CognitiveServices/JSONNSDataExtension.swift; sourceTree = "<group>"; };
 		C7413D631FA92AF9007867A0 /* StringExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StringExtension.swift; path = "../../SDK/Swift Extensions/StringExtension.swift"; sourceTree = "<group>"; };
+		C75D089F1FBCEB170036FCEF /* Progress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Progress.swift; sourceTree = "<group>"; };
 		C77F44D71FA0E5710037CE11 /* Supervision Search.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Supervision Search.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C77F44DA1FA0E5710037CE11 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C77F44DC1FA0E5710037CE11 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -153,6 +155,7 @@
 				C77F44E11FA0E5710037CE11 /* Assets.xcassets */,
 				C73598221FA905020021A9DC /* ImageViewController.swift */,
 				C7D834DC1FB4AAE1007723A5 /* Global.swift */,
+				C75D089F1FBCEB170036FCEF /* Progress.swift */,
 			);
 			path = "Supervision Search";
 			sourceTree = "<group>";
@@ -266,6 +269,7 @@
 				C7413D581FA92A87007867A0 /* ListDomainSpecificModels.swift in Sources */,
 				C73598231FA905020021A9DC /* ImageViewController.swift in Sources */,
 				C7413D641FA92AF9007867A0 /* StringExtension.swift in Sources */,
+				C75D08A01FBCEB170036FCEF /* Progress.swift in Sources */,
 				C7413D5B1FA92A87007867A0 /* TagImage.swift in Sources */,
 				C7413D5A1FA92A87007867A0 /* RecognizeDomainSpecificContent.swift in Sources */,
 				C77F44DB1FA0E5710037CE11 /* AppDelegate.swift in Sources */,

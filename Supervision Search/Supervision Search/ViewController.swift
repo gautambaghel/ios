@@ -60,19 +60,19 @@ class ViewController: UIViewController {
     
     @IBAction func findPressed(_ sender: UIButton) {
         
+        // self.view.addSubview(UIView.init(frame: self.view.frame))
+        Progress.shared.showProgressView(self.view)
+        self.cameraPreview.removeFromSuperview()
+        
         // Take a picture from back camera
         if let videoConnection = stillImageOutput.connection(withMediaType: AVMediaTypeVideo) {
-            
             stillImageOutput.captureStillImageAsynchronously(from: videoConnection) {
                 (imageDataSampleBuffer, error) -> Void in
-                
-                self.cameraPreview.removeFromSuperview()
                 let imageData = AVCaptureStillImageOutput.jpegStillImageNSDataRepresentation(imageDataSampleBuffer)
                 
                 let nextViewController = self.storyboard?.instantiateViewController(withIdentifier: "ImageViewController") as! ImageViewController
                 nextViewController.imageData = imageData
                 self.present(nextViewController, animated:false, completion:nil)
-                              
             }
         }
     }
