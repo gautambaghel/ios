@@ -10,9 +10,12 @@ import UIKit
 import AVFoundation
 import Speech
 import AudioToolbox
+import SystemConfiguration
 
 class ImageViewController: UIViewController, UIScrollViewDelegate, UISearchBarDelegate , SFSpeechRecognizerDelegate {
 
+    @IBOutlet weak var zoomButton: UIImageView!
+    @IBOutlet weak var retry: UIImageView!
     @IBOutlet weak var microphoneButton: UIButton!
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var rightArrow: UIImageView!
@@ -57,39 +60,65 @@ class ImageViewController: UIViewController, UIScrollViewDelegate, UISearchBarDe
     private var recognitionRequest: SFSpeechAudioBufferRecognitionRequest?
     private var recognitionTask: SFSpeechRecognitionTask?
     private var audioEngine = AVAudioEngine()
-    private let audioSession = AVAudioSession.sharedInstance()  //2
+    private let audioSession = AVAudioSession.sharedInstance()
     
     private var alertController: UIAlertController? = nil
+    private var responseRecieved = false
+    private let synth = AVSpeechSynthesizer()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         speak(this: "hello")
         initNextWordMenu()
+        retry.isHidden = true
         searchBar.delegate = self
         image = UIImage(data: imageData!)!
         
         // start the spinner
         Progress.shared.showProgressView(self.view)
         
+        // start a count down timer (of sorts)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 15.0, execute: {
+            
+            Progress.shared.hideProgressView()
+            if !self.isInternetAvailable() {
+                self.speak(this: "Turn on the internet to use this app.")
+            } else if !self.responseRecieved {
+                self.speak(this: "Internal error tap to retry")
+                self.retry.isHidden = false
+                let retryGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(ImageViewController.retryPressed))
+                self.retry.isUserInteractionEnabled = true
+                self.retry.addGestureRecognizer(retryGestureRecognizer)
+            }
+        })
+        
         // COGINITITON STUFF
+        doCognititonInBackground()
+        
+        // View init stuff
+        setupImageInImageview()
+        setupTextAboveSearchBar()
+        setupSpeechStuff()
+    }
+    
+    func doCognititonInBackground(){
         DispatchQueue.global(qos: .background).async {
             let requestObject: OCRRequestObject = (resource: self.imageData!, language: .Automatic, detectOrientation: true)
-            try! self.ocr.recognizeCharactersWithRequestObject(requestObject, completion: { (response) in
+            try! self.ocr.recognizeCharactersWithRequestObject(requestObject, completion: { (response, error) in
                 if (response != nil){
                     DispatchQueue.main.async {
+                        self.responseRecieved = true
                         let _ = self.ocr.extractStringFromDictionary(response!)
                         
                         Progress.shared.hideProgressView()
                         self.orientImage()
                     }
+                } else if error != "" {
+                    DispatchQueue.main.async { self.speak(this: error) }
                 }
             })
         }
-        
-        setupImageInImageview()
-        setupTextAboveSearchBar()
-        setupSpeechStuff()
     }
     
     func setupTextAboveSearchBar () {
@@ -143,7 +172,7 @@ class ImageViewController: UIViewController, UIScrollViewDelegate, UISearchBarDe
         }
         
         do {
-            try audioSession.setCategory(AVAudioSessionModeDefault)
+            try audioSession.setCategory(AVAudioSessionModeSpokenAudio)
             try audioSession.setMode(AVAudioSessionModeMeasurement)
             try audioSession.setActive(true, with: .notifyOthersOnDeactivation)
         } catch {
@@ -201,9 +230,6 @@ class ImageViewController: UIViewController, UIScrollViewDelegate, UISearchBarDe
         
         try? self.audioSession.setActive(false, with: .notifyOthersOnDeactivation)
         
-        // to play sound
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: { self.playRecordStopSound()})
-        
         if resultIsValid {
            self.searchBar.text = result.bestTranscription.formattedString
            self.processAndSearch()
@@ -222,10 +248,15 @@ class ImageViewController: UIViewController, UIScrollViewDelegate, UISearchBarDe
         
         let leftGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(ImageViewController.leftArrowPressed))
         let rightGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(ImageViewController.rightArrowPressed))
+        let zoomGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(ImageViewController.zoomPressed))
+        
         leftArrow.isUserInteractionEnabled = true
         rightArrow.isUserInteractionEnabled = true
+        zoomButton.isUserInteractionEnabled = true
+        
         leftArrow.addGestureRecognizer(leftGestureRecognizer)
         rightArrow.addGestureRecognizer(rightGestureRecognizer)
+        zoomButton.addGestureRecognizer(zoomGestureRecognizer)
         
         noWordsFound.text = ""
         hideNextWordMenu()
@@ -235,6 +266,7 @@ class ImageViewController: UIViewController, UIScrollViewDelegate, UISearchBarDe
         leftArrow.isHidden = true
         rightArrow.isHidden = true
         noWordsFound.isHidden = true
+        zoomButton.isHidden = true
     }
     
     func showNextWordMenu () {
@@ -274,6 +306,7 @@ class ImageViewController: UIViewController, UIScrollViewDelegate, UISearchBarDe
         
         self.scrollView?.addGestureRecognizer(singleTap)
         self.scrollView?.addGestureRecognizer(doubleTap)
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -308,39 +341,68 @@ class ImageViewController: UIViewController, UIScrollViewDelegate, UISearchBarDe
     }
 
     @IBAction func micPressed(_ sender: UIButton) {
-    
-            if !audioSession.isOtherAudioPlaying && !audioEngine.isRunning {
-                playRecordStartSound()
-                
-                alertController = UIAlertController(title: "Speak", message: "Go ahead, I'm listening", preferredStyle: .alert)
-                
-                let cancel = UIAlertAction(title: "Done", style: .cancel, handler:  { action in
-                    self.alertController?.dismiss(animated: true, completion: nil)
-                    self.stopMicAndProcess(SFSpeechRecognitionResult.init(), valid: false)
-                })
-                alertController!.addAction(cancel)
-                
-                present(alertController!, animated: true, completion: nil)
-                // DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: { self.startRecording()})
-                self.startRecording()
-            }
+        if !audioSession.isOtherAudioPlaying && !audioEngine.isRunning {
+            playRecordStartSound()
+            tryRecording()
+        }
     }
     
+    func tryRecording () {
     
-    func playRecordStopSound() {
-        let sound = 1114
-        AudioServicesPlaySystemSound(SystemSoundID(sound))
-        AudioServicesRemoveSystemSoundCompletion(SystemSoundID(sound));
-        AudioServicesDisposeSystemSoundID(SystemSoundID(sound))
+        if synth.isSpeaking {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.25, execute: { self.tryRecording() } )
+        } else {
+            self.alertController = UIAlertController(title: "Speak", message: "Go ahead, I'm listening", preferredStyle: .alert)
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 4, execute: {
+                self.alertController?.dismiss(animated: true, completion: nil)
+                self.stopMicAndProcess(SFSpeechRecognitionResult.init(), valid: false)
+            })
+            let cancel = UIAlertAction(title: "Done", style: .cancel, handler:  { action in
+                self.alertController?.dismiss(animated: true, completion: nil)
+                self.stopMicAndProcess(SFSpeechRecognitionResult.init(), valid: false)
+            })
+            
+            let image = resizeImage(UIImage(named: "microphone")!, targetSize: CGSize(width: 60, height: 60))
+            let imageView = UIImageView(frame: CGRect(x: 0, y: 10, width: 60, height: 60))
+            imageView.image = image
+            self.alertController!.view.addSubview(imageView)
+            self.alertController!.addAction(cancel)
+            self.present(self.alertController!, animated: true, completion: nil)
+            self.startRecording()
+        }
+    }
+    
+    func resizeImage(_ image: UIImage, targetSize: CGSize) -> UIImage? {
+        let size = image.size
+        
+        let widthRatio  = targetSize.width  / image.size.width
+        let heightRatio = targetSize.height / image.size.height
+        
+        // Figure out what our orientation is, and use that to form the rectangle
+        var newSize: CGSize
+        if(widthRatio > heightRatio) {
+            newSize = CGSize(width: size.width * heightRatio, height: size.height * heightRatio)
+        } else {
+            newSize = CGSize(width: size.width * widthRatio, height: size.height * widthRatio)
+        }
+        
+        // This is the rect that we've calculated out and this is what is actually used below
+        let rect = CGRect(x: 0, y: 0, width: newSize.width, height: newSize.height)
+        
+        // Actually do the resizing to the rect using the ImageContext stuff
+        UIGraphicsBeginImageContextWithOptions(newSize, false, 1.0)
+        image.draw(in: rect)
+        let newImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        return newImage
     }
     
     func playRecordStartSound() {
-        let sound = 1113
-        AudioServicesPlaySystemSound(SystemSoundID(sound))
-        AudioServicesRemoveSystemSoundCompletion(SystemSoundID(sound));
-        AudioServicesDisposeSystemSoundID(SystemSoundID(sound))
+        speak(this: "Speak")
     }
-
+    
     func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
         textField?.text = searchBar.text!
         return true
@@ -403,6 +465,7 @@ class ImageViewController: UIViewController, UIScrollViewDelegate, UISearchBarDe
             } else {
                 speak(this: "\(key) found at one location")
                 hideNextWordMenu()
+                zoomButton.isHidden = false
             }
             
             noWordsFound.text = String(describing: (pointsToZoom?.count)!)
@@ -419,17 +482,16 @@ class ImageViewController: UIViewController, UIScrollViewDelegate, UISearchBarDe
     }
     
     func speak(this str: String) {
-        
-        let synth = AVSpeechSynthesizer()
         let myUtterance = AVSpeechUtterance(string: str)
         // myUtterance.rate = 0.4
+        myUtterance.volume = 1
         synth.speak(myUtterance)
     }
     
     func removeSpecialCharsFromString(text: String) -> String {
         let okayChars : Set<Character> =
-            Set("abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLKMNOPQRSTUVWXYZ1234567890%$".characters)
-        return String(text.characters.filter {okayChars.contains($0) })
+            Set("abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLKMNOPQRSTUVWXYZ1234567890%$")
+        return String(text.filter {okayChars.contains($0) })
     }
     
     func similarCalc(for s1: String, with s2: String) -> Float {
@@ -559,15 +621,21 @@ class ImageViewController: UIViewController, UIScrollViewDelegate, UISearchBarDe
     func startBlinking() {
         isBlinking = true
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.8, execute: {
-            if self.isHighlighted {
-                self.imageView!.image = self.image
-                self.isHighlighted = false
-            } else {
-                self.imageView!.image = self.highlightedImage
-                self.isHighlighted = true
+            if self.isBlinking {
+                if self.isHighlighted {
+                    self.imageView!.image = self.image
+                    self.isHighlighted = false
+                } else {
+                    self.imageView!.image = self.highlightedImage
+                    self.isHighlighted = true
+                }
+                self.startBlinking()
             }
-            self.startBlinking()
         })
+    }
+    
+    func stopBlinking() {
+        isBlinking = false
     }
     
     func drawHighlightedImage(rects: [CGRect], image: UIImage) -> UIImage {
@@ -608,7 +676,7 @@ class ImageViewController: UIViewController, UIScrollViewDelegate, UISearchBarDe
                 leftArrow(show: false)
             }
                 
-            if wordCursor != 0 { wordCursor -= 1 }
+            if wordCursor > 0 { wordCursor -= 1 }
             
             let p  = pointsToZoom![wordCursor]
             let wordsDisplay = String(describing: ((pointsToZoom?.index(of: p))! + 1)) + "/" + String(describing: (pointsToZoom?.count)!)
@@ -618,26 +686,42 @@ class ImageViewController: UIViewController, UIScrollViewDelegate, UISearchBarDe
         }
     }
     
-    func rightArrowPressed(recognizer: UITapGestureRecognizer) {
+    func rightArrowPressed (recognizer: UITapGestureRecognizer) {
         if (pointsToZoom != nil) && wordCursor < (pointsToZoom?.count)! {
             
-            if((wordCursor + 1) == ((pointsToZoom?.count)! - 1)){
-                rightArrow(show: false)
+            if firstTimePressFlag {
+                firstTimePressFlag = false
+            } else {
+                
+                if((wordCursor + 1) == ((pointsToZoom?.count)! - 1)){
+                    rightArrow(show: false)
+                }
+                
+                wordCursor += 1
+                leftArrow(show: true)
+
             }
-            
-            if !firstTimePressFlag { wordCursor += 1 }
-            
             let p  = pointsToZoom![wordCursor]
             let wordsDisplay = String(describing: ((pointsToZoom?.index(of: p))! + 1)) + "/" + String(describing: (pointsToZoom?.count)!)
             noWordsFound.text = wordsDisplay
             zoomAt(point: p)
             
-            if firstTimePressFlag {
-                wordCursor += 1
-                firstTimePressFlag = false
-            }
-            leftArrow(show: true)
         }
+    }
+    
+    func zoomPressed (recognizer: UITapGestureRecognizer)  {
+        if (pointsToZoom != nil) {
+            zoomAt(point: pointsToZoom![0])
+        }
+    }
+    
+    func retryPressed (recognizer: UITapGestureRecognizer) {
+        retry.isHidden = true
+        self.responseRecieved = false
+        stopBlinking()
+        image = UIImage(data: imageData!)!
+        initNextWordMenu()
+        doCognititonInBackground()
     }
     
     func leftArrow(show s: Bool){
@@ -652,9 +736,27 @@ class ImageViewController: UIViewController, UIScrollViewDelegate, UISearchBarDe
         if scrollView?.zoomScale == 1 {
             scrollView?.zoom(to: zoomRectForScale(scale: (scrollView?.maximumZoomScale)!, center: p), animated: true)
         } else {
+            disableArrows()
             scrollView?.setZoomScale(1, animated: true)
-            scrollView?.zoom(to: zoomRectForScale(scale: (scrollView?.maximumZoomScale)!, center: p), animated: true)
+            doubleZoomAt(point: p)
         }
+    }
+    
+    func doubleZoomAt (point p: CGPoint) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.75, execute: {
+            self.scrollView?.zoom(to: self.zoomRectForScale(scale: (self.scrollView?.maximumZoomScale)!, center: p), animated: true)
+            self.enableArrows()
+        })
+    }
+    
+    func disableArrows () {
+        rightArrow.isUserInteractionEnabled = false
+        leftArrow.isUserInteractionEnabled = false
+    }
+    
+    func enableArrows () {
+        rightArrow.isUserInteractionEnabled = true
+        leftArrow.isUserInteractionEnabled = true
     }
     
     func convertCoordinatesForView (givenPoint p: CGPoint) -> CGPoint{
@@ -670,5 +772,28 @@ class ImageViewController: UIViewController, UIScrollViewDelegate, UISearchBarDe
         
         return CGPoint(x: x, y: y)
     }
+    
+    
+    func isInternetAvailable() -> Bool
+    {
+        var zeroAddress = sockaddr_in()
+        zeroAddress.sin_len = UInt8(MemoryLayout.size(ofValue: zeroAddress))
+        zeroAddress.sin_family = sa_family_t(AF_INET)
+        
+        let defaultRouteReachability = withUnsafePointer(to: &zeroAddress) {
+            $0.withMemoryRebound(to: sockaddr.self, capacity: 1) {zeroSockAddress in
+                SCNetworkReachabilityCreateWithAddress(nil, zeroSockAddress)
+            }
+        }
+        
+        var flags = SCNetworkReachabilityFlags()
+        if !SCNetworkReachabilityGetFlags(defaultRouteReachability!, &flags) {
+            return false
+        }
+        let isReachable = flags.contains(.reachable)
+        let needsConnection = flags.contains(.connectionRequired)
+        return (isReachable && !needsConnection)
+    }
+    
 }
 

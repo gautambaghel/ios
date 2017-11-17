@@ -26,7 +26,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OBb-p8-FPd">
-                                        <rect key="frame" x="150.5" y="584" width="75" height="75"/>
+                                        <rect key="frame" x="150" y="584" width="75" height="75"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="75" id="MiT-nD-Mmy"/>
                                             <constraint firstAttribute="width" constant="75" id="gyt-vJ-E7J"/>
@@ -108,6 +108,13 @@
                                     <constraint firstAttribute="height" constant="60" id="yi6-8F-1sf"/>
                                 </constraints>
                             </imageView>
+                            <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="zoom" translatesAutoresizingMaskIntoConstraints="NO" id="72z-Uc-jr1" userLabel="zoom">
+                                <rect key="frame" x="157" y="521" width="60" height="60"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="60" id="Mb2-gQ-fQo"/>
+                                    <constraint firstAttribute="height" constant="60" id="igR-RU-qaz"/>
+                                </constraints>
+                            </imageView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="right-arrow" translatesAutoresizingMaskIntoConstraints="NO" id="Sed-YP-IsQ">
                                 <rect key="frame" x="315" y="537" width="60" height="60"/>
                                 <constraints>
@@ -121,14 +128,25 @@
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="retry" translatesAutoresizingMaskIntoConstraints="NO" id="q8t-HI-2wO">
+                                <rect key="frame" x="127.5" y="273.5" width="120" height="120"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="120" id="Flr-K9-UgU"/>
+                                    <constraint firstAttribute="height" constant="120" id="phh-XB-IsC"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="72z-Uc-jr1" firstAttribute="centerY" secondItem="P0R-hj-8vQ" secondAttribute="centerY" id="740-7k-568"/>
+                            <constraint firstItem="q8t-HI-2wO" firstAttribute="centerY" secondItem="uSb-0J-HFo" secondAttribute="centerY" id="94o-R7-Es2"/>
                             <constraint firstItem="1Sl-zL-gN8" firstAttribute="top" secondItem="Min-82-VVO" secondAttribute="bottom" id="ATO-re-J0P"/>
+                            <constraint firstItem="q8t-HI-2wO" firstAttribute="centerX" secondItem="uSb-0J-HFo" secondAttribute="centerX" id="HDT-ig-pay"/>
                             <constraint firstItem="Min-82-VVO" firstAttribute="top" secondItem="Sed-YP-IsQ" secondAttribute="bottom" constant="10" id="Qn4-g5-A71"/>
                             <constraint firstItem="fcn-ar-Hpa" firstAttribute="leading" secondItem="uSb-0J-HFo" secondAttribute="leading" id="RTS-4D-acu"/>
                             <constraint firstItem="mdF-V8-jpk" firstAttribute="trailing" secondItem="knf-1y-nsg" secondAttribute="leading" id="TpV-Kk-Akj"/>
                             <constraint firstItem="Min-82-VVO" firstAttribute="trailing" secondItem="rdR-8c-5iQ" secondAttribute="trailing" constant="-5" id="UwS-QS-pSg"/>
+                            <constraint firstItem="72z-Uc-jr1" firstAttribute="centerX" secondItem="uSb-0J-HFo" secondAttribute="centerX" id="V4f-j2-Vpc"/>
                             <constraint firstItem="Sed-YP-IsQ" firstAttribute="trailing" secondItem="uSb-0J-HFo" secondAttribute="trailing" id="YO3-gp-6Sd"/>
                             <constraint firstItem="1Sl-zL-gN8" firstAttribute="top" secondItem="knf-1y-nsg" secondAttribute="bottom" constant="5" id="aJR-7L-FmY"/>
                             <constraint firstItem="Sed-YP-IsQ" firstAttribute="leading" secondItem="P0R-hj-8vQ" secondAttribute="trailing" constant="50" id="ajl-bO-ZHx"/>
@@ -151,9 +169,11 @@
                         <outlet property="mainView" destination="rdR-8c-5iQ" id="G8X-tj-o5Y"/>
                         <outlet property="microphoneButton" destination="mdF-V8-jpk" id="QH8-bt-O9b"/>
                         <outlet property="noWordsFound" destination="P0R-hj-8vQ" id="kWX-L3-JEI"/>
+                        <outlet property="retry" destination="q8t-HI-2wO" id="JyX-3i-nxV"/>
                         <outlet property="rightArrow" destination="Sed-YP-IsQ" id="dkX-w6-nNf"/>
                         <outlet property="searchBar" destination="knf-1y-nsg" id="KwD-IE-jNq"/>
                         <outlet property="searchDisplayController" destination="JIB-nf-wLw" id="AxU-5N-P8l"/>
+                        <outlet property="zoomButton" destination="72z-Uc-jr1" id="MbJ-iE-CIX"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SwQ-Gj-X9a" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -166,7 +186,7 @@
                     </connections>
                 </searchDisplayController>
             </objects>
-            <point key="canvasLocation" x="952.5" y="75"/>
+            <point key="canvasLocation" x="951.20000000000005" y="74.212893553223395"/>
         </scene>
     </scenes>
     <resources>
@@ -174,6 +194,8 @@
         <image name="find" width="640" height="640"/>
         <image name="left-arrow" width="640" height="640"/>
         <image name="microphone" width="640" height="640"/>
+        <image name="retry" width="640" height="640"/>
         <image name="right-arrow" width="640" height="640"/>
+        <image name="zoom" width="640" height="640"/>
     </resources>
 </document>

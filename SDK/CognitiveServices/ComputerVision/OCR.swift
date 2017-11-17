@@ -84,7 +84,7 @@ class OCR: NSObject {
      - parameter language: The languange
      - parameter completion: Once the request has been performed the response is returend in the completion block.
      */
-    func recognizeCharactersWithRequestObject(_ requestObject: OCRRequestObject, completion: @escaping (_ response: [String:AnyObject]? ) -> Void) throws {
+    func recognizeCharactersWithRequestObject(_ requestObject: OCRRequestObject, completion: @escaping (_ response: [String:AnyObject]?, _ error: String) -> Void) throws {
 
         // Generate the url
         let requestUrlString = url + "?language=" + requestObject.language.rawValue + "&detectOrientation%20=\(requestObject.detectOrientation)"
@@ -109,14 +109,14 @@ class OCR: NSObject {
         let task = URLSession.shared.dataTask(with: request){ data, response, error in
             if error != nil{
                 print("Error -> \(String(describing: error))")
-                completion(nil)
+                completion(nil, (error?.localizedDescription)!)
                 return
             }else{
                 
                 if let results = try! JSONSerialization.jsonObject(with: data!, options: []) as? [String : AnyObject] {
                     // Hand dict over
                     DispatchQueue.main.async {
-                        completion(results)
+                        completion(results,"")
                     }
                 }
             }
@@ -134,6 +134,9 @@ class OCR: NSObject {
     
     
     func extractStringsFromDictionary(_ dictionary: [String : AnyObject]) -> [String] {
+        
+        // reset word Coordinates
+        wordCoordinates.removeAll()
         
         if let a = dictionary["textAngle"] {
             textAngle = a as! Float
