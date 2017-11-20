@@ -66,6 +66,16 @@ class ImageViewController: UIViewController, UIScrollViewDelegate, UISearchBarDe
     private var responseRecieved = false
     private let synth = AVSpeechSynthesizer()
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        AppUtility.lockOrientation(.portrait)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        AppUtility.lockOrientation(.all)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -99,7 +109,6 @@ class ImageViewController: UIViewController, UIScrollViewDelegate, UISearchBarDe
         // View init stuff
         setupImageInImageview()
         setupTextAboveSearchBar()
-        setupSpeechStuff()
     }
     
     func doCognititonInBackground(){
@@ -341,9 +350,20 @@ class ImageViewController: UIViewController, UIScrollViewDelegate, UISearchBarDe
     }
 
     @IBAction func micPressed(_ sender: UIButton) {
+        
+        setupSpeechStuff()
+        
         if !audioSession.isOtherAudioPlaying && !audioEngine.isRunning {
-            playRecordStartSound()
-            tryRecording()
+            if (audioSession.responds(to: #selector(AVAudioSession.requestRecordPermission(_:)))) {
+                AVAudioSession.sharedInstance().requestRecordPermission({(granted: Bool)-> Void in
+                    if granted {
+                        self.playRecordStartSound()
+                        self.tryRecording()
+                    } else {
+                        self.microphoneButton.isEnabled = false
+                    }
+                })
+            }
         }
     }
     
@@ -461,6 +481,7 @@ class ImageViewController: UIViewController, UIScrollViewDelegate, UISearchBarDe
             if (pointsToZoom?.count)! > 1 {
                 showNextWordMenu()
                 leftArrow(show: false)
+                zoomButton.isHidden = true
                 speak(this: "\(key) found at \((pointsToZoom?.count)!) locations")
             } else {
                 speak(this: "\(key) found at one location")
