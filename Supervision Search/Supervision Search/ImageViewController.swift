@@ -74,12 +74,19 @@ class ImageViewController: UIViewController, UIScrollViewDelegate, UISearchBarDe
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         AppUtility.lockOrientation(.all)
+//        let preferences = UserDefaults.standard
+//        let helloKey = "helloKey"
+//        preferences.set(nil, forKey: helloKey)
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        speak(this: "hello")
+//        if !helloSaid() {
+//            speak(this: "hello")
+//            saveState(to: "true")
+//        }
+        
         initNextWordMenu()
         retry.isHidden = true
         searchBar.delegate = self
@@ -109,6 +116,26 @@ class ImageViewController: UIViewController, UIScrollViewDelegate, UISearchBarDe
         // View init stuff
         setupImageInImageview()
         setupTextAboveSearchBar()
+        
+    }
+    
+    func helloSaid() -> Bool {
+        let preferences = UserDefaults.standard
+        let helloKey = "helloKey"
+        
+        if preferences.string(forKey: helloKey) != nil {
+            return true
+        } else {
+            return false
+        }
+    }
+    
+    func saveState(to state: String) {
+        let preferences = UserDefaults.standard
+        let helloKey = "helloKey"
+        
+        preferences.set(state, forKey: helloKey)
+        preferences.synchronize()
     }
     
     func doCognititonInBackground(){
@@ -318,11 +345,6 @@ class ImageViewController: UIViewController, UIScrollViewDelegate, UISearchBarDe
         self.scrollView?.addGestureRecognizer(singleTap)
         self.scrollView?.addGestureRecognizer(doubleTap)
         
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
     func singleTapDetected(recognizer: UITapGestureRecognizer) {
@@ -673,12 +695,19 @@ class ImageViewController: UIViewController, UIScrollViewDelegate, UISearchBarDe
         let context = UIGraphicsGetCurrentContext()
         
         // set stroking width and color of the context
-        context!.setLineWidth(15.0)
         context!.setStrokeColor(UIColor.green.cgColor)
         
         for rect in rects {
             // Draw rect
-            context!.stroke(rect)
+            let lineWidth = max((rect.height / 5),10)
+            context!.setLineWidth(lineWidth)
+            // context!.stroke(rect)
+            let firstPoint = CGPoint(x: rect.origin.x, y: rect.origin.y + rect.height)
+            let secondPoint = CGPoint(x: rect.origin.x + rect.width, y: rect.origin.y + rect.height)
+            context!.move(to: firstPoint)
+            context!.addLine(to: secondPoint)
+            context!.closePath()
+            context!.strokePath()
         }
         
         // get the image from the graphics context
