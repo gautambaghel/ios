@@ -289,12 +289,14 @@ class ImageViewController: UIViewController, UIScrollViewDelegate, UISearchBarDe
         //remove the earlier view
         self.scrollView?.removeFromSuperview()
         
+        self.imageView!.autoresizingMask = UIViewAutoresizing(rawValue: UIViewAutoresizing.RawValue(UInt8(UIViewAutoresizing.flexibleWidth.rawValue) | UInt8(UIViewAutoresizing.flexibleHeight.rawValue)))
         self.imageView!.image = image
         let imageFrame = CGRect(origin: CGPoint(x: 0,y :0),
                                 size: CGSize(width: mainView.bounds.width, height: mainView.bounds.height))
         self.imageView!.frame = imageFrame
         
         self.scrollView?.frame = mainView.bounds
+        self.scrollView?.autoresizingMask = UIViewAutoresizing(rawValue: UIViewAutoresizing.RawValue(UInt8(UIViewAutoresizing.flexibleWidth.rawValue) | UInt8(UIViewAutoresizing.flexibleHeight.rawValue)))
         //adding imageview as a subview of scroll view
         self.scrollView?.addSubview(self.imageView!)
         // content size of the scroll view is the size of the image
