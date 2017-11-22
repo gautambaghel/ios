@@ -66,6 +66,14 @@ class ImageViewController: UIViewController, UIScrollViewDelegate, UISearchBarDe
     private var responseRecieved = false
     private let synth = AVSpeechSynthesizer()
     
+    override var shouldAutorotate: Bool {
+        return false
+    }
+    
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        return UIInterfaceOrientationMask.portrait
+    }
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         AppUtility.lockOrientation(.portrait)
@@ -74,18 +82,10 @@ class ImageViewController: UIViewController, UIScrollViewDelegate, UISearchBarDe
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         AppUtility.lockOrientation(.all)
-//        let preferences = UserDefaults.standard
-//        let helloKey = "helloKey"
-//        preferences.set(nil, forKey: helloKey)
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-//        if !helloSaid() {
-//            speak(this: "hello")
-//            saveState(to: "true")
-//        }
         
         initNextWordMenu()
         retry.isHidden = true
@@ -116,25 +116,25 @@ class ImageViewController: UIViewController, UIScrollViewDelegate, UISearchBarDe
         // View init stuff
         setupImageInImageview()
         setupTextAboveSearchBar()
-        
+        restoreState()
     }
     
-    func helloSaid() -> Bool {
+    func restoreState() {
         let preferences = UserDefaults.standard
-        let helloKey = "helloKey"
+        let searchWordKey = "searchWordKey"
         
-        if preferences.string(forKey: helloKey) != nil {
-            return true
+        if let searchedWord = preferences.string(forKey: searchWordKey) {
+            self.searchBar.text = searchedWord
         } else {
-            return false
+            self.speak(this: "Hello!")
         }
     }
     
     func saveState(to state: String) {
         let preferences = UserDefaults.standard
-        let helloKey = "helloKey"
+        let searchWordKey = "searchWordKey"
         
-        preferences.set(state, forKey: helloKey)
+        preferences.set(state, forKey: searchWordKey)
         preferences.synchronize()
     }
     
@@ -142,13 +142,16 @@ class ImageViewController: UIViewController, UIScrollViewDelegate, UISearchBarDe
         DispatchQueue.global(qos: .background).async {
             let requestObject: OCRRequestObject = (resource: self.imageData!, language: .Automatic, detectOrientation: true)
             try! self.ocr.recognizeCharactersWithRequestObject(requestObject, completion: { (response, error) in
-                if (response != nil){
+                if (response != nil) {
                     DispatchQueue.main.async {
                         self.responseRecieved = true
                         let _ = self.ocr.extractStringFromDictionary(response!)
                         
                         Progress.shared.hideProgressView()
                         self.orientImage()
+                        if self.searchBar.text != "" || self.searchBar.text != nil{
+                            self.processAndSearch()
+                        }
                     }
                 } else if error != "" {
                     DispatchQueue.main.async { self.speak(this: error) }
@@ -468,6 +471,7 @@ class ImageViewController: UIViewController, UIScrollViewDelegate, UISearchBarDe
         if key == "" {
             return
         }
+        saveState(to: key)
         wordCursor = 0
         firstTimePressFlag = true
         pointsToZoom = [CGPoint]()
@@ -479,7 +483,8 @@ class ImageViewController: UIViewController, UIScrollViewDelegate, UISearchBarDe
             cleanedWord = word.trimmingCharacters(in: .whitespacesAndNewlines)
             cleanedWord = removeSpecialCharsFromString(text: cleanedWord)
             
-            if (similarCalc(for: key.lowercased(),with: cleanedWord) >= 0.6) {
+            if (similarCalc(for: key.lowercased(),with: cleanedWord) >= 0.6) ||
+                (similarCalc(for: key.lowercased() + "s",with: cleanedWord) >= 0.6) {
                 
                 for wordRect in coordinates {
                     
@@ -520,6 +525,7 @@ class ImageViewController: UIViewController, UIScrollViewDelegate, UISearchBarDe
                 self.startBlinking()
             }
         } else {
+            self.stopBlinking()
             hideNextWordMenu()
             speak(this: "\(key) not found")
         }
@@ -675,6 +681,9 @@ class ImageViewController: UIViewController, UIScrollViewDelegate, UISearchBarDe
                     self.isHighlighted = true
                 }
                 self.startBlinking()
+            } else {
+                // blinking could stop at highlighted image
+                self.imageView!.image = self.image
             }
         })
     }
@@ -702,8 +711,8 @@ class ImageViewController: UIViewController, UIScrollViewDelegate, UISearchBarDe
             let lineWidth = max((rect.height / 5),10)
             context!.setLineWidth(lineWidth)
             // context!.stroke(rect)
-            let firstPoint = CGPoint(x: rect.origin.x, y: rect.origin.y + rect.height)
-            let secondPoint = CGPoint(x: rect.origin.x + rect.width, y: rect.origin.y + rect.height)
+            let firstPoint = CGPoint(x: rect.origin.x, y: rect.origin.y + rect.height + (lineWidth / 2))
+            let secondPoint = CGPoint(x: rect.origin.x + rect.width, y: rect.origin.y + rect.height + (lineWidth / 2))
             context!.move(to: firstPoint)
             context!.addLine(to: secondPoint)
             context!.closePath()
@@ -773,6 +782,8 @@ class ImageViewController: UIViewController, UIScrollViewDelegate, UISearchBarDe
         stopBlinking()
         image = UIImage(data: imageData!)!
         initNextWordMenu()
+        // start the spinner
+        Progress.shared.showProgressView(self.view)
         doCognititonInBackground()
     }
     
