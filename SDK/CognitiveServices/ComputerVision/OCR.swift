@@ -166,15 +166,18 @@ class OCR: NSObject {
                                         if let z = a as? [String : AnyObject] {
                                             
                                             if let word = z["text"] {
+                                                
+                                                // last
                                                 let strWord = String(describing: word)
                                                 let bBox = z["boundingBox"]! as? String
                                                 
-                                                if var existingCoord = wordCoordinates[strWord] {
-                                                    existingCoord.append(bBox!)
-                                                    wordCoordinates[strWord] = existingCoord
+                                                if strWord.contains(",") {
+                                                    let strWords = strWord.split(separator: ",")
+                                                    for aWord in strWords {
+                                                        addThisToDictionary(word: String(aWord), box: bBox!)
+                                                    }
                                                 } else {
-                                                    let newArray: [String] = [bBox!]
-                                                    wordCoordinates[strWord] = newArray
+                                                    addThisToDictionary(word: strWord, box: bBox!)
                                                 }
                                                 extractedText += (strWord) + " "
                                             }
@@ -196,6 +199,18 @@ class OCR: NSObject {
             return [""];
         }
     }
+    
+    // adds a string to dictionary
+    func addThisToDictionary(word strWord: String, box bBox: String) {
+        if var existingCoord = wordCoordinates[strWord] {
+            existingCoord.append(bBox)
+            wordCoordinates[strWord] = existingCoord
+        } else {
+            let newArray: [String] = [bBox]
+            wordCoordinates[strWord] = newArray
+        }
+    }
+    
     /**
      Returns a String extracted from the Dictionary generated from `recognizeCharactersOnImageUrl()`
      - Parameter dictionary: The Dictionary created by `recognizeCharactersOnImageUrl()`.

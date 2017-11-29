@@ -38,6 +38,18 @@ class ViewController: UIViewController {
         if let captureDevice = devices.first as? AVCaptureDevice{
             
             videoDevice = captureDevice
+            do{
+                if (captureDevice.hasTorch)
+                {
+                    try captureDevice.lockForConfiguration()
+                    captureDevice.torchMode = .auto
+                    captureDevice.flashMode = .auto
+                    captureDevice.unlockForConfiguration()
+                }
+            }catch{
+                print("Device tourch Flash Error ");
+            }
+            
             do {
                 try
                     captureSession.addInput(AVCaptureDeviceInput(device: captureDevice))

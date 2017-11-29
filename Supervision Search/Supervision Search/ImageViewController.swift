@@ -22,6 +22,7 @@ class ImageViewController: UIViewController, UIScrollViewDelegate, UISearchBarDe
     @IBOutlet weak var leftArrow: UIImageView!
     @IBOutlet weak var noWordsFound: UILabel!
     
+    var isLandscape = false
     var pointsToZoom: [CGPoint]?
     var wordsFound: [CGRect]?
     var wordCursor = 0
@@ -96,6 +97,18 @@ class ImageViewController: UIViewController, UIScrollViewDelegate, UISearchBarDe
         Progress.shared.showProgressView(self.view)
         
         // start a count down timer (of sorts)
+        retryProcessing()
+        
+        // COGINITITON STUFF
+        doCognititonInBackground()
+        
+        // View init stuff
+        setupImageInImageview()
+        setupTextAboveSearchBar()
+        restoreState()
+    }
+    
+    func retryProcessing() {
         DispatchQueue.main.asyncAfter(deadline: .now() + 15.0, execute: {
             
             Progress.shared.hideProgressView()
@@ -109,14 +122,6 @@ class ImageViewController: UIViewController, UIScrollViewDelegate, UISearchBarDe
                 self.retry.addGestureRecognizer(retryGestureRecognizer)
             }
         })
-        
-        // COGINITITON STUFF
-        doCognititonInBackground()
-        
-        // View init stuff
-        setupImageInImageview()
-        setupTextAboveSearchBar()
-        restoreState()
     }
     
     func restoreState() {
@@ -148,6 +153,8 @@ class ImageViewController: UIViewController, UIScrollViewDelegate, UISearchBarDe
                         let _ = self.ocr.extractStringFromDictionary(response!)
                         
                         Progress.shared.hideProgressView()
+                        self.retry.isHidden = true
+                        
                         self.orientImage()
                         if self.searchBar.text != "" || self.searchBar.text != nil{
                             self.processAndSearch()
@@ -174,7 +181,7 @@ class ImageViewController: UIViewController, UIScrollViewDelegate, UISearchBarDe
     func setupSpeechStuff() {
         speechRecognizer = SFSpeechRecognizer(locale: Locale.init(identifier: "en-US"))
         
-        microphoneButton.isEnabled = false
+        toggleMicButton(enable: false)
         speechRecognizer?.delegate = self
         SFSpeechRecognizer.requestAuthorization { (authStatus) in
             
@@ -198,7 +205,7 @@ class ImageViewController: UIViewController, UIScrollViewDelegate, UISearchBarDe
             }
             
             OperationQueue.main.addOperation() {
-                self.microphoneButton.isEnabled = isButtonEnabled
+                self.toggleMicButton(enable: isButtonEnabled)
             }
         }
     }
@@ -211,7 +218,7 @@ class ImageViewController: UIViewController, UIScrollViewDelegate, UISearchBarDe
         }
         
         do {
-            try audioSession.setCategory(AVAudioSessionModeSpokenAudio)
+            try audioSession.setCategory(AVAudioSessionCategoryPlayAndRecord)
             try audioSession.setMode(AVAudioSessionModeMeasurement)
             try audioSession.setActive(true, with: .notifyOthersOnDeactivation)
         } catch {
@@ -265,7 +272,7 @@ class ImageViewController: UIViewController, UIScrollViewDelegate, UISearchBarDe
         
         self.recognitionRequest = nil
         self.recognitionTask = nil
-        self.microphoneButton.isEnabled = true
+        toggleMicButton(enable: true)
         
         try? self.audioSession.setActive(false, with: .notifyOthersOnDeactivation)
         
@@ -277,9 +284,9 @@ class ImageViewController: UIViewController, UIScrollViewDelegate, UISearchBarDe
     
     func speechRecognizer(_ speechRecognizer: SFSpeechRecognizer, availabilityDidChange available: Bool) {
         if available {
-            microphoneButton.isEnabled = true
+            toggleMicButton(enable: true)
         } else {
-            microphoneButton.isEnabled = false
+            toggleMicButton(enable: false)
         }
     }
     
@@ -387,36 +394,52 @@ class ImageViewController: UIViewController, UIScrollViewDelegate, UISearchBarDe
                         self.playRecordStartSound()
                         self.tryRecording()
                     } else {
-                        self.microphoneButton.isEnabled = false
+                        self.toggleMicButton(enable: false)
                     }
                 })
             }
         }
     }
     
+    func playRecordStartSound() {
+        try? audioSession.setCategory(AVAudioSessionCategorySoloAmbient)
+        let systemSoundID: SystemSoundID = 1113
+        // to play sound
+        AudioServicesPlaySystemSound(systemSoundID)
+    }
+    
     func tryRecording () {
     
-        if synth.isSpeaking {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.25, execute: { self.tryRecording() } )
-        } else {
+        self.toggleMicButton(enable: false)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2, execute: {
             self.alertController = UIAlertController(title: "Speak", message: "Go ahead, I'm listening", preferredStyle: .alert)
             
             DispatchQueue.main.asyncAfter(deadline: .now() + 4, execute: {
                 self.alertController?.dismiss(animated: true, completion: nil)
                 self.stopMicAndProcess(SFSpeechRecognitionResult.init(), valid: false)
+                self.toggleMicButton(enable: true)
             })
             let cancel = UIAlertAction(title: "Done", style: .cancel, handler:  { action in
                 self.alertController?.dismiss(animated: true, completion: nil)
                 self.stopMicAndProcess(SFSpeechRecognitionResult.init(), valid: false)
             })
             
-            let image = resizeImage(UIImage(named: "microphone")!, targetSize: CGSize(width: 60, height: 60))
+            let image = self.resizeImage(UIImage(named: "microphone")!, targetSize: CGSize(width: 60, height: 60))
             let imageView = UIImageView(frame: CGRect(x: 0, y: 10, width: 60, height: 60))
             imageView.image = image
             self.alertController!.view.addSubview(imageView)
             self.alertController!.addAction(cancel)
             self.present(self.alertController!, animated: true, completion: nil)
             self.startRecording()
+        })
+        
+    }
+    
+    func toggleMicButton(enable: Bool) {
+        if enable {
+            microphoneButton.isEnabled = true
+        } else {
+            microphoneButton.isEnabled = false
         }
     }
     
@@ -446,10 +469,6 @@ class ImageViewController: UIViewController, UIScrollViewDelegate, UISearchBarDe
         return newImage
     }
     
-    func playRecordStartSound() {
-        speak(this: "Speak")
-    }
-    
     func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
         textField?.text = searchBar.text!
         return true
@@ -467,10 +486,11 @@ class ImageViewController: UIViewController, UIScrollViewDelegate, UISearchBarDe
     
     func processAndSearch() {
         
-        let key = searchBar.text!
+        let key = searchBar.text!.lowercased()
         if key == "" {
             return
         }
+        
         saveState(to: key)
         wordCursor = 0
         firstTimePressFlag = true
@@ -479,12 +499,12 @@ class ImageViewController: UIViewController, UIScrollViewDelegate, UISearchBarDe
         
         for (word, coordinates) in self.ocr.wordCoordinates {
             
-            var cleanedWord = word.lowercased()
-            cleanedWord = word.trimmingCharacters(in: .whitespacesAndNewlines)
+            var cleanedWord = word.trimmingCharacters(in: .whitespacesAndNewlines)
             cleanedWord = removeSpecialCharsFromString(text: cleanedWord)
+            cleanedWord = cleanedWord.lowercased()
             
-            if (similarCalc(for: key.lowercased(),with: cleanedWord) >= 0.6) ||
-                (similarCalc(for: key.lowercased() + "s",with: cleanedWord) >= 0.6) {
+            if (similarCalc(for: key, with: cleanedWord) >= 0.6) ||
+                (similarCalc(for: key + "s", with: cleanedWord) >= 0.6) {
                 
                 for wordRect in coordinates {
                     
@@ -533,6 +553,9 @@ class ImageViewController: UIViewController, UIScrollViewDelegate, UISearchBarDe
     }
     
     func speak(this str: String) {
+        try? audioSession.setCategory(AVAudioSessionCategorySoloAmbient)
+        try? audioSession.setMode(AVAudioSessionModeDefault)
+        try? audioSession.setActive(true, with: .notifyOthersOnDeactivation)
         let myUtterance = AVSpeechUtterance(string: str)
         // myUtterance.rate = 0.4
         myUtterance.volume = 1
@@ -633,21 +656,30 @@ class ImageViewController: UIViewController, UIScrollViewDelegate, UISearchBarDe
         let orientation = self.ocr.orientation
         var angle: Float = 0
         switch (orientation) {
-           case "Down":
-            angle = 180
            case "Left":
             angle = 90
+            // flip it
+            image = rotateImage(image: image!, angle: 180)
+            isLandscape = true
+           case "Down":
+            angle = 180
+            // flip it
+            image = rotateImage(image: image!, angle: 180)
+            isLandscape = false
            case "Right":
             angle = 270
-           default: break
+            isLandscape = true
+           default:
+            isLandscape = false
+            break
         }
-        
-        angle = angle - self.ocr.textAngle
+    
+        angle = -self.ocr.textAngle
         image = rotateImage(image: image!, angle: angle)
         self.imageView?.image = image
     }
     
-    func radians(_ s1: Float) -> Float {
+    func radians(degrees s1: Float) -> Float {
         return s1 * Float(Float.pi/180)
     }
     
@@ -660,7 +692,7 @@ class ImageViewController: UIViewController, UIScrollViewDelegate, UISearchBarDe
         UIGraphicsBeginImageContext(image.size)
         let context = UIGraphicsGetCurrentContext()
         var transform = CGAffineTransform.init(translationX: cx , y: cy)
-        transform = transform.rotated(by: CGFloat(radians(angle)))
+        transform = transform.rotated(by: CGFloat(radians(degrees: angle)))
         transform = transform.translatedBy(x: -cx, y: -cy)
         context!.concatenate(transform)
         image.draw(at: .zero)
@@ -706,6 +738,20 @@ class ImageViewController: UIViewController, UIScrollViewDelegate, UISearchBarDe
         // set stroking width and color of the context
         context!.setStrokeColor(UIColor.green.cgColor)
         
+        if isLandscape {
+            let cx = CGFloat(context!.width)
+            var transform = CGAffineTransform.init(translationX: cx , y: 0)
+            transform = transform.rotated(by: CGFloat(radians(degrees: 90)))
+            // Method only called when pointsToZoom is >0
+            context!.concatenate(transform)
+            for i in 0..<pointsToZoom!.count {
+                // since the coordinates are flipped
+                pointsToZoom![i] = swapXandY(ofPoint: pointsToZoom![i])
+                let width = convertCoordinatesForView(givenPoint: CGPoint(x: cx, y: 0)).x
+                pointsToZoom![i].x = width - pointsToZoom![i].x
+            }
+        }
+        
         for rect in rects {
             // Draw rect
             let lineWidth = max((rect.height / 5),10)
@@ -724,10 +770,15 @@ class ImageViewController: UIViewController, UIScrollViewDelegate, UISearchBarDe
         
         // end the graphics context 
         UIGraphicsEndImageContext()
-        
         return (resultImage)!
     }
     
+    func swapXandY (ofPoint p: CGPoint) -> CGPoint {
+        var returningPoint = p
+        returningPoint.x = p.y
+        returningPoint.y = p.x
+        return returningPoint
+    }
     
     func leftArrowPressed(recognizer: UITapGestureRecognizer) {
         
@@ -784,6 +835,8 @@ class ImageViewController: UIViewController, UIScrollViewDelegate, UISearchBarDe
         initNextWordMenu()
         // start the spinner
         Progress.shared.showProgressView(self.view)
+        // start a count down timer (of sorts)
+        retryProcessing()
         doCognititonInBackground()
     }
     
@@ -796,6 +849,8 @@ class ImageViewController: UIViewController, UIScrollViewDelegate, UISearchBarDe
     }
     
     func zoomAt(point p: CGPoint) {
+        
+        print("Zoomed at \(p)")
         if scrollView?.zoomScale == 1 {
             scrollView?.zoom(to: zoomRectForScale(scale: (scrollView?.maximumZoomScale)!, center: p), animated: true)
         } else {
@@ -835,7 +890,6 @@ class ImageViewController: UIViewController, UIScrollViewDelegate, UISearchBarDe
         
         return CGPoint(x: x, y: y)
     }
-    
     
     func isInternetAvailable() -> Bool
     {
