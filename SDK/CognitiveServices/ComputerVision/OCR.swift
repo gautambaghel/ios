@@ -133,7 +133,7 @@ class OCR: NSObject {
      */
     
     
-    func extractStringsFromDictionary(_ dictionary: [String : AnyObject]) -> [String] {
+    func extractStringsFromDictionary(_ dictionary: [String : AnyObject]) {
         
         // reset word Coordinates
         wordCoordinates.removeAll()
@@ -147,8 +147,6 @@ class OCR: NSObject {
         }
         
         if dictionary["regions"] != nil {
-            
-            var extractedText : String = ""
             
             if let regionsz = dictionary["regions"] as? [AnyObject]{
                 for reigons1 in regionsz
@@ -171,15 +169,26 @@ class OCR: NSObject {
                                                 let strWord = String(describing: word)
                                                 let bBox = z["boundingBox"]! as? String
                                                 
-                                                if strWord.contains(",") {
-                                                    let strWords = strWord.split(separator: ",")
+                                                // cleaning and case handles
+                                                if let special = getSpecialCharIn(Word: strWord){
+                                                    let strWords = strWord.split(separator: special)
                                                     for aWord in strWords {
-                                                        addThisToDictionary(word: String(aWord), box: bBox!)
+                                                        if let cleanedWord = getOkayCharsIn(Word: String(aWord)) {
+                                                            addThisToDictionary(word: cleanedWord, box: bBox!)
+                                                        }
                                                     }
+                                                } else if let special = getKeyCharsIn(Word: strWord){
+                                                    let strWords = strWord.split(separator: special)
+                                                    for aWord in strWords {
+                                                        if let cleanedWord = getOkayCharsIn(Word: String(aWord)) {
+                                                            addThisToDictionary(word: cleanedWord, box: bBox!)
+                                                        }
+                                                    }
+                                                    addThisToDictionary(word: String(special), box: bBox!)
                                                 } else {
                                                     addThisToDictionary(word: strWord, box: bBox!)
                                                 }
-                                                extractedText += (strWord) + " "
+                                                
                                             }
                                         }
                                     }
@@ -189,14 +198,6 @@ class OCR: NSObject {
                     }
                 }
             }
-            
-            // Get text from words
-            // print(extractedText)
-            return [extractedText]
-        }
-        else
-        {
-            return [""];
         }
     }
     
@@ -211,20 +212,36 @@ class OCR: NSObject {
         }
     }
     
-    /**
-     Returns a String extracted from the Dictionary generated from `recognizeCharactersOnImageUrl()`
-     - Parameter dictionary: The Dictionary created by `recognizeCharactersOnImageUrl()`.
-     - Returns: A String extracted from the Dictionary.
-     */
-    func extractStringFromDictionary(_ dictionary: [String:AnyObject]) -> String {
-        
-        let stringArray = extractStringsFromDictionary(dictionary)
-        
-        let reducedArray = stringArray.enumerated().reduce("", {
-                $0 + $1.element + ($1.offset < stringArray.endIndex-1 ? " " : "")
+    // contains alpha numeric plus few extra cases
+    func getOkayCharsIn(Word word: String) -> String? {
+        let okayChars : Set<Character> =
+            Set("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLKMNOPQRSTUVWXYZ1234567890")
+        return String(word.filter {okayChars.contains($0)})
+    }
+    
+    // If the word contains special characters, return them
+    // loops this way cause most words will be smaller than the Set
+    func getSpecialCharIn(Word word: String) -> Character? {
+        let okayChars : Set<Character> =
+            Set("abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLKMNOPQRSTUVWXYZ1234567890%$")
+        for ch in word{
+            if !okayChars.contains(ch) {
+                return ch
             }
-        )
-        return reducedArray
+        }
+        return nil
+    }
+    
+    // These are special cases for special searches
+    // loops this way cause set will be smaller than the word
+    func getKeyCharsIn(Word word: String) -> Character? {
+        let keyChars : Set<Character> = Set("%$")
+        for ch in keyChars {
+            if word.contains(ch){
+                return ch
+            }
+        }
+        return nil
     }
     
 }

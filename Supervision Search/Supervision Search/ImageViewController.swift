@@ -150,7 +150,7 @@ class ImageViewController: UIViewController, UIScrollViewDelegate, UISearchBarDe
                 if (response != nil) {
                     DispatchQueue.main.async {
                         self.responseRecieved = true
-                        let _ = self.ocr.extractStringFromDictionary(response!)
+                        self.ocr.extractStringsFromDictionary(response!)
                         
                         Progress.shared.hideProgressView()
                         self.retry.isHidden = true
@@ -486,7 +486,7 @@ class ImageViewController: UIViewController, UIScrollViewDelegate, UISearchBarDe
     
     func processAndSearch() {
         
-        let key = searchBar.text!.lowercased()
+        let key = searchBar.text!.lowercased().trimmingCharacters(in: .whitespacesAndNewlines)
         if key == "" {
             return
         }
@@ -500,7 +500,7 @@ class ImageViewController: UIViewController, UIScrollViewDelegate, UISearchBarDe
         for (word, coordinates) in self.ocr.wordCoordinates {
             
             var cleanedWord = word.trimmingCharacters(in: .whitespacesAndNewlines)
-            cleanedWord = removeSpecialCharsFromString(text: cleanedWord)
+            // 'cleanedWord = removeSpecialCharsFromString(text: cleanedWord)
             cleanedWord = cleanedWord.lowercased()
             
             if (similarCalc(for: key, with: cleanedWord) >= 0.6) ||
@@ -791,7 +791,7 @@ class ImageViewController: UIViewController, UIScrollViewDelegate, UISearchBarDe
             if wordCursor > 0 { wordCursor -= 1 }
             
             let p  = pointsToZoom![wordCursor]
-            let wordsDisplay = String(describing: ((pointsToZoom?.index(of: p))! + 1)) + "/" + String(describing: (pointsToZoom?.count)!)
+            let wordsDisplay = String(describing: (wordCursor + 1)) + "/" + String(describing: (pointsToZoom?.count)!)
             noWordsFound.text = wordsDisplay
             zoomAt(point: p)
             rightArrow(show: true)
@@ -814,7 +814,7 @@ class ImageViewController: UIViewController, UIScrollViewDelegate, UISearchBarDe
 
             }
             let p  = pointsToZoom![wordCursor]
-            let wordsDisplay = String(describing: ((pointsToZoom?.index(of: p))! + 1)) + "/" + String(describing: (pointsToZoom?.count)!)
+            let wordsDisplay = String(describing: (wordCursor + 1)) + "/" + String(describing: (pointsToZoom?.count)!)
             noWordsFound.text = wordsDisplay
             zoomAt(point: p)
             
@@ -849,8 +849,6 @@ class ImageViewController: UIViewController, UIScrollViewDelegate, UISearchBarDe
     }
     
     func zoomAt(point p: CGPoint) {
-        
-        print("Zoomed at \(p)")
         if scrollView?.zoomScale == 1 {
             scrollView?.zoom(to: zoomRectForScale(scale: (scrollView?.maximumZoomScale)!, center: p), animated: true)
         } else {
