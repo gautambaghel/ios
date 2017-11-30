@@ -12,7 +12,7 @@ import Speech
 import AudioToolbox
 import SystemConfiguration
 
-class ImageViewController: UIViewController, UIScrollViewDelegate, UISearchBarDelegate , SFSpeechRecognizerDelegate {
+class ImageViewController: UIViewController, UIScrollViewDelegate, UISearchBarDelegate , SFSpeechRecognizerDelegate , UITextFieldDelegate{
 
     @IBOutlet weak var zoomButton: UIImageView!
     @IBOutlet weak var retry: UIImageView!
@@ -21,6 +21,7 @@ class ImageViewController: UIViewController, UIScrollViewDelegate, UISearchBarDe
     @IBOutlet weak var rightArrow: UIImageView!
     @IBOutlet weak var leftArrow: UIImageView!
     @IBOutlet weak var noWordsFound: UILabel!
+    @IBOutlet weak var info: UIImageView!
     
     var isLandscape = false
     var pointsToZoom: [CGPoint]?
@@ -105,7 +106,17 @@ class ImageViewController: UIViewController, UIScrollViewDelegate, UISearchBarDe
         // View init stuff
         setupImageInImageview()
         setupTextAboveSearchBar()
+        setupInfo()
         restoreState()
+        
+    }
+    
+    func setupInfo() {
+        info.translatesAutoresizingMaskIntoConstraints = false
+        info.centerXAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/10).isActive = true
+        info.centerYAnchor.constraint(equalTo: view.topAnchor, constant: view.frame.width/10).isActive = true
+        info.widthAnchor.constraint(equalToConstant: view.frame.width/10).isActive = true
+        info.heightAnchor.constraint(equalToConstant: view.frame.width/10).isActive = true
     }
     
     func retryProcessing() {
@@ -168,11 +179,12 @@ class ImageViewController: UIViewController, UIScrollViewDelegate, UISearchBarDe
     }
     
     func setupTextAboveSearchBar () {
-        let customView = UIView(frame: CGRect(x: 0, y: 0, width: 25, height: 60))
+        let viewWidth = view.bounds.width
+        let customView = UIView(frame: CGRect(x: 0, y: 0, width: viewWidth, height: 60))
         customView.backgroundColor = UIColor.red
         
-        textField = UILabel(frame: CGRect(x: 20, y: 0, width: 600, height: 60))
-        textField?.font = textField?.font.withSize(25)
+        textField = UILabel(frame: CGRect(x: 20, y: 0, width: viewWidth, height: 60))
+        textField?.font = textField?.font?.withSize(25)
         textField?.textColor = .white
         customView.addSubview(textField!)
         searchBar.inputAccessoryView = customView
@@ -470,13 +482,13 @@ class ImageViewController: UIViewController, UIScrollViewDelegate, UISearchBarDe
     }
     
     func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
-        textField?.text = searchBar.text!
+        textField?.text = searchBar.text! + "|"
         return true
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         // Each letter added
-        textField?.text = searchBar.text!
+        textField?.text = searchBar.text! + "|"
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
@@ -515,12 +527,12 @@ class ImageViewController: UIViewController, UIScrollViewDelegate, UISearchBarDe
                     let height = Double(wRect[3])!
                     
                     let rect = CGRect(x: x, y: y, width: width, height: height)
-                    wordsFound?.append(rect)
-                    
-                    var pointToZoom = CGPoint(x: x + (width / 2), y: y + (height / 2))
-                    pointToZoom = convertCoordinatesForView(givenPoint: pointToZoom)
-                    pointsToZoom?.append(pointToZoom)
-                    
+                    if !(wordsFound?.contains(rect))!{
+                        wordsFound?.append(rect)
+                        var pointToZoom = CGPoint(x: x + (width / 2), y: y + (height / 2))
+                        pointToZoom = convertCoordinatesForView(givenPoint: pointToZoom)
+                        pointsToZoom?.append(pointToZoom)
+                    }
                 }
             }
         }

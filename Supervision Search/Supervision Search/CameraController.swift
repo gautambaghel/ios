@@ -12,7 +12,11 @@ class ViewController: UIViewController {
     
     @IBOutlet weak var findButton: UIButton!
     @IBOutlet weak var cameraPreview: UIView!
-
+    @IBOutlet weak var zoomSlider: UISlider!
+    @IBOutlet weak var plus: UIImageView!
+    @IBOutlet weak var minus: UIImageView!
+    @IBOutlet weak var info: UIImageView!
+    
     let cognitiveServices = CognitiveServices.sharedInstance
     let stillImageOutput = AVCaptureStillImageOutput()
     
@@ -31,6 +35,7 @@ class ViewController: UIViewController {
     }
     
     override func viewDidLoad() {
+        super.viewDidLoad()
         
         let captureSession = AVCaptureSession()
         let devices = AVCaptureDevice.devices().filter{ ($0 as AnyObject).hasMediaType(AVMediaTypeVideo) && ($0 as AnyObject).position == AVCaptureDevicePosition.back }
@@ -76,6 +81,48 @@ class ViewController: UIViewController {
                 print("some error")
             }
         }
+        
+        setupSlider()
+        setZoom(toFactor: 1.0)
+    }
+    
+    func setupSlider () {
+        
+        zoomSlider.translatesAutoresizingMaskIntoConstraints = false
+        zoomSlider.transform = CGAffineTransform.init(rotationAngle: -(CGFloat(CGFloat.pi/2)))
+        
+        zoomSlider.centerXAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/8).isActive = true
+        zoomSlider.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        zoomSlider.widthAnchor.constraint(equalToConstant: view.frame.height/3).isActive = true
+        
+        zoomSlider.minimumValue = 1.0
+        zoomSlider.maximumValue = Float(getDeviceMaxZoom() / 10)
+        zoomSlider.isContinuous = true
+        zoomSlider.value = 1.0
+        zoomSlider.tintColor = UIColor.black
+        
+        plus.translatesAutoresizingMaskIntoConstraints = false
+        plus.centerXAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/8).isActive = true
+        plus.centerYAnchor.constraint(equalTo: view.topAnchor, constant: (view.frame.height/3) - 20).isActive = true
+        plus.widthAnchor.constraint(equalToConstant: zoomSlider.frame.width).isActive = true
+        plus.heightAnchor.constraint(equalToConstant: zoomSlider.frame.width).isActive = true
+        
+        minus.translatesAutoresizingMaskIntoConstraints = false
+        minus.centerXAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/8).isActive = true
+        minus.centerYAnchor.constraint(equalTo: view.topAnchor, constant: (view.frame.height - view.frame.height/3) + 20).isActive = true
+        minus.widthAnchor.constraint(equalToConstant: zoomSlider.frame.width).isActive = true
+        minus.heightAnchor.constraint(equalToConstant: zoomSlider.frame.width).isActive = true
+        
+        info.translatesAutoresizingMaskIntoConstraints = false
+        info.centerXAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/10).isActive = true
+        info.centerYAnchor.constraint(equalTo: view.topAnchor, constant: view.frame.width/10).isActive = true
+        info.widthAnchor.constraint(equalToConstant: view.frame.width/10).isActive = true
+        info.heightAnchor.constraint(equalToConstant: view.frame.width/10).isActive = true
+        
+    }
+    
+    @IBAction func zoomChanged(_ sender: UISlider) {
+        setZoom(toFactor: CGFloat(sender.value))
     }
     
     @IBAction func findPressed(_ sender: UIButton) {
@@ -114,23 +161,32 @@ class ViewController: UIViewController {
     }
     
     func pinchDetected (pinch: UIPinchGestureRecognizer) {
+        let vZoomFactor = pinch.scale
+        zoomSlider.value = Float(vZoomFactor)
+        setZoom(toFactor: vZoomFactor)
+    }
+    
+    func getDeviceMaxZoom() -> CGFloat {
+        let device: AVCaptureDevice = self.videoDevice!
+        return device.activeFormat.videoMaxZoomFactor
+    }
+    
+    func setZoom(toFactor vZoomFactor: CGFloat) {
         var device: AVCaptureDevice = self.videoDevice!
-        var vZoomFactor = pinch.scale
         var error:NSError!
         do{
             try device.lockForConfiguration()
             defer {device.unlockForConfiguration()}
             if (vZoomFactor <= device.activeFormat.videoMaxZoomFactor && vZoomFactor >= 1.0){
-                device.ramp(toVideoZoomFactor: vZoomFactor, withRate: 1)
-                // device.videoZoomFactor = vZoomFactor
+                // device.ramp(toVideoZoomFactor: vZoomFactor, withRate: 1)
+                 device.videoZoomFactor = vZoomFactor
             }
             else if (vZoomFactor <= 1.0){ NSLog("Unable to set videoZoom: (max %f, asked %f)", device.activeFormat.videoMaxZoomFactor, vZoomFactor) }
             else{ NSLog("Unable to set videoZoom: (max %f, asked %f)", device.activeFormat.videoMaxZoomFactor, vZoomFactor) }
         }
-        
-          catch error as NSError{ NSLog("Unable to set videoZoom: %@", error.localizedDescription) }
-          catch _{ NSLog("Unable to set videoZoom: %@", error.localizedDescription) }
+            
+        catch error as NSError{ NSLog("Unable to set videoZoom: %@", error.localizedDescription) }
+        catch _{ NSLog("Unable to set videoZoom: %@", error.localizedDescription) }
     }
-    
 }
 

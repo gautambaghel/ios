@@ -166,17 +166,21 @@ class OCR: NSObject {
                                             if let word = z["text"] {
                                                 
                                                 // last
-                                                let strWord = String(describing: word)
+                                                var strWord = String(describing: word)
                                                 let bBox = z["boundingBox"]! as? String
                                                 
                                                 // cleaning and case handles
-                                                if let special = getSpecialCharIn(Word: strWord){
-                                                    let strWords = strWord.split(separator: special)
+                                                if let special = getSpecialCharsIn(Word: strWord){
+                                                    for ch in special {
+                                                        strWord = strWord.replacingOccurrences(of: String(ch), with: " ")
+                                                    }
+                                                    let strWords = strWord.split(separator: " ")
                                                     for aWord in strWords {
                                                         if let cleanedWord = getOkayCharsIn(Word: String(aWord)) {
                                                             addThisToDictionary(word: cleanedWord, box: bBox!)
                                                         }
                                                     }
+                                                    addThisToDictionary(word: strWord, box: bBox!)
                                                 } else if let special = getKeyCharsIn(Word: strWord){
                                                     let strWords = strWord.split(separator: special)
                                                     for aWord in strWords {
@@ -221,15 +225,20 @@ class OCR: NSObject {
     
     // If the word contains special characters, return them
     // loops this way cause most words will be smaller than the Set
-    func getSpecialCharIn(Word word: String) -> Character? {
+    func getSpecialCharsIn(Word word: String) -> String? {
+        var returnString: String? = nil
         let okayChars : Set<Character> =
             Set("abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLKMNOPQRSTUVWXYZ1234567890%$")
         for ch in word{
             if !okayChars.contains(ch) {
-                return ch
+                if returnString != nil{
+                    returnString!.append(ch)
+                } else {
+                    returnString = String(ch)
+                }
             }
         }
-        return nil
+        return returnString
     }
     
     // These are special cases for special searches
