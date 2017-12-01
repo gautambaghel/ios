@@ -114,7 +114,7 @@ class ImageViewController: UIViewController, UIScrollViewDelegate, UISearchBarDe
     func setupInfo() {
         info.translatesAutoresizingMaskIntoConstraints = false
         info.centerXAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/10).isActive = true
-        info.centerYAnchor.constraint(equalTo: view.topAnchor, constant: view.frame.width/10).isActive = true
+        info.centerYAnchor.constraint(equalTo: view.topAnchor, constant: view.frame.height/10).isActive = true
         info.widthAnchor.constraint(equalToConstant: view.frame.width/10).isActive = true
         info.heightAnchor.constraint(equalToConstant: view.frame.width/10).isActive = true
     }

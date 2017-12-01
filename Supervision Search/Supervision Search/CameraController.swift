@@ -8,7 +8,7 @@
 import UIKit
 import AVFoundation
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, AVCapturePhotoCaptureDelegate {
     
     @IBOutlet weak var findButton: UIButton!
     @IBOutlet weak var cameraPreview: UIView!
@@ -18,9 +18,57 @@ class ViewController: UIViewController {
     @IBOutlet weak var info: UIImageView!
     
     let cognitiveServices = CognitiveServices.sharedInstance
-    let stillImageOutput = AVCaptureStillImageOutput()
     
-    var videoDevice: AVCaptureDevice? = nil
+    var capturePhotoOutput = AVCapturePhotoOutput()
+    let previewView = VideoPreviewView()
+    let captureSession = AVCaptureSession()
+    let sessionQueue = DispatchQueue(label: "session queue")
+    var isCaptureSessionConfigured = false // Instance proprerty on this view controller class
+    
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        if self.isCaptureSessionConfigured {
+            if !self.captureSession.isRunning {
+                self.captureSession.startRunning()
+            }
+        } else {
+            // First time: request camera access, configure capture session and start it.
+            self.checkCameraAuthorization({ authorized in
+                guard authorized else {
+                    print("Permission to use camera denied.")
+                    return
+                }
+                self.sessionQueue.async {
+                    self.configureCaptureSession({ success in
+                        guard success else { return }
+                        self.isCaptureSessionConfigured = true
+                        self.captureSession.startRunning()
+                        DispatchQueue.main.async {
+                            self.previewView.updateVideoOrientationForDeviceOrientation()
+                        }
+                    })
+                }
+            })
+        }
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        AppUtility.lockOrientation(.all)
+        if captureSession.isRunning {
+            captureSession.stopRunning()
+        }
+    }
+
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        AppUtility.lockOrientation(.portrait)
+    }
+
     
     override var prefersStatusBarHidden: Bool {
         return true
@@ -37,56 +85,77 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let captureSession = AVCaptureSession()
-        let devices = AVCaptureDevice.devices().filter{ ($0 as AnyObject).hasMediaType(AVMediaTypeVideo) && ($0 as AnyObject).position == AVCaptureDevicePosition.back }
-        
-        if let captureDevice = devices.first as? AVCaptureDevice{
-            
-            videoDevice = captureDevice
-            do{
-                if (captureDevice.hasTorch)
-                {
-                    try captureDevice.lockForConfiguration()
-                    captureDevice.torchMode = .auto
-                    captureDevice.flashMode = .auto
-                    captureDevice.unlockForConfiguration()
-                }
-            }catch{
-                print("Device tourch Flash Error ");
-            }
-            
-            do {
-                try
-                    captureSession.addInput(AVCaptureDeviceInput(device: captureDevice))
-                captureSession.sessionPreset = AVCaptureSessionPresetHigh // AVCaptureSessionPresetPhoto
-                captureSession.startRunning()
-                stillImageOutput.outputSettings = [AVVideoCodecKey:AVVideoCodecJPEG]
-                if captureSession.canAddOutput(stillImageOutput) {
-                    captureSession.addOutput(stillImageOutput)
-                }
-                
-                if let previewLayer = AVCaptureVideoPreviewLayer(session: captureSession) {
-                    previewLayer.bounds =  cameraPreview.bounds
-                    previewLayer.videoGravity = AVLayerVideoGravityResizeAspectFill
-                    previewLayer.connection?.videoOrientation = .portrait
-                    cameraPreview.layer.insertSublayer(previewLayer, at: 0)
-                    previewLayer.frame = CGRect(x: 0,y: 0,width: self.view.bounds.width,height: self.view.bounds.height)
-                    // cameraPreview.frame
-                    
-                    let pinch = UIPinchGestureRecognizer(target: self, action: #selector(ViewController.pinchDetected))
-                    cameraPreview.addGestureRecognizer(pinch)
-                }
-                
-            } catch {
-                print("some error")
+        self.checkCameraAuthorization { authorized in
+            if authorized {
+                // Proceed to set up and use the camera.
+            } else {
+                print("Permission to use camera denied.")
             }
         }
         
-        setupSlider()
+        self.previewView.session = self.captureSession
+        self.previewView.aspectRatio = AVLayerVideoGravityResizeAspectFill as AVLayerVideoGravity
+        self.previewView.addGestureRecognizer(UIPinchGestureRecognizer(target: self, action: #selector(self.pinchDetected)))
+        
+        let photoSettings = AVCapturePhotoSettings()
+        photoSettings.isAutoStillImageStabilizationEnabled = true
+        photoSettings.flashMode = .auto
+        photoSettings.isHighResolutionPhotoEnabled = true
+        
+        setupViews()
         setZoom(toFactor: 1.0)
     }
     
-    func setupSlider () {
+    func defaultDevice() -> AVCaptureDevice {
+        if let device = AVCaptureDevice.defaultDevice(withDeviceType: .builtInDuoCamera,
+                                                      mediaType: AVMediaTypeVideo,
+                                                      position: .back) {
+            return device // use dual camera on supported devices
+        } else if let device = AVCaptureDevice.defaultDevice(withDeviceType: .builtInWideAngleCamera,
+                                                             mediaType: AVMediaTypeVideo,
+                                                             position: .back) {
+            return device // use default back facing camera otherwise
+        } else {
+            fatalError("All supported devices are expected to have at least one of the queried capture devices.")
+        }
+    }
+    
+    func configureCaptureSession(_ completionHandler: ((_ success: Bool) -> Void)) {
+        var success = false
+        defer { completionHandler(success) } // Ensure all exit paths call completion handler.
+        
+        // Get video input for the default camera.
+        let videoCaptureDevice = defaultDevice()
+        guard let videoInput = try? AVCaptureDeviceInput(device: videoCaptureDevice) else {
+            print("Unable to obtain video input for default camera.")
+            return
+        }
+        
+        // Create and configure the photo output.
+        let capturePhotoOutput = AVCapturePhotoOutput()
+        capturePhotoOutput.isHighResolutionCaptureEnabled = true
+        capturePhotoOutput.isLivePhotoCaptureEnabled = capturePhotoOutput.isLivePhotoCaptureSupported
+        
+        // Make sure inputs and output can be added to session.
+        guard self.captureSession.canAddInput(videoInput) else { return }
+        guard self.captureSession.canAddOutput(capturePhotoOutput) else { return }
+        
+        // Configure the session.
+        self.captureSession.beginConfiguration()
+        self.captureSession.sessionPreset = AVCaptureSessionPresetPhoto
+        self.captureSession.addInput(videoInput)
+        self.captureSession.addOutput(capturePhotoOutput)
+        self.captureSession.commitConfiguration()
+        
+        self.capturePhotoOutput = capturePhotoOutput
+        success = true
+    }
+    
+    func setupViews () {
+        
+        previewView.translatesAutoresizingMaskIntoConstraints = false
+        previewView.widthAnchor.constraint(equalToConstant: view.frame.width).isActive = true
+        previewView.heightAnchor.constraint(equalToConstant: view.frame.height).isActive = true
         
         zoomSlider.translatesAutoresizingMaskIntoConstraints = false
         zoomSlider.transform = CGAffineTransform.init(rotationAngle: -(CGFloat(CGFloat.pi/2)))
@@ -96,7 +165,7 @@ class ViewController: UIViewController {
         zoomSlider.widthAnchor.constraint(equalToConstant: view.frame.height/3).isActive = true
         
         zoomSlider.minimumValue = 1.0
-        zoomSlider.maximumValue = Float(getDeviceMaxZoom() / 10)
+        zoomSlider.maximumValue = (Float(getDeviceMaxZoom() / 2))
         zoomSlider.isContinuous = true
         zoomSlider.value = 1.0
         zoomSlider.tintColor = UIColor.black
@@ -115,14 +184,23 @@ class ViewController: UIViewController {
         
         info.translatesAutoresizingMaskIntoConstraints = false
         info.centerXAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/10).isActive = true
-        info.centerYAnchor.constraint(equalTo: view.topAnchor, constant: view.frame.width/10).isActive = true
+        info.centerYAnchor.constraint(equalTo: view.topAnchor, constant: view.frame.height/10).isActive = true
         info.widthAnchor.constraint(equalToConstant: view.frame.width/10).isActive = true
         info.heightAnchor.constraint(equalToConstant: view.frame.width/10).isActive = true
         
+        findButton.widthAnchor.constraint(equalToConstant: view.frame.width/4).isActive = true
+        findButton.heightAnchor.constraint(equalToConstant: view.frame.width/4).isActive = true
+        
+        cameraPreview.addSubview(previewView)
+        cameraPreview.bringSubview(toFront: zoomSlider)
+        cameraPreview.bringSubview(toFront: findButton)
+        cameraPreview.bringSubview(toFront: plus)
+        cameraPreview.bringSubview(toFront: minus)
+        cameraPreview.bringSubview(toFront: info)
     }
     
     @IBAction func zoomChanged(_ sender: UISlider) {
-        setZoom(toFactor: CGFloat(sender.value))
+         setZoom(toFactor: CGFloat(sender.value))
     }
     
     @IBAction func findPressed(_ sender: UIButton) {
@@ -131,48 +209,109 @@ class ViewController: UIViewController {
         Progress.shared.showProgressView(self.view)
         self.cameraPreview.removeFromSuperview()
         
-        // Take a picture from back camera
-        if let videoConnection = stillImageOutput.connection(withMediaType: AVMediaTypeVideo) {
-            stillImageOutput.captureStillImageAsynchronously(from: videoConnection) {
-                (imageDataSampleBuffer, error) -> Void in
-                let imageData = AVCaptureStillImageOutput.jpegStillImageNSDataRepresentation(imageDataSampleBuffer)
-                
-                let nextViewController = self.storyboard?.instantiateViewController(withIdentifier: "ImageViewController") as! ImageViewController
-                nextViewController.imageData = imageData
-                self.present(nextViewController, animated:false, completion:nil)
+        // Capture code
+        let capturePhotoOutput = self.capturePhotoOutput
+        let videoPreviewLayerOrientation = previewView.videoPreviewLayer.connection.videoOrientation
+        self.sessionQueue.async {
+            // Update the photo output's connection to match the video orientation of the video preview layer.
+            if let photoOutputConnection = capturePhotoOutput.connection(withMediaType: AVMediaTypeVideo) {
+                photoOutputConnection.videoOrientation = videoPreviewLayerOrientation
             }
+            
+            let photoSettings = AVCapturePhotoSettings()
+            photoSettings.isAutoStillImageStabilizationEnabled = true
+            photoSettings.isHighResolutionPhotoEnabled = true
+            photoSettings.flashMode = .auto
+            
+            capturePhotoOutput.capturePhoto(with: photoSettings, delegate: self)
         }
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
+    var photoSampleBuffer: CMSampleBuffer?
+    var previewPhotoSampleBuffer: CMSampleBuffer?
+    
+    func capture(_ captureOutput: AVCapturePhotoOutput,
+                 didFinishProcessingPhotoSampleBuffer photoSampleBuffer: CMSampleBuffer?,
+                 previewPhotoSampleBuffer: CMSampleBuffer?,
+                 resolvedSettings: AVCaptureResolvedPhotoSettings,
+                 bracketSettings: AVCaptureBracketedStillImageSettings?,
+                 error: Error?) {
+        guard error == nil, let photoSampleBuffer = photoSampleBuffer else {
+            print("Error capturing photo: \(String(describing: error))")
+            return
+        }
         
-        AppUtility.lockOrientation(.portrait)
-        // Or to rotate and lock
-        // AppUtility.lockOrientation(.portrait, andRotateTo: .portrait)
-        
+        self.photoSampleBuffer = photoSampleBuffer
+        self.previewPhotoSampleBuffer = previewPhotoSampleBuffer
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
+    func capture(_ captureOutput: AVCapturePhotoOutput,
+                 didFinishCaptureForResolvedSettings resolvedSettings: AVCaptureResolvedPhotoSettings,
+                 error: Error?) {
+        guard error == nil else {
+            print("Error in capture process: \(String(describing: error))")
+            return
+        }
         
-        // Don't forget to reset when view is being removed
-        AppUtility.lockOrientation(.all)
+        if let photoSampleBuffer = self.photoSampleBuffer {
+            segueBufferToImageViewController(photoSampleBuffer,
+                                           previewSampleBuffer: self.previewPhotoSampleBuffer,
+                                           completionHandler: { success, error in
+                                            if success {
+                                                print("Added JPEG photo to library.")
+                                            } else {
+                                                print("Error adding JPEG photo to library: \(String(describing: error))")
+                                            }
+            })
+        }
     }
     
-    func pinchDetected (pinch: UIPinchGestureRecognizer) {
-        let vZoomFactor = pinch.scale
-        zoomSlider.value = Float(vZoomFactor)
-        setZoom(toFactor: vZoomFactor)
+    func segueBufferToImageViewController(_ sampleBuffer: CMSampleBuffer,
+                                        previewSampleBuffer: CMSampleBuffer?,
+                                        completionHandler: ((_ success: Bool, _ error: Error?) -> Void)?) {
+
+        
+        guard let imageData = AVCapturePhotoOutput.jpegPhotoDataRepresentation(
+            forJPEGSampleBuffer: sampleBuffer,
+            previewPhotoSampleBuffer: previewSampleBuffer)
+            else {
+                print("Unable to create JPEG data.")
+                completionHandler?(false, nil)
+                return
+        }
+        
+        
+        let nextViewController = self.storyboard?.instantiateViewController(withIdentifier: "ImageViewController") as! ImageViewController
+        nextViewController.imageData = imageData
+        self.present(nextViewController, animated:false, completion:nil)
     }
-    
+
     func getDeviceMaxZoom() -> CGFloat {
-        let device: AVCaptureDevice = self.videoDevice!
+        let device: AVCaptureDevice = defaultDevice()
         return device.activeFormat.videoMaxZoomFactor
     }
     
+    func pinchDetected (sender: UIPinchGestureRecognizer) {
+        let device = defaultDevice()
+        if sender.state == .changed {
+            let maxZoomFactor = device.activeFormat.videoMaxZoomFactor
+            let pinchVelocityDividerFactor: CGFloat = 5.0
+            do {
+                try device.lockForConfiguration()
+                defer { device.unlockForConfiguration() }
+                
+                let desiredZoomFactor = device.videoZoomFactor + atan2(sender.velocity, pinchVelocityDividerFactor)
+                let zoomValue = max(1.0, min(desiredZoomFactor, maxZoomFactor))
+                device.videoZoomFactor = zoomValue
+                self.zoomSlider.value = Float(zoomValue) // track the seek bar
+            } catch {
+                print(error)
+            }
+        }
+    }
+
     func setZoom(toFactor vZoomFactor: CGFloat) {
-        var device: AVCaptureDevice = self.videoDevice!
+        var device: AVCaptureDevice = defaultDevice()
         var error:NSError!
         do{
             try device.lockForConfiguration()
@@ -184,9 +323,63 @@ class ViewController: UIViewController {
             else if (vZoomFactor <= 1.0){ NSLog("Unable to set videoZoom: (max %f, asked %f)", device.activeFormat.videoMaxZoomFactor, vZoomFactor) }
             else{ NSLog("Unable to set videoZoom: (max %f, asked %f)", device.activeFormat.videoMaxZoomFactor, vZoomFactor) }
         }
-            
+
         catch error as NSError{ NSLog("Unable to set videoZoom: %@", error.localizedDescription) }
         catch _{ NSLog("Unable to set videoZoom: %@", error.localizedDescription) }
     }
+    
+    func checkCameraAuthorization(_ completionHandler: @escaping ((_ authorized: Bool) -> Void)) {
+        switch AVCaptureDevice.authorizationStatus(forMediaType: AVMediaTypeVideo) {
+        case .authorized:
+            //The user has previously granted access to the camera.
+            completionHandler(true)
+            
+        case .notDetermined:
+            // The user has not yet been presented with the option to grant video access so request access.
+            AVCaptureDevice.requestAccess(forMediaType: AVMediaTypeVideo, completionHandler: { success in
+                completionHandler(success)
+            })
+            
+        case .denied:
+            // The user has previously denied access.
+            completionHandler(false)
+            
+        case .restricted:
+            // The user doesn't have the authority to request access e.g. parental restriction.
+            completionHandler(false)
+        }
+    }
 }
 
+
+class VideoPreviewView: UIView {
+    var videoPreviewLayer: AVCaptureVideoPreviewLayer {
+        return layer as! AVCaptureVideoPreviewLayer
+    }
+    var aspectRatio: AVLayerVideoGravity {
+        get { return videoPreviewLayer.videoGravity! as AVLayerVideoGravity }
+        set { videoPreviewLayer.videoGravity = newValue as String! }
+    }
+    var session: AVCaptureSession? {
+        get { return videoPreviewLayer.session }
+        set { videoPreviewLayer.session = newValue }
+    }
+    override class var layerClass: AnyClass {
+        return AVCaptureVideoPreviewLayer.self
+    }
+    private var orientationMap: [UIDeviceOrientation : AVCaptureVideoOrientation] = [
+        .portrait           : .portrait,
+        .portraitUpsideDown : .portraitUpsideDown,
+        .landscapeLeft      : .landscapeRight,
+        .landscapeRight     : .landscapeLeft,
+        ]
+    func updateVideoOrientationForDeviceOrientation() {
+        if let videoPreviewLayerConnection = videoPreviewLayer.connection {
+            let deviceOrientation = UIDevice.current.orientation
+            guard let newVideoOrientation = orientationMap[deviceOrientation],
+                deviceOrientation.isPortrait || deviceOrientation.isLandscape
+                else { return }
+            videoPreviewLayerConnection.videoOrientation = newVideoOrientation
+        }
+    }
+}

@@ -27,11 +27,6 @@
 		C7ABA0961FBA4AAE00F08E08 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C7ABA0921FBA4AAE00F08E08 /* AudioToolbox.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		C7ABA0981FBA4AAE00F08E08 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C7ABA0941FBA4AAE00F08E08 /* AVFoundation.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		C7ABA0991FBA4AAE00F08E08 /* AVKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C7ABA0951FBA4AAE00F08E08 /* AVKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
-		C7ABA09C1FBA4ABE00F08E08 /* EventKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C7ABA09A1FBA4ABE00F08E08 /* EventKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
-		C7ABA09D1FBA4ABE00F08E08 /* EventKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C7ABA09B1FBA4ABE00F08E08 /* EventKitUI.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
-		C7ABA0A11FBA4AF900F08E08 /* MediaAccessibility.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C7ABA09E1FBA4AF900F08E08 /* MediaAccessibility.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
-		C7ABA0A21FBA4AF900F08E08 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C7ABA09F1FBA4AF900F08E08 /* MediaPlayer.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
-		C7ABA0A31FBA4AF900F08E08 /* MediaToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C7ABA0A01FBA4AF900F08E08 /* MediaToolbox.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		C7D834DD1FB4AAE1007723A5 /* Global.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7D834DC1FB4AAE1007723A5 /* Global.swift */; };
 /* End PBXBuildFile section */
 
@@ -72,11 +67,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C7ABA0A11FBA4AF900F08E08 /* MediaAccessibility.framework in Frameworks */,
-				C7ABA0A21FBA4AF900F08E08 /* MediaPlayer.framework in Frameworks */,
-				C7ABA0A31FBA4AF900F08E08 /* MediaToolbox.framework in Frameworks */,
-				C7ABA09C1FBA4ABE00F08E08 /* EventKit.framework in Frameworks */,
-				C7ABA09D1FBA4ABE00F08E08 /* EventKitUI.framework in Frameworks */,
 				C7ABA0961FBA4AAE00F08E08 /* AudioToolbox.framework in Frameworks */,
 				C7ABA0981FBA4AAE00F08E08 /* AVFoundation.framework in Frameworks */,
 				C7ABA0991FBA4AAE00F08E08 /* AVKit.framework in Frameworks */,
