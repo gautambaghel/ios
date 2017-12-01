@@ -21,7 +21,7 @@ class ImageViewController: UIViewController, UIScrollViewDelegate, UISearchBarDe
     @IBOutlet weak var rightArrow: UIImageView!
     @IBOutlet weak var leftArrow: UIImageView!
     @IBOutlet weak var noWordsFound: UILabel!
-    @IBOutlet weak var info: UIImageView!
+    @IBOutlet weak var info: UIButton!
     
     var isLandscape = false
     var pointsToZoom: [CGPoint]?

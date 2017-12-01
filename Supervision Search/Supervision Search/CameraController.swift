@@ -8,14 +8,14 @@
 import UIKit
 import AVFoundation
 
-class ViewController: UIViewController, AVCapturePhotoCaptureDelegate {
+class CameraController: UIViewController, AVCapturePhotoCaptureDelegate {
     
     @IBOutlet weak var findButton: UIButton!
     @IBOutlet weak var cameraPreview: UIView!
     @IBOutlet weak var zoomSlider: UISlider!
     @IBOutlet weak var plus: UIImageView!
     @IBOutlet weak var minus: UIImageView!
-    @IBOutlet weak var info: UIImageView!
+    @IBOutlet weak var info: UIButton!
     
     let cognitiveServices = CognitiveServices.sharedInstance
     
@@ -194,6 +194,9 @@ class ViewController: UIViewController, AVCapturePhotoCaptureDelegate {
         info.widthAnchor.constraint(equalToConstant: view.frame.width/10).isActive = true
         info.heightAnchor.constraint(equalToConstant: view.frame.width/10).isActive = true
         
+        findButton.translatesAutoresizingMaskIntoConstraints = false
+        findButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        findButton.centerYAnchor.constraint(equalTo: view.bottomAnchor, constant: -((view.frame.width/4))).isActive = true
         findButton.widthAnchor.constraint(equalToConstant: view.frame.width/4).isActive = true
         findButton.heightAnchor.constraint(equalToConstant: view.frame.width/4).isActive = true
         
@@ -203,6 +206,11 @@ class ViewController: UIViewController, AVCapturePhotoCaptureDelegate {
         cameraPreview.bringSubview(toFront: plus)
         cameraPreview.bringSubview(toFront: minus)
         cameraPreview.bringSubview(toFront: info)
+        
+    }
+    
+    func backPressed (_ sender: UIBarButtonItem) {
+        dismiss(animated: true, completion: nil)
     }
     
     @IBAction func zoomChanged(_ sender: UISlider) {
