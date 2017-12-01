@@ -238,16 +238,11 @@ class ImageViewController: UIViewController, UIScrollViewDelegate, UISearchBarDe
         }
         
         recognitionRequest = SFSpeechAudioBufferRecognitionRequest()
-        guard let inputNode = audioEngine.inputNode else {
-            fatalError("Audio engine has no input node")
-        }
-        guard let recognitionRequest = recognitionRequest else {
-            fatalError("Unable to create an SFSpeechAudioBufferRecognitionRequest object")
-        }
+        let inputNode = audioEngine.inputNode
         
         // TODO changed this false,  revert to true if needed
-        recognitionRequest.shouldReportPartialResults = false
-        recognitionTask = speechRecognizer?.recognitionTask(with: recognitionRequest, resultHandler: { (result, error) in
+        recognitionRequest?.shouldReportPartialResults = false
+        recognitionTask = speechRecognizer?.recognitionTask(with: recognitionRequest!, resultHandler: { (result, error) in
             
             if result != nil {
                 self.stopMicAndProcess(result!, valid: true)
@@ -272,9 +267,7 @@ class ImageViewController: UIViewController, UIScrollViewDelegate, UISearchBarDe
     
     func stopMicAndProcess (_ result: SFSpeechRecognitionResult, valid resultIsValid: Bool) {
         
-        guard let inputNode = audioEngine.inputNode else {
-            fatalError("Audio engine has no input node")
-        }
+        let inputNode = audioEngine.inputNode
         
         self.alertController!.dismiss(animated: true, completion: nil)
         self.recognitionRequest?.endAudio()
@@ -369,11 +362,11 @@ class ImageViewController: UIViewController, UIScrollViewDelegate, UISearchBarDe
         
     }
     
-    func singleTapDetected(recognizer: UITapGestureRecognizer) {
+    @objc func singleTapDetected(recognizer: UITapGestureRecognizer) {
         searchBar.resignFirstResponder()
     }
     
-    func doubleTapDetected(recognizer: UITapGestureRecognizer) {
+    @objc func doubleTapDetected(recognizer: UITapGestureRecognizer) {
         if scrollView?.zoomScale == 1 {
             scrollView?.zoom(to: zoomRectForScale(scale: (scrollView?.maximumZoomScale)!, center: recognizer.location(in: recognizer.view)), animated: true)
         } else {
@@ -527,10 +520,13 @@ class ImageViewController: UIViewController, UIScrollViewDelegate, UISearchBarDe
                     let height = Double(wRect[3])!
                     
                     let rect = CGRect(x: x, y: y, width: width, height: height)
+                    // Add only if location not already present
                     if !(wordsFound?.contains(rect))!{
                         wordsFound?.append(rect)
                         var pointToZoom = CGPoint(x: x + (width / 2), y: y + (height / 2))
-                        pointToZoom = convertCoordinatesForView(givenPoint: pointToZoom)
+                        if !isLandscape { // Landscape conversion done after rotating
+                           pointToZoom = convertImageCoordinatesForView(givenPoint: pointToZoom)
+                        }
                         pointsToZoom?.append(pointToZoom)
                     }
                 }
@@ -580,84 +576,6 @@ class ImageViewController: UIViewController, UIScrollViewDelegate, UISearchBarDe
         return String(text.filter {okayChars.contains($0) })
     }
     
-    func similarCalc(for s1: String, with s2: String) -> Float {
-        let minLen = min(s1.count,s2.count)
-        
-        // we know that if the outcome here is 0.5 or lower, then the
-        // property will return the lower probability. so the moment we
-        // learn that probability is 0.5 or lower we can return 0.0 and
-        // stop. this optimization makes a perceptible improvement in
-        // overall performance.
-        let maxLen = max(s1.count, s2.count)
-        if (Double(minLen / maxLen) <= 0.5){
-           return 0.0
-        }
-        
-        // if the strings are equal we can stop right here.
-        if (minLen == maxLen && s1==s2) {
-           return 1.0
-        }
-        
-        // we couldn't shortcut, so now we go ahead and compute the full
-        // metric
-        let dist = min(matrix(s1,secondString: s2), minLen)
-        return Float(1.0 - (Double(dist) / Double(minLen)))
-    }
-    
-    func minOfThree(one o: Int, two tw: Int , three th: Int) -> Int{
-        var min = o
-        if (tw < min) {min = tw}
-        if (th < min) {min = th}
-        return min
-    }
-    
-    // Cost for insertion and deletion is 1, substitution is 2.
-    // Based on Levenshtein distance (LD), weighted distribution not implemented
-    func matrix(_ s1: String, secondString s2: String) -> Int{
-        
-        var matrix: [[Int]]
-        let n = s1.count
-        let m = s2.count
-        var c1, c2, temp: Int
-        
-        if (n == 0){
-            return m
-        }
-        
-        if (m == 0){
-            return n
-        }
-        
-        matrix = [[Int]](repeating: [Int](repeating: 0, count: n + 1), count: m + 1)
-        
-        for i in 0...n {
-            matrix[i][0] = i * 2
-        }
-        
-        for j in 0...m {
-            matrix[0][j] = j * 2
-        }
-        
-        for i in 1...n {
-            let numC1 = s1[s1.index(s1.startIndex, offsetBy:(i - 1))]  // s1.charAt(i - 1)
-            c1 = Int((String(numC1).unicodeScalars.filter{$0.isASCII}.first?.value)!)
-            
-            for j in 1...m {
-                let numC2 = s2[s2.index(s2.startIndex, offsetBy:(j - 1))] // s2.charAt(j - 1)
-                c2 = Int((String(numC2).unicodeScalars.filter{$0.isASCII}.first?.value)!)
-                
-                if (c1 == c2) {
-                    temp = 0
-                } else {
-                    temp = 2
-                }
-            
-                matrix[i][j] = minOfThree(one: matrix[i - 1][j] + 1,two: matrix[i][j - 1] + 1, three: matrix[i - 1][j - 1] + temp)
-            }
-        }
-    
-      return matrix[n][m]
-    }
     
     func dismissKeyboard() {
         view.endEditing(true)
@@ -757,10 +675,8 @@ class ImageViewController: UIViewController, UIScrollViewDelegate, UISearchBarDe
             // Method only called when pointsToZoom is >0
             context!.concatenate(transform)
             for i in 0..<pointsToZoom!.count {
-                // since the coordinates are flipped
-                pointsToZoom![i] = swapXandY(ofPoint: pointsToZoom![i])
-                let width = convertCoordinatesForView(givenPoint: CGPoint(x: cx, y: 0)).x
-                pointsToZoom![i].x = width - pointsToZoom![i].x
+                pointsToZoom![i] = pointsToZoom![i].applying(transform)
+                pointsToZoom![i] = convertImageCoordinatesForView(givenPoint: pointsToZoom![i])
             }
         }
         
@@ -792,7 +708,7 @@ class ImageViewController: UIViewController, UIScrollViewDelegate, UISearchBarDe
         return returningPoint
     }
     
-    func leftArrowPressed(recognizer: UITapGestureRecognizer) {
+    @objc func leftArrowPressed(recognizer: UITapGestureRecognizer) {
         
         if (pointsToZoom != nil) {
             
@@ -810,7 +726,7 @@ class ImageViewController: UIViewController, UIScrollViewDelegate, UISearchBarDe
         }
     }
     
-    func rightArrowPressed (recognizer: UITapGestureRecognizer) {
+    @objc func rightArrowPressed (recognizer: UITapGestureRecognizer) {
         if (pointsToZoom != nil) && wordCursor < (pointsToZoom?.count)! {
             
             if firstTimePressFlag {
@@ -833,13 +749,13 @@ class ImageViewController: UIViewController, UIScrollViewDelegate, UISearchBarDe
         }
     }
     
-    func zoomPressed (recognizer: UITapGestureRecognizer)  {
+    @objc func zoomPressed (recognizer: UITapGestureRecognizer)  {
         if (pointsToZoom != nil) {
             zoomAt(point: pointsToZoom![0])
         }
     }
     
-    func retryPressed (recognizer: UITapGestureRecognizer) {
+    @objc func retryPressed (recognizer: UITapGestureRecognizer) {
         retry.isHidden = true
         self.responseRecieved = false
         stopBlinking()
@@ -887,7 +803,7 @@ class ImageViewController: UIViewController, UIScrollViewDelegate, UISearchBarDe
         leftArrow.isUserInteractionEnabled = true
     }
     
-    func convertCoordinatesForView (givenPoint p: CGPoint) -> CGPoint{
+    func convertImageCoordinatesForView (givenPoint p: CGPoint) -> CGPoint{
         
         let scrollWidth = scrollView!.bounds.width
         let scrollHeight = scrollView!.bounds.height
@@ -920,6 +836,85 @@ class ImageViewController: UIViewController, UIScrollViewDelegate, UISearchBarDe
         let isReachable = flags.contains(.reachable)
         let needsConnection = flags.contains(.connectionRequired)
         return (isReachable && !needsConnection)
+    }
+    
+    func similarCalc(for s1: String, with s2: String) -> Float {
+        let minLen = min(s1.count,s2.count)
+        
+        // we know that if the outcome here is 0.5 or lower, then the
+        // property will return the lower probability. so the moment we
+        // learn that probability is 0.5 or lower we can return 0.0 and
+        // stop. this optimization makes a perceptible improvement in
+        // overall performance.
+        let maxLen = max(s1.count, s2.count)
+        if (Double(minLen / maxLen) <= 0.5){
+            return 0.0
+        }
+        
+        // if the strings are equal we can stop right here.
+        if (minLen == maxLen && s1==s2) {
+            return 1.0
+        }
+        
+        // we couldn't shortcut, so now we go ahead and compute the full
+        // metric
+        let dist = min(matrix(s1,secondString: s2), minLen)
+        return Float(1.0 - (Double(dist) / Double(minLen)))
+    }
+    
+    func minOfThree(one o: Int, two tw: Int , three th: Int) -> Int{
+        var min = o
+        if (tw < min) {min = tw}
+        if (th < min) {min = th}
+        return min
+    }
+    
+    // Cost for insertion and deletion is 1, substitution is 2.
+    // Based on Levenshtein distance (LD), weighted distribution not implemented
+    func matrix(_ s1: String, secondString s2: String) -> Int{
+        
+        var matrix: [[Int]]
+        let n = s1.count
+        let m = s2.count
+        var c1, c2, temp: Int
+        
+        if (n == 0){
+            return m
+        }
+        
+        if (m == 0){
+            return n
+        }
+        
+        matrix = [[Int]](repeating: [Int](repeating: 0, count: n + 1), count: m + 1)
+        
+        for i in 0...n {
+            matrix[i][0] = i * 2
+        }
+        
+        for j in 0...m {
+            matrix[0][j] = j * 2
+        }
+        
+        for i in 1...n {
+            let numC1 = s1[s1.index(s1.startIndex, offsetBy:(i - 1))]  // s1.charAt(i - 1)
+            c1 = Int((String(numC1).unicodeScalars.filter{$0.isASCII}.first?.value)!)
+            
+            for j in 1...m {
+                let numC2 = s2[s2.index(s2.startIndex, offsetBy:(j - 1))] // s2.charAt(j - 1)
+                c2 = Int((String(numC2).unicodeScalars.filter{$0.isASCII}.first?.value)!)
+                
+                if (c1 == c2) {
+                    temp = 0
+                } else {
+                    temp = 2
+                }
+                
+                matrix[i][j] = minOfThree(one: matrix[i - 1][j] + 1,two: matrix[i][j - 1] + 1, three: matrix[i - 1][j - 1] + temp)
+            }
+        }
+        
+        return matrix[n][m]
     }
     
 }

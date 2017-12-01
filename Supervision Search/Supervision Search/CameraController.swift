@@ -4,7 +4,7 @@
 //
 //  Created by Gautam on 10/25/17.
 //  Copyright © 2017 Gautam. All rights reserved.
-//
+
 import UIKit
 import AVFoundation
 
@@ -45,9 +45,6 @@ class ViewController: UIViewController, AVCapturePhotoCaptureDelegate {
                         guard success else { return }
                         self.isCaptureSessionConfigured = true
                         self.captureSession.startRunning()
-                        DispatchQueue.main.async {
-                            self.previewView.updateVideoOrientationForDeviceOrientation()
-                        }
                     })
                 }
             })
@@ -62,13 +59,19 @@ class ViewController: UIViewController, AVCapturePhotoCaptureDelegate {
             captureSession.stopRunning()
         }
     }
-
+    
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         AppUtility.lockOrientation(.portrait)
+        
+        self.checkCameraAuthorization { authorized in
+            if !authorized {
+                self.keepShowingCameraNeededAlert()
+            }
+        }
     }
-
+    
     
     override var prefersStatusBarHidden: Bool {
         return true
@@ -84,36 +87,39 @@ class ViewController: UIViewController, AVCapturePhotoCaptureDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         self.checkCameraAuthorization { authorized in
             if authorized {
                 // Proceed to set up and use the camera.
-            } else {
-                print("Permission to use camera denied.")
+                
+                self.previewView.session = self.captureSession
+                self.previewView.aspectRatio = AVLayerVideoGravity.resizeAspectFill as AVLayerVideoGravity
+                self.previewView.addGestureRecognizer(UIPinchGestureRecognizer(target: self, action: #selector(self.pinchDetected)))
+                
+                let photoSettings = AVCapturePhotoSettings()
+                photoSettings.isAutoStillImageStabilizationEnabled = true
+                photoSettings.flashMode = .auto
+                photoSettings.isHighResolutionPhotoEnabled = true
+                
+                self.setZoom(toFactor: 1.0)
             }
         }
-        
-        self.previewView.session = self.captureSession
-        self.previewView.aspectRatio = AVLayerVideoGravityResizeAspectFill as AVLayerVideoGravity
-        self.previewView.addGestureRecognizer(UIPinchGestureRecognizer(target: self, action: #selector(self.pinchDetected)))
-        
-        let photoSettings = AVCapturePhotoSettings()
-        photoSettings.isAutoStillImageStabilizationEnabled = true
-        photoSettings.flashMode = .auto
-        photoSettings.isHighResolutionPhotoEnabled = true
-        
         setupViews()
-        setZoom(toFactor: 1.0)
+    }
+    
+    func keepShowingCameraNeededAlert () {
+        let alertController = UIAlertController(title: "Hey there!", message: "We need your camera permission to work.", preferredStyle: UIAlertControllerStyle.alert)
+        alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: {(alert: UIAlertAction!) in self.keepShowingCameraNeededAlert()}))
+        self.present(alertController, animated: true, completion: nil)
     }
     
     func defaultDevice() -> AVCaptureDevice {
-        if let device = AVCaptureDevice.defaultDevice(withDeviceType: .builtInDuoCamera,
-                                                      mediaType: AVMediaTypeVideo,
-                                                      position: .back) {
+        if let device = AVCaptureDevice.default(AVCaptureDevice.DeviceType.builtInDuoCamera,
+                                                for: AVMediaType.video,
+                                                position: .back) {
             return device // use dual camera on supported devices
-        } else if let device = AVCaptureDevice.defaultDevice(withDeviceType: .builtInWideAngleCamera,
-                                                             mediaType: AVMediaTypeVideo,
-                                                             position: .back) {
+        } else if let device = AVCaptureDevice.default(AVCaptureDevice.DeviceType.builtInWideAngleCamera,
+                                                       for: AVMediaType.video,
+                                                       position: .back) {
             return device // use default back facing camera otherwise
         } else {
             fatalError("All supported devices are expected to have at least one of the queried capture devices.")
@@ -142,7 +148,7 @@ class ViewController: UIViewController, AVCapturePhotoCaptureDelegate {
         
         // Configure the session.
         self.captureSession.beginConfiguration()
-        self.captureSession.sessionPreset = AVCaptureSessionPresetPhoto
+        self.captureSession.sessionPreset = AVCaptureSession.Preset.photo
         self.captureSession.addInput(videoInput)
         self.captureSession.addOutput(capturePhotoOutput)
         self.captureSession.commitConfiguration()
@@ -211,11 +217,11 @@ class ViewController: UIViewController, AVCapturePhotoCaptureDelegate {
         
         // Capture code
         let capturePhotoOutput = self.capturePhotoOutput
-        let videoPreviewLayerOrientation = previewView.videoPreviewLayer.connection.videoOrientation
+        let videoPreviewLayerOrientation = previewView.videoPreviewLayer.connection?.videoOrientation
         self.sessionQueue.async {
             // Update the photo output's connection to match the video orientation of the video preview layer.
-            if let photoOutputConnection = capturePhotoOutput.connection(withMediaType: AVMediaTypeVideo) {
-                photoOutputConnection.videoOrientation = videoPreviewLayerOrientation
+            if let photoOutputConnection = capturePhotoOutput.connection(with: AVMediaType.video) {
+                photoOutputConnection.videoOrientation = videoPreviewLayerOrientation!
             }
             
             let photoSettings = AVCapturePhotoSettings()
@@ -230,9 +236,9 @@ class ViewController: UIViewController, AVCapturePhotoCaptureDelegate {
     var photoSampleBuffer: CMSampleBuffer?
     var previewPhotoSampleBuffer: CMSampleBuffer?
     
-    func capture(_ captureOutput: AVCapturePhotoOutput,
-                 didFinishProcessingPhotoSampleBuffer photoSampleBuffer: CMSampleBuffer?,
-                 previewPhotoSampleBuffer: CMSampleBuffer?,
+    func photoOutput(_ captureOutput: AVCapturePhotoOutput,
+                 didFinishProcessingPhoto photoSampleBuffer: CMSampleBuffer?,
+                 previewPhoto previewPhotoSampleBuffer: CMSampleBuffer?,
                  resolvedSettings: AVCaptureResolvedPhotoSettings,
                  bracketSettings: AVCaptureBracketedStillImageSettings?,
                  error: Error?) {
@@ -245,8 +251,8 @@ class ViewController: UIViewController, AVCapturePhotoCaptureDelegate {
         self.previewPhotoSampleBuffer = previewPhotoSampleBuffer
     }
     
-    func capture(_ captureOutput: AVCapturePhotoOutput,
-                 didFinishCaptureForResolvedSettings resolvedSettings: AVCaptureResolvedPhotoSettings,
+    func photoOutput(_ captureOutput: AVCapturePhotoOutput,
+                 didFinishCaptureFor resolvedSettings: AVCaptureResolvedPhotoSettings,
                  error: Error?) {
         guard error == nil else {
             print("Error in capture process: \(String(describing: error))")
@@ -291,7 +297,7 @@ class ViewController: UIViewController, AVCapturePhotoCaptureDelegate {
         return device.activeFormat.videoMaxZoomFactor
     }
     
-    func pinchDetected (sender: UIPinchGestureRecognizer) {
+    @objc func pinchDetected (sender: UIPinchGestureRecognizer) {
         let device = defaultDevice()
         if sender.state == .changed {
             let maxZoomFactor = device.activeFormat.videoMaxZoomFactor
@@ -329,14 +335,14 @@ class ViewController: UIViewController, AVCapturePhotoCaptureDelegate {
     }
     
     func checkCameraAuthorization(_ completionHandler: @escaping ((_ authorized: Bool) -> Void)) {
-        switch AVCaptureDevice.authorizationStatus(forMediaType: AVMediaTypeVideo) {
+        switch AVCaptureDevice.authorizationStatus(for: AVMediaType.video) {
         case .authorized:
             //The user has previously granted access to the camera.
             completionHandler(true)
             
         case .notDetermined:
             // The user has not yet been presented with the option to grant video access so request access.
-            AVCaptureDevice.requestAccess(forMediaType: AVMediaTypeVideo, completionHandler: { success in
+            AVCaptureDevice.requestAccess(for: AVMediaType.video, completionHandler: { success in
                 completionHandler(success)
             })
             
@@ -357,8 +363,8 @@ class VideoPreviewView: UIView {
         return layer as! AVCaptureVideoPreviewLayer
     }
     var aspectRatio: AVLayerVideoGravity {
-        get { return videoPreviewLayer.videoGravity! as AVLayerVideoGravity }
-        set { videoPreviewLayer.videoGravity = newValue as String! }
+        get { return videoPreviewLayer.videoGravity as AVLayerVideoGravity }
+        set { videoPreviewLayer.videoGravity = newValue }
     }
     var session: AVCaptureSession? {
         get { return videoPreviewLayer.session }
@@ -366,20 +372,5 @@ class VideoPreviewView: UIView {
     }
     override class var layerClass: AnyClass {
         return AVCaptureVideoPreviewLayer.self
-    }
-    private var orientationMap: [UIDeviceOrientation : AVCaptureVideoOrientation] = [
-        .portrait           : .portrait,
-        .portraitUpsideDown : .portraitUpsideDown,
-        .landscapeLeft      : .landscapeRight,
-        .landscapeRight     : .landscapeLeft,
-        ]
-    func updateVideoOrientationForDeviceOrientation() {
-        if let videoPreviewLayerConnection = videoPreviewLayer.connection {
-            let deviceOrientation = UIDevice.current.orientation
-            guard let newVideoOrientation = orientationMap[deviceOrientation],
-                deviceOrientation.isPortrait || deviceOrientation.isLandscape
-                else { return }
-            videoPreviewLayerConnection.videoOrientation = newVideoOrientation
-        }
     }
 }
