@@ -22,14 +22,18 @@ class ImageViewController: UIViewController, UIScrollViewDelegate, UISearchBarDe
     @IBOutlet weak var leftArrow: UIImageView!
     @IBOutlet weak var noWordsFound: UILabel!
     @IBOutlet weak var info: UIButton!
+    @IBOutlet weak var mainView: UIView!
     
-    var isLandscape = false
     var pointsToZoom: [CGPoint]?
     var wordsFound: [CGRect]?
     var wordCursor = 0
+    
+    // Flags
     var firstTimePressFlag = true
     var isBlinking = false
-    
+    var imageOriented = false
+    var isLandscape = false
+
     var imageData: Data? = nil
     
     var imageView: UIImageView? = {
@@ -52,8 +56,6 @@ class ImageViewController: UIViewController, UIScrollViewDelegate, UISearchBarDe
     var highlightedImage: UIImage?
     var isHighlighted: Bool = false
     var textField: UILabel?
-    
-    @IBOutlet weak var mainView: UIView!
     
     // Speech stuff
     private var speechRecognizer: SFSpeechRecognizer? = nil
@@ -88,6 +90,7 @@ class ImageViewController: UIViewController, UIScrollViewDelegate, UISearchBarDe
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.imageOriented = false
         initNextWordMenu()
         retry.isHidden = true
         searchBar.delegate = self
@@ -330,14 +333,20 @@ class ImageViewController: UIViewController, UIScrollViewDelegate, UISearchBarDe
         //remove the earlier view
         self.scrollView?.removeFromSuperview()
         
-        self.imageView!.autoresizingMask = UIViewAutoresizing(rawValue: UIViewAutoresizing.RawValue(UInt8(UIViewAutoresizing.flexibleWidth.rawValue) | UInt8(UIViewAutoresizing.flexibleHeight.rawValue)))
+        self.imageView!.autoresizingMask = UIViewAutoresizing(rawValue:
+            UIViewAutoresizing.RawValue(UInt8(UIViewAutoresizing.flexibleWidth.rawValue) |
+                UInt8(UIViewAutoresizing.flexibleHeight.rawValue)))
+        
         self.imageView!.image = image
         let imageFrame = CGRect(origin: CGPoint(x: 0,y :0),
                                 size: CGSize(width: mainView.bounds.width, height: mainView.bounds.height))
         self.imageView!.frame = imageFrame
         
         self.scrollView?.frame = mainView.bounds
-        self.scrollView?.autoresizingMask = UIViewAutoresizing(rawValue: UIViewAutoresizing.RawValue(UInt8(UIViewAutoresizing.flexibleWidth.rawValue) | UInt8(UIViewAutoresizing.flexibleHeight.rawValue)))
+        self.scrollView?.autoresizingMask = UIViewAutoresizing(rawValue:
+            UIViewAutoresizing.RawValue(UInt8(UIViewAutoresizing.flexibleWidth.rawValue) |
+                UInt8(UIViewAutoresizing.flexibleHeight.rawValue)))
+        
         //adding imageview as a subview of scroll view
         self.scrollView?.addSubview(self.imageView!)
         // content size of the scroll view is the size of the image
@@ -389,6 +398,8 @@ class ImageViewController: UIViewController, UIScrollViewDelegate, UISearchBarDe
 
     @IBAction func micPressed(_ sender: UIButton) {
         
+        // If speaking, then stop
+        synth.stopSpeaking(at: AVSpeechBoundary.immediate)
         setupSpeechStuff()
         
         if !audioSession.isOtherAudioPlaying && !audioEngine.isRunning {
@@ -525,10 +536,7 @@ class ImageViewController: UIViewController, UIScrollViewDelegate, UISearchBarDe
                     // Add only if location not already present
                     if !(wordsFound?.contains(rect))!{
                         wordsFound?.append(rect)
-                        var pointToZoom = CGPoint(x: x + (width / 2), y: y + (height / 2))
-                        if !isLandscape { // Landscape conversion done after rotating
-                           pointToZoom = convertImageCoordinatesForView(givenPoint: pointToZoom)
-                        }
+                        let pointToZoom = CGPoint(x: x + (width / 2), y: y + (height / 2))
                         pointsToZoom?.append(pointToZoom)
                     }
                 }
@@ -609,6 +617,7 @@ class ImageViewController: UIViewController, UIScrollViewDelegate, UISearchBarDe
         angle = -self.ocr.textAngle
         image = rotateImage(image: image!, angle: angle)
         self.imageView?.image = image
+        self.imageOriented = true
     }
     
     func radians(degrees s1: Float) -> Float {
@@ -678,6 +687,10 @@ class ImageViewController: UIViewController, UIScrollViewDelegate, UISearchBarDe
             context!.concatenate(transform)
             for i in 0..<pointsToZoom!.count {
                 pointsToZoom![i] = pointsToZoom![i].applying(transform)
+                pointsToZoom![i] = convertImageCoordinatesForView(givenPoint: pointsToZoom![i])
+            }
+        } else {
+            for i in 0..<pointsToZoom!.count {
                 pointsToZoom![i] = convertImageCoordinatesForView(givenPoint: pointsToZoom![i])
             }
         }
