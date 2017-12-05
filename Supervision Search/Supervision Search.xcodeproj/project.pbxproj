@@ -30,6 +30,10 @@
 		C7D64DB81FD1F18700C8FFED /* ButtonInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7D64DB71FD1F18700C8FFED /* ButtonInfoCell.swift */; };
 		C7D64DBA1FD1F3F900C8FFED /* InfoTableController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7D64DB91FD1F3F900C8FFED /* InfoTableController.swift */; };
 		C7D834DD1FB4AAE1007723A5 /* Global.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7D834DC1FB4AAE1007723A5 /* Global.swift */; };
+		C7F4DF311FD70CD500458331 /* UMCommon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C7F4DF301FD70CD500458331 /* UMCommon.framework */; };
+		C7F4DF341FD70D0900458331 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = C7F4DF331FD70D0800458331 /* libz.tbd */; };
+		C7F4DF371FD70D2D00458331 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = C7F4DF361FD70D2D00458331 /* libsqlite3.tbd */; };
+		C7F4DF3A1FD7134B00458331 /* UMAnalytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C7F4DF391FD7134B00458331 /* UMAnalytics.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -52,17 +56,16 @@
 		C77F44E41FA0E5710037CE11 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		C77F44E61FA0E5710037CE11 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C7ABA0921FBA4AAE00F08E08 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
-		C7ABA0931FBA4AAE00F08E08 /* AudioUnit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioUnit.framework; path = System/Library/Frameworks/AudioUnit.framework; sourceTree = SDKROOT; };
 		C7ABA0941FBA4AAE00F08E08 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		C7ABA0951FBA4AAE00F08E08 /* AVKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVKit.framework; path = System/Library/Frameworks/AVKit.framework; sourceTree = SDKROOT; };
-		C7ABA09A1FBA4ABE00F08E08 /* EventKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EventKit.framework; path = System/Library/Frameworks/EventKit.framework; sourceTree = SDKROOT; };
-		C7ABA09B1FBA4ABE00F08E08 /* EventKitUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EventKitUI.framework; path = System/Library/Frameworks/EventKitUI.framework; sourceTree = SDKROOT; };
-		C7ABA09E1FBA4AF900F08E08 /* MediaAccessibility.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaAccessibility.framework; path = System/Library/Frameworks/MediaAccessibility.framework; sourceTree = SDKROOT; };
-		C7ABA09F1FBA4AF900F08E08 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
-		C7ABA0A01FBA4AF900F08E08 /* MediaToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaToolbox.framework; path = System/Library/Frameworks/MediaToolbox.framework; sourceTree = SDKROOT; };
 		C7D64DB71FD1F18700C8FFED /* ButtonInfoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonInfoCell.swift; sourceTree = "<group>"; };
 		C7D64DB91FD1F3F900C8FFED /* InfoTableController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoTableController.swift; sourceTree = "<group>"; };
 		C7D834DC1FB4AAE1007723A5 /* Global.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Global.swift; sourceTree = "<group>"; };
+		C7F4DF301FD70CD500458331 /* UMCommon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UMCommon.framework; path = umeng/common/UMCommon.framework; sourceTree = "<group>"; };
+		C7F4DF331FD70D0800458331 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
+		C7F4DF361FD70D2D00458331 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
+		C7F4DF381FD710C600458331 /* SupervisionSearch-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SupervisionSearch-Bridging-Header.h"; sourceTree = "<group>"; };
+		C7F4DF391FD7134B00458331 /* UMAnalytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UMAnalytics.framework; path = umeng/analytics/UMAnalytics.framework; sourceTree = "<group>"; };
 		C7F532061FBA416C00B7021A /* Speech.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Speech.framework; path = System/Library/Frameworks/Speech.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -71,6 +74,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C7F4DF3A1FD7134B00458331 /* UMAnalytics.framework in Frameworks */,
+				C7F4DF311FD70CD500458331 /* UMCommon.framework in Frameworks */,
+				C7F4DF371FD70D2D00458331 /* libsqlite3.tbd in Frameworks */,
+				C7F4DF341FD70D0900458331 /* libz.tbd in Frameworks */,
 				C7ABA0961FBA4AAE00F08E08 /* AudioToolbox.framework in Frameworks */,
 				C7ABA0981FBA4AAE00F08E08 /* AVFoundation.framework in Frameworks */,
 				C7ABA0991FBA4AAE00F08E08 /* AVKit.framework in Frameworks */,
@@ -124,6 +131,7 @@
 		C77F44CE1FA0E5710037CE11 = {
 			isa = PBXGroup;
 			children = (
+				C7F4DF381FD710C600458331 /* SupervisionSearch-Bridging-Header.h */,
 				C77F44D91FA0E5710037CE11 /* Supervision Search */,
 				C77F44D81FA0E5710037CE11 /* Products */,
 				C7A1A5D91FB3B8EA0009E051 /* Frameworks */,
@@ -168,13 +176,11 @@
 		C7A1A5D91FB3B8EA0009E051 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				C7ABA09E1FBA4AF900F08E08 /* MediaAccessibility.framework */,
-				C7ABA09F1FBA4AF900F08E08 /* MediaPlayer.framework */,
-				C7ABA0A01FBA4AF900F08E08 /* MediaToolbox.framework */,
-				C7ABA09A1FBA4ABE00F08E08 /* EventKit.framework */,
-				C7ABA09B1FBA4ABE00F08E08 /* EventKitUI.framework */,
+				C7F4DF391FD7134B00458331 /* UMAnalytics.framework */,
+				C7F4DF301FD70CD500458331 /* UMCommon.framework */,
+				C7F4DF361FD70D2D00458331 /* libsqlite3.tbd */,
+				C7F4DF331FD70D0800458331 /* libz.tbd */,
 				C7ABA0921FBA4AAE00F08E08 /* AudioToolbox.framework */,
-				C7ABA0931FBA4AAE00F08E08 /* AudioUnit.framework */,
 				C7ABA0941FBA4AAE00F08E08 /* AVFoundation.framework */,
 				C7ABA0951FBA4AAE00F08E08 /* AVKit.framework */,
 				C7F532061FBA416C00B7021A /* Speech.framework */,
@@ -330,6 +336,7 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				"FRAMEWORK_SEARCH_PATHS[arch=*]" = "$(PROJECT_DIR)/**";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -344,13 +351,19 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/umeng/analytics/UMAnalytics.framework/Headers";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				SCAN_ALL_SOURCE_FILES_FOR_INCLUDES = NO;
 				SDKROOT = iphoneos10.0;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_INSTALL_OBJC_HEADER = YES;
+				"SWIFT_OBJC_BRIDGING_HEADER[arch=*]" = "$(PROJECT_DIR)/SupervisionSearch-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
+				SWIFT_VERSION = 4.0;
+				"SYSTEM_FRAMEWORK_SEARCH_PATHS[arch=*]" = "$(PROJECT_DIR)/**";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -388,6 +401,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				"FRAMEWORK_SEARCH_PATHS[arch=*]" = "$(PROJECT_DIR)/**";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -396,11 +410,17 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/umeng/analytics/UMAnalytics.framework/Headers";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
+				SCAN_ALL_SOURCE_FILES_FOR_INCLUDES = NO;
 				SDKROOT = iphoneos10.0;
+				SWIFT_INSTALL_OBJC_HEADER = YES;
+				"SWIFT_OBJC_BRIDGING_HEADER[arch=*]" = "$(PROJECT_DIR)/SupervisionSearch-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
+				SWIFT_VERSION = 4.0;
+				"SYSTEM_FRAMEWORK_SEARCH_PATHS[arch=*]" = "$(PROJECT_DIR)/**";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 			};
@@ -411,6 +431,16 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = S3XP72WELV;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(PROJECT_DIR)/**",
+					"$(PROJECT_DIR)/umeng_sdk_ios_5a256d39a40fa37afa000628/common",
+					"$(PROJECT_DIR)/umeng_sdk_ios_5a256d39a40fa37afa000628/analytics",
+					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/umeng/common",
+					"$(PROJECT_DIR)/umeng/analytics",
+				);
+				"FRAMEWORK_SEARCH_PATHS[arch=*]" = "$(PROJECT_DIR)/**";
+				"HEADER_SEARCH_PATHS[arch=*]" = "$(PROJECT_DIR)/**";
 				INFOPLIST_FILE = "Supervision Search/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -418,6 +448,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 4.0;
+				"SYSTEM_FRAMEWORK_SEARCH_PATHS[arch=*]" = "$(PROJECT_DIR)";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -427,6 +458,15 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = S3XP72WELV;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(PROJECT_DIR)/**",
+					"$(PROJECT_DIR)/umeng_sdk_ios_5a256d39a40fa37afa000628/common",
+					"$(PROJECT_DIR)/umeng_sdk_ios_5a256d39a40fa37afa000628/analytics",
+					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/umeng/common",
+					"$(PROJECT_DIR)/umeng/analytics",
+				);
+				"HEADER_SEARCH_PATHS[arch=*]" = "$(PROJECT_DIR)/**";
 				INFOPLIST_FILE = "Supervision Search/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -434,6 +474,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 4.0;
+				"SYSTEM_FRAMEWORK_SEARCH_PATHS[arch=*]" = "$(PROJECT_DIR)";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;

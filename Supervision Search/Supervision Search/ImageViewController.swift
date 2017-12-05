@@ -12,7 +12,7 @@ import Speech
 import AudioToolbox
 import SystemConfiguration
 
-class ImageViewController: UIViewController, UIScrollViewDelegate, UISearchBarDelegate , SFSpeechRecognizerDelegate , UITextFieldDelegate{
+class ImageViewController: UIViewController, UIScrollViewDelegate, UISearchBarDelegate , SFSpeechRecognizerDelegate , UITextFieldDelegate {
 
     @IBOutlet weak var zoomButton: UIImageView!
     @IBOutlet weak var retry: UIImageView!
@@ -34,7 +34,6 @@ class ImageViewController: UIViewController, UIScrollViewDelegate, UISearchBarDe
     
     var imageView: UIImageView? = {
         let v = UIImageView()
-        // v.translatesAutoresizingMaskIntoConstraints = false
         v.backgroundColor = UIColor.black
         return v
     }()
@@ -495,6 +494,9 @@ class ImageViewController: UIViewController, UIScrollViewDelegate, UISearchBarDe
         if key == "" {
             return
         }
+        
+        // Anaytics
+        MobClick.event("searched", label: key)
         
         saveState(to: key)
         wordCursor = 0
