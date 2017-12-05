@@ -433,8 +433,6 @@
 				DEVELOPMENT_TEAM = S3XP72WELV;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/**",
-					"$(PROJECT_DIR)/umeng_sdk_ios_5a256d39a40fa37afa000628/common",
-					"$(PROJECT_DIR)/umeng_sdk_ios_5a256d39a40fa37afa000628/analytics",
 					"$(PROJECT_DIR)",
 					"$(PROJECT_DIR)/umeng/common",
 					"$(PROJECT_DIR)/umeng/analytics",
@@ -460,8 +458,6 @@
 				DEVELOPMENT_TEAM = S3XP72WELV;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/**",
-					"$(PROJECT_DIR)/umeng_sdk_ios_5a256d39a40fa37afa000628/common",
-					"$(PROJECT_DIR)/umeng_sdk_ios_5a256d39a40fa37afa000628/analytics",
 					"$(PROJECT_DIR)",
 					"$(PROJECT_DIR)/umeng/common",
 					"$(PROJECT_DIR)/umeng/analytics",
