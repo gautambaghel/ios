@@ -171,7 +171,7 @@ class CameraController: UIViewController, AVCapturePhotoCaptureDelegate {
         zoomSlider.widthAnchor.constraint(equalToConstant: view.frame.height/3).isActive = true
         
         zoomSlider.minimumValue = 1.0
-        zoomSlider.maximumValue = (Float(getDeviceMaxZoom() / 2))
+        zoomSlider.maximumValue = 10
         zoomSlider.isContinuous = true
         zoomSlider.value = 1.0
         zoomSlider.tintColor = UIColor.black
@@ -214,7 +214,10 @@ class CameraController: UIViewController, AVCapturePhotoCaptureDelegate {
     }
     
     @IBAction func zoomChanged(_ sender: UISlider) {
-         setZoom(toFactor: CGFloat(sender.value))
+        // let factor = CGFloat(powf(1.05,sender.value))
+        let factor = CGFloat(sender.value)
+        print(factor)
+        setZoom(toFactor: factor)
     }
     
     @IBAction func findPressed(_ sender: UIButton) {

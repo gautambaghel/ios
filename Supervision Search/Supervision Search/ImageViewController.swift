@@ -24,25 +24,26 @@ class ImageViewController: UIViewController, UIScrollViewDelegate, UISearchBarDe
     @IBOutlet weak var info: UIButton!
     @IBOutlet weak var mainView: UIView!
     
-    var pointsToZoom: [CGPoint]?
-    var wordsFound: [CGRect]?
-    var wordCursor = 0
+    private var pointsToZoom: [CGPoint]?
+    private var wordsFound: [CGRect]?
+    private var wordCursor = 0
     
     // Flags
-    var firstTimePressFlag = true
-    var isBlinking = false
-    var imageOriented = false
-    var isLandscape = false
+    private var firstTimePressFlag = true
+    private var isBlinking = false
+    private var imageOriented = false
+    private var isLandscape = false
 
+    // set on Camera Controller
     var imageData: Data? = nil
     
-    var imageView: UIImageView? = {
+    private var imageView: UIImageView? = {
         let v = UIImageView()
         v.backgroundColor = UIColor.black
         return v
     }()
     
-    var scrollView: UIScrollView? = {
+    private var scrollView: UIScrollView? = {
         let v = UIScrollView()
         v.translatesAutoresizingMaskIntoConstraints = false
         v.backgroundColor = UIColor.black
@@ -51,11 +52,11 @@ class ImageViewController: UIViewController, UIScrollViewDelegate, UISearchBarDe
         return v
     }()
     
-    var ocr = CognitiveServices.sharedInstance.ocr
-    var image: UIImage?
-    var highlightedImage: UIImage?
-    var isHighlighted: Bool = false
-    var textField: UILabel?
+    private var ocr = CognitiveServices.sharedInstance.ocr
+    private var image: UIImage?
+    private var highlightedImage: UIImage?
+    private var isHighlighted: Bool = false
+    private var textField: UILabel?
     
     // Speech stuff
     private var speechRecognizer: SFSpeechRecognizer? = nil
@@ -68,6 +69,11 @@ class ImageViewController: UIViewController, UIScrollViewDelegate, UISearchBarDe
     private var alertController: UIAlertController? = nil
     private var responseRecieved = false
     private let synth = AVSpeechSynthesizer()
+    
+    private var keyDictionary: Dictionary<String, String> = [
+        "price"   : "$",
+        "rate"    : "%"
+    ]
     
     override var shouldAutorotate: Bool {
         return false
@@ -251,7 +257,7 @@ class ImageViewController: UIViewController, UIScrollViewDelegate, UISearchBarDe
             }
             
             if error != nil {
-                self.speak(this: "Sorry didn't catch that")
+                self.speak(this: "Sorry, didn't catch that")
             }
         })
         
@@ -284,9 +290,18 @@ class ImageViewController: UIViewController, UIScrollViewDelegate, UISearchBarDe
         try? self.audioSession.setActive(false, with: .notifyOthersOnDeactivation)
         
         if resultIsValid {
-           self.searchBar.text = result.bestTranscription.formattedString
+           let spoken = result.bestTranscription.formattedString.lowercased()
+            if let key = keyWordsSpoken(in: spoken){
+                self.searchBar.text = key + " " + spoken
+            } else {
+                self.searchBar.text = spoken
+            }
            self.processAndSearch()
         }
+    }
+    
+    func keyWordsSpoken(in words: String) -> String? {
+        return self.keyDictionary[words]
     }
     
     func speechRecognizer(_ speechRecognizer: SFSpeechRecognizer, availabilityDidChange available: Bool) {
@@ -506,7 +521,7 @@ class ImageViewController: UIViewController, UIScrollViewDelegate, UISearchBarDe
             return
         }
         
-        // Anaytics
+        // Analytics
         MobClick.event("searched", label: key)
         
         saveState(to: key)
@@ -515,29 +530,32 @@ class ImageViewController: UIViewController, UIScrollViewDelegate, UISearchBarDe
         pointsToZoom = [CGPoint]()
         wordsFound = [CGRect]()
         
-        for (word, coordinates) in self.ocr.wordCoordinates {
-            
-            var cleanedWord = word.trimmingCharacters(in: .whitespacesAndNewlines)
-            // 'cleanedWord = removeSpecialCharsFromString(text: cleanedWord)
-            cleanedWord = cleanedWord.lowercased()
-            
-            if (similarCalc(for: key, with: cleanedWord) >= 0.6) ||
-                (similarCalc(for: key + "s", with: cleanedWord) >= 0.6) {
+        let searchedWords = key.split(separator: " ")
+        for index in 0..<searchedWords.count {
+            for (word, coordinates) in self.ocr.wordCoordinates {
                 
-                for wordRect in coordinates {
+                var cleanedWord = word.trimmingCharacters(in: .whitespacesAndNewlines)
+                // 'cleanedWord = removeSpecialCharsFromString(text: cleanedWord)
+                cleanedWord = cleanedWord.lowercased()
+            
+                if (similarCalc(for: String(searchedWords[index]), with: cleanedWord) >= 0.6) ||
+                    (similarCalc(for: String(searchedWords[index]) + "s", with: cleanedWord) >= 0.6) {
                     
-                    let wRect = wordRect.split(separator: ",").map(String.init)
-                    let x = Double(wRect[0])!
-                    let y = Double(wRect[1])!
-                    let width = Double(wRect[2])!
-                    let height = Double(wRect[3])!
-                    
-                    let rect = CGRect(x: x, y: y, width: width, height: height)
-                    // Add only if location not already present
-                    if !(wordsFound?.contains(rect))!{
-                        wordsFound?.append(rect)
-                        let pointToZoom = CGPoint(x: x + (width / 2), y: y + (height / 2))
-                        pointsToZoom?.append(pointToZoom)
+                    for wordRect in coordinates {
+                        
+                        let wRect = wordRect.split(separator: ",").map(String.init)
+                        let x = Double(wRect[0])!
+                        let y = Double(wRect[1])!
+                        let width = Double(wRect[2])!
+                        let height = Double(wRect[3])!
+                        
+                        let rect = CGRect(x: x, y: y, width: width, height: height)
+                        // Add only if location not already present
+                        if !(wordsFound?.contains(rect))!{
+                            wordsFound?.append(rect)
+                            let pointToZoom = CGPoint(x: x + (width / 2), y: y + (height / 2))
+                            pointsToZoom?.append(pointToZoom)
+                        }
                     }
                 }
             }
@@ -583,7 +601,7 @@ class ImageViewController: UIViewController, UIScrollViewDelegate, UISearchBarDe
     func removeSpecialCharsFromString(text: String) -> String {
         let okayChars : Set<Character> =
             Set("abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLKMNOPQRSTUVWXYZ1234567890%$")
-        return String(text.filter {okayChars.contains($0) })
+        return String(text.filter {okayChars.contains($0)})
     }
     
     
