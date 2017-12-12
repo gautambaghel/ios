@@ -174,7 +174,10 @@ class ImageViewController: UIViewController, UIScrollViewDelegate, UISearchBarDe
                         Progress.shared.hideProgressView()
                         self.retry.isHidden = true
                         
-                        self.orientImage()
+                        if !self.imageOriented {
+                            self.orientImage()
+                        }
+                        
                         if self.searchBar.text != "" || self.searchBar.text != nil{
                             self.processAndSearch()
                         }
@@ -632,13 +635,17 @@ class ImageViewController: UIViewController, UIScrollViewDelegate, UISearchBarDe
             break
         }
     
-        angle = -self.ocr.textAngle
-        image = rotateImage(image: image!, angle: angle)
+        angle = self.ocr.textAngle
+        image = rotateImage(image: image!, angle: degreesTo(radians: angle))
         self.imageView?.image = image
         self.imageOriented = true
     }
     
-    func radians(degrees s1: Float) -> Float {
+    func degreesTo(radians s1: Float) -> Float {
+        return s1 * Float(180/Float.pi)
+    }
+    
+    func radiansTo(degrees s1: Float) -> Float {
         return s1 * Float(Float.pi/180)
     }
     
@@ -651,7 +658,7 @@ class ImageViewController: UIViewController, UIScrollViewDelegate, UISearchBarDe
         UIGraphicsBeginImageContext(image.size)
         let context = UIGraphicsGetCurrentContext()
         var transform = CGAffineTransform.init(translationX: cx , y: cy)
-        transform = transform.rotated(by: CGFloat(radians(degrees: angle)))
+        transform = transform.rotated(by: CGFloat(radiansTo(degrees: angle)))
         transform = transform.translatedBy(x: -cx, y: -cy)
         context!.concatenate(transform)
         image.draw(at: .zero)
@@ -700,7 +707,7 @@ class ImageViewController: UIViewController, UIScrollViewDelegate, UISearchBarDe
         if isLandscape {
             let cx = CGFloat(context!.width)
             var transform = CGAffineTransform.init(translationX: cx , y: 0)
-            transform = transform.rotated(by: CGFloat(radians(degrees: 90)))
+            transform = transform.rotated(by: CGFloat(radiansTo(degrees: 90)))
             // Method only called when pointsToZoom is >0
             context!.concatenate(transform)
             for i in 0..<pointsToZoom!.count {

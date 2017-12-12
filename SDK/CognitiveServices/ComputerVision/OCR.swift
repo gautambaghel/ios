@@ -87,7 +87,7 @@ class OCR: NSObject {
     func recognizeCharactersWithRequestObject(_ requestObject: OCRRequestObject, completion: @escaping (_ response: [String:AnyObject]?, _ error: String) -> Void) throws {
 
         // Generate the url
-        let requestUrlString = url + "?language=" + requestObject.language.rawValue + "&detectOrientation%20=\(requestObject.detectOrientation)"
+        let requestUrlString = url + "?language=" + Languages.English.rawValue + "&detectOrientation%20=\(requestObject.detectOrientation)"
         let requestUrl = URL(string: requestUrlString)
         
         

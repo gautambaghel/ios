@@ -90,7 +90,6 @@ class CameraController: UIViewController, AVCapturePhotoCaptureDelegate {
         self.checkCameraAuthorization { authorized in
             if authorized {
                 // Proceed to set up and use the camera.
-                
                 self.previewView.session = self.captureSession
                 self.previewView.aspectRatio = AVLayerVideoGravity.resizeAspectFill as AVLayerVideoGravity
                 self.previewView.addGestureRecognizer(UIPinchGestureRecognizer(target: self, action: #selector(self.pinchDetected)))
@@ -171,7 +170,7 @@ class CameraController: UIViewController, AVCapturePhotoCaptureDelegate {
         zoomSlider.widthAnchor.constraint(equalToConstant: view.frame.height/3).isActive = true
         
         zoomSlider.minimumValue = 1.0
-        zoomSlider.maximumValue = 10
+        zoomSlider.maximumValue = 20.0
         zoomSlider.isContinuous = true
         zoomSlider.value = 1.0
         zoomSlider.tintColor = UIColor.black
@@ -214,10 +213,10 @@ class CameraController: UIViewController, AVCapturePhotoCaptureDelegate {
     }
     
     @IBAction func zoomChanged(_ sender: UISlider) {
-        // let factor = CGFloat(powf(1.05,sender.value))
-        let factor = CGFloat(sender.value)
-        print(factor)
-        setZoom(toFactor: factor)
+        let factor = CGFloat(sender.value) - 2 // constant to avoid slider jump
+        if factor >= 1 {
+            setZoom(toFactor: factor)
+        }
     }
     
     @IBAction func findPressed(_ sender: UIButton) {
@@ -238,7 +237,12 @@ class CameraController: UIViewController, AVCapturePhotoCaptureDelegate {
             let photoSettings = AVCapturePhotoSettings()
             photoSettings.isAutoStillImageStabilizationEnabled = true
             photoSettings.isHighResolutionPhotoEnabled = true
-            photoSettings.flashMode = .auto
+            
+            let device = self.defaultDevice()
+            if device.isFlashAvailable {
+                let position = device.position
+                photoSettings.flashMode = position == .front || position == .unspecified ? .off : .auto
+            }
             
             capturePhotoOutput.capturePhoto(with: photoSettings, delegate: self)
         }
