@@ -11,20 +11,12 @@ import UIKit
 class ViewController: UIViewController {
     
     @IBOutlet var tiles: [UITextField]!
-    @IBOutlet var smallBoards: [UIView]!
     @IBOutlet weak var menuButton: UIButton!
     
     private var board = SudokuGenrator()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        // yellow background view boards
-        for board in smallBoards {
-            board.layer.cornerRadius = 10;
-            board.layer.masksToBounds = true;
-        }
-        
         
         let preferences = UserDefaults.standard
         let continueGameKey = "continueGame"
@@ -34,6 +26,10 @@ class ViewController: UIViewController {
         }else {
             startNewGame()
         }
+    }
+    
+    @IBAction func done(_ sender: UIBarButtonItem) {
+        dismiss(animated: true, completion: nil)
     }
     
     @IBAction func tileTapped(_ sender: UITextField) {
@@ -48,7 +44,7 @@ class ViewController: UIViewController {
         sender.endEditing(true)
     }
     
-    @IBAction func submit(_ sender: UIButton) {
+    @IBAction func submit(_ sender: UIBarButtonItem) {
         
         var title = "Incorrect!"
         var message = "Try again"
@@ -88,11 +84,9 @@ class ViewController: UIViewController {
             self.present(alert, animated: true, completion: nil)
             
         }
-        
     }
-    
-    @IBAction func retry(_ sender: UIButton) {
-        
+  
+    @IBAction func retry(_ sender: UIBarButtonItem) {
         let refreshAlert = UIAlertController(title: "Resetting Board", message: "Are you sure?", preferredStyle: UIAlertControllerStyle.alert)
         
         refreshAlert.addAction(UIAlertAction(title: "Yeah!", style: .default, handler: { (action: UIAlertAction!) in
@@ -132,6 +126,7 @@ class ViewController: UIViewController {
             }
         }
     }
+    
     
     func continueGame(Data gameData: String){
         board.putState(Data: gameData)

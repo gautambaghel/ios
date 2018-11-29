@@ -205,4 +205,10 @@ typedef NS_ENUM (NSUInteger, eScenarioType)
 
 + (void)setCrashCBBlock:(CallbackBlock)cbBlock;
 
+/** DeepLink事件
+ @param link 唤起应用的link
+ @return void.
+ */
++ (void)onDeepLinkReceived:(NSURL *)link;
+
 @end

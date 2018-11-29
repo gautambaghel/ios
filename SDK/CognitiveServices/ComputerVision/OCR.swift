@@ -138,8 +138,8 @@ class OCR: NSObject {
         // reset word Coordinates
         wordCoordinates.removeAll()
         
-        if let a = dictionary["textAngle"] {
-            textAngle = a as! Float
+        if let a = dictionary["textAngle"] as? NSNumber{
+            textAngle = a.floatValue
         }
         
         if let o = dictionary["orientation"] {

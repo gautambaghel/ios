@@ -92,7 +92,9 @@ class CameraController: UIViewController, AVCapturePhotoCaptureDelegate {
                 // Proceed to set up and use the camera.
                 self.previewView.session = self.captureSession
                 self.previewView.aspectRatio = AVLayerVideoGravity.resizeAspectFill as AVLayerVideoGravity
-                self.previewView.addGestureRecognizer(UIPinchGestureRecognizer(target: self, action: #selector(self.pinchDetected)))
+                DispatchQueue.main.async {
+                    self.previewView.addGestureRecognizer(UIPinchGestureRecognizer(target: self, action: #selector(self.pinchDetected)))
+                }
                 
                 let photoSettings = AVCapturePhotoSettings()
                 photoSettings.isAutoStillImageStabilizationEnabled = true

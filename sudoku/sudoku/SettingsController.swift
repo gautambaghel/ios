@@ -16,6 +16,10 @@ class SettingsController: UIViewController , UIPickerViewDelegate, UIPickerViewD
     private var pickerData: [String] = [String]()
     static var settings = Settings()
     
+    @IBAction func done(_ sender: UIBarButtonItem) {
+        dismiss(animated: true, completion: nil)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         

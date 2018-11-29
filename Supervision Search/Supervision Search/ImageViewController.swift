@@ -469,10 +469,12 @@ class ImageViewController: UIViewController, UIScrollViewDelegate, UISearchBarDe
     }
     
     func toggleMicButton(enable: Bool) {
-        if enable {
-            microphoneButton.isEnabled = true
-        } else {
-            microphoneButton.isEnabled = false
+        DispatchQueue.main.async {
+            if enable {
+                self.microphoneButton.isEnabled = true
+            } else {
+                self.microphoneButton.isEnabled = false
+            }
         }
     }
     
