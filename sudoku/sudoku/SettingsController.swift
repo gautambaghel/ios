@@ -14,9 +14,10 @@ class SettingsController: UIViewController , UIPickerViewDelegate, UIPickerViewD
     @IBOutlet weak var musicSwitch: UISwitch!
     
     private var pickerData: [String] = [String]()
-    static var settings = Settings()
+    private var settings = Settings()
     
     @IBAction func done(_ sender: UIBarButtonItem) {
+        self.saveSettings()
         dismiss(animated: true, completion: nil)
     }
     
@@ -30,11 +31,17 @@ class SettingsController: UIViewController , UIPickerViewDelegate, UIPickerViewD
         // Input data into the Array:
         pickerData = ["EASY", "MEDIUM", "HARD"]
         
-        if let i = pickerData.index(of: SettingsController.settings.level) {
+        let preferences = UserDefaults.standard
+        let continueGameKey = "settings"
+        if let settingsData = preferences.string(forKey: continueGameKey) {
+            self.settings.set(settingsString: settingsData)
+        }
+        
+        if let i = pickerData.index(of: settings.level) {
             levelPicker.selectRow(i, inComponent: 0, animated: true)
         }
         
-        musicSwitch.setOn(SettingsController.settings.music, animated: true)
+        musicSwitch.setOn(settings.music, animated: true)
         
     }
     
@@ -63,15 +70,24 @@ class SettingsController: UIViewController , UIPickerViewDelegate, UIPickerViewD
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        SettingsController.settings.level = pickerData[row]
+        settings.level = pickerData[row]
     }
     
     @IBAction func musicSwitchToggle(_ sender: UISwitch) {
         if sender.isOn {
-            SettingsController.settings.music = true
+            settings.music = true
         } else {
-            SettingsController.settings.music = false
+            settings.music = false
         }
+    }
+    
+    func saveSettings(){
+        let preferences = UserDefaults.standard
+        let continueGameKey = "settings"
+        
+        preferences.set(settings.toString(), forKey: continueGameKey)
+        //  Save to disk
+        preferences.synchronize()
     }
     
 }

@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct SudokuGenrator{
+struct SudokuGenrator {
     
     
     // ONLY two boardStates VARIABLE & FIXED
@@ -163,12 +163,8 @@ struct SudokuGenrator{
      */
     func printBoard() {
         for i in 0..<9  {
-            for j in 0..<9 {
-                print("\(board[i][j]) ")
-            }
-            print("\n")
+           print(board[i])
         }
-        print("\n")
     }
     
     func getThisElement(row x: Int, column y: Int) -> Int{
@@ -215,13 +211,16 @@ struct SudokuGenrator{
         for large in 0..<9 {
             for small in 0..<9 {
                 
-                let number: Int = Int(fields[index])!
-                index+=1
-                setThisElement(row: large, column: small, value: number)
-                
-                let state: String = fields[index]
-                index+=1
-                setThisElementState(row: large, column: small,state: state)
+                if let number = Int(fields[index]) {
+                    let state = fields[index+1]
+                    if number != 0 {
+                        setThisElement(row: large, column: small, value: number)
+                        setThisElementState(row: large, column: small, state: state)
+                    } else {
+                        setThisElementState(row: large, column: small, state: "VARIABLE")
+                    }
+                    index += 2
+                }
                 
             }
         }

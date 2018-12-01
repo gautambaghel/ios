@@ -23,4 +23,20 @@ struct Settings {
         music = Bool(fields[0])!
         level = fields[1]
     }
+    
+    func getLevel() -> Int {
+        switch level {
+        case "EASY":
+            // Random no b/w 33-46
+            return Int(arc4random_uniform(14) + 33);
+        case "MEDIUM":
+            // Random no b/w 47-53
+            return Int(arc4random_uniform(7) + 47);
+        case "HARD":
+            // Random no b/w 54-55
+            return Int(arc4random_uniform(2) + 54);
+        default:
+            return 35
+        }
+    }
 }

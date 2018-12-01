@@ -13,14 +13,8 @@ class MenuController: UIViewController, UIPopoverPresentationControllerDelegate 
     @IBOutlet weak var background: UIImageView!
     
     override func viewDidLoad() {
+        super.viewDidLoad()
         animate(background)
-        
-        let preferences = UserDefaults.standard
-        let saveSettings = "saveSettings"
-        
-        if let settingsData = preferences.string(forKey: saveSettings) {
-            applySettings(settingsData: settingsData)
-        }
     }
     
     func animate(_ image: UIImageView) {
@@ -52,24 +46,6 @@ class MenuController: UIViewController, UIPopoverPresentationControllerDelegate 
     @IBAction func settingsButton(_ sender: UIButton) {
         self.performSegue(withIdentifier: "settingsSegue", sender: self)
     }
-    
-    func saveSettings () {
-        
-        let preferences = UserDefaults.standard
-        let saveSettings = "saveSettings"
-        
-        preferences.set(SettingsController.settings.toString(), forKey: saveSettings)
-        //  Save to disk
-        preferences.synchronize()
-    }
-    
-    func applySettings (settingsData data: String) {
-        SettingsController.settings.set(settingsString: data)
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        saveSettings()
-    }
+
     
 }
