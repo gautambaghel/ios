@@ -34,6 +34,8 @@ class ViewController: UIViewController {
     }
     
     @IBAction func done(_ sender: UIBarButtonItem) {
+        
+        saveGame()
         let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
         let menuController:MenuController = storyBoard.instantiateViewController(withIdentifier: "MenuController") as! MenuController
         self.present(menuController, animated: true, completion: nil)
@@ -46,6 +48,7 @@ class ViewController: UIViewController {
            let thisRow = Int(loc.split(separator: ",")[0]),
            let thisColumn = Int(loc.split(separator: ",")[1]) {
             board.setThisElement(row: thisRow, column: thisColumn, value: thisValue)
+            saveGame()
         }
         sender.endEditing(true)
     }
@@ -53,6 +56,7 @@ class ViewController: UIViewController {
     @IBAction func submit(_ sender: UIBarButtonItem) {
         
         board.printBoard()
+        saveGame()
         
         var title = "Incorrect!"
         var message = "Try again"
@@ -143,22 +147,22 @@ class ViewController: UIViewController {
         
         for (_, tile) in tiles.enumerated() {
         
-          if let location = tile.accessibilityIdentifier {
+          if let location = tile.accessibilityIdentifier,
+             let thisRow = Int(location.split(separator: ",")[0]),
+             let thisColumn = Int(location.split(separator: ",")[1]){
             
-            let thisRow = Int(location.split(separator: ",")[0])!
-            let thisColumn = Int(location.split(separator: ",")[1])!
-            let element = board.getThisElement(row: thisRow, column: thisColumn)
-            let state = board.getThisElementState(row: thisRow, column: thisColumn)
+             let element = board.getThisElement(row: thisRow, column: thisColumn)
+             let state = board.getThisElementState(row: thisRow, column: thisColumn)
             
-            // center every alphabet
-            tile.textAlignment = .center
+             // center every alphabet
+             tile.textAlignment = .center
             
-            if state == "FIXED" {
+             if state == "FIXED" {
                 
                 makeThisTileFixed(Tile: tile)
                 tile.text = String(element)
                 
-            } else {
+             } else {
                 
                 makeThisTileVariable(Tile: tile)
                 
@@ -172,7 +176,7 @@ class ViewController: UIViewController {
             
           }
             
-        }
+       }
     }
     
     func makeThisTileFixed(Tile tile: UITextField){
@@ -203,11 +207,6 @@ class ViewController: UIViewController {
         preferences.set(nil, forKey: continueGameKey)
         //  Save to disk
         preferences.synchronize()
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        saveGame()
     }
     
 }

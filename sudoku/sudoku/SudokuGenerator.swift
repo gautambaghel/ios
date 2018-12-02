@@ -213,12 +213,8 @@ struct SudokuGenrator {
                 
                 if let number = Int(fields[index]) {
                     let state = fields[index+1]
-                    if number != 0 {
-                        setThisElement(row: large, column: small, value: number)
-                        setThisElementState(row: large, column: small, state: state)
-                    } else {
-                        setThisElementState(row: large, column: small, state: "VARIABLE")
-                    }
+                    setThisElement(row: large, column: small, value: number)
+                    setThisElementState(row: large, column: small, state: state)
                     index += 2
                 }
                 
