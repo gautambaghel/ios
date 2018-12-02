@@ -40,12 +40,12 @@ class ViewController: UIViewController {
     }
     
     @IBAction func tileTapped(_ sender: UITextField) {
-        
-        let thisValue = Int(sender.text!)
-        if let loc = sender.accessibilityIdentifier,
+    
+        if let thisValue = Int(sender.text!),
+           let loc = sender.accessibilityIdentifier,
            let thisRow = Int(loc.split(separator: ",")[0]),
            let thisColumn = Int(loc.split(separator: ",")[1]) {
-             board.setThisElement(row: thisRow, column: thisColumn, value: thisValue!)
+            board.setThisElement(row: thisRow, column: thisColumn, value: thisValue)
         }
         sender.endEditing(true)
     }

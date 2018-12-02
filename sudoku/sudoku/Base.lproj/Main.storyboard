@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="agZ-02-Ydm">
-    <device id="retina3_5" orientation="landscape">
+    <device id="retina3_5" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
@@ -21,50 +21,50 @@
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="480" height="288"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="416"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="fmt-UY-S6b">
-                                <rect key="frame" x="16" y="20" width="448" height="248"/>
+                                <rect key="frame" x="16" y="20" width="288" height="376"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="WlN-zw-mzE">
-                                        <rect key="frame" x="0.0" y="0.0" width="448" height="72.5"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="288" height="115.5"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="5za-0V-NpT">
-                                                <rect key="frame" x="0.0" y="0.0" width="139.5" height="72.5"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="86" height="115.5"/>
                                                 <subviews>
                                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="VeF-gj-KkS">
-                                                        <rect key="frame" x="0.0" y="0.0" width="139.5" height="21"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="86" height="35"/>
                                                         <subviews>
                                                             <textField opaque="NO" clipsSubviews="YES" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="justified" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="SZL-0h-uaa">
-                                                                <rect key="frame" x="0.0" y="0.0" width="43" height="21"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="25.5" height="35"/>
                                                                 <color key="backgroundColor" cocoaTouchSystemColor="lightTextColor"/>
                                                                 <accessibility key="accessibilityConfiguration" identifier="0,0"/>
                                                                 <nil key="textColor"/>
                                                                 <fontDescription key="fontDescription" name="Papyrus" family="Papyrus" pointSize="20"/>
-                                                                <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                                                                <textInputTraits key="textInputTraits" keyboardType="numberPad" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
                                                                 <connections>
                                                                     <action selector="tileTapped:" destination="BYZ-38-t0r" eventType="editingChanged" id="exF-I5-6mq"/>
                                                                 </connections>
                                                             </textField>
                                                             <textField opaque="NO" clipsSubviews="YES" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="justified" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Yf4-Td-wNT">
-                                                                <rect key="frame" x="48" y="0.0" width="43" height="21"/>
+                                                                <rect key="frame" x="30.5" y="0.0" width="25" height="35"/>
                                                                 <color key="backgroundColor" cocoaTouchSystemColor="lightTextColor"/>
                                                                 <accessibility key="accessibilityConfiguration" identifier="0,1"/>
                                                                 <nil key="textColor"/>
                                                                 <fontDescription key="fontDescription" name="Papyrus" family="Papyrus" pointSize="21"/>
-                                                                <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                                                                <textInputTraits key="textInputTraits" keyboardType="numberPad" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
                                                                 <connections>
                                                                     <action selector="tileTapped:" destination="BYZ-38-t0r" eventType="editingChanged" id="hbi-pg-aDr"/>
                                                                 </connections>
                                                             </textField>
                                                             <textField opaque="NO" clipsSubviews="YES" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="justified" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="NSY-32-PAy">
-                                                                <rect key="frame" x="96" y="0.0" width="43.5" height="21"/>
+                                                                <rect key="frame" x="60.5" y="0.0" width="25.5" height="35"/>
                                                                 <color key="backgroundColor" cocoaTouchSystemColor="lightTextColor"/>
                                                                 <accessibility key="accessibilityConfiguration" identifier="0,2"/>
                                                                 <nil key="textColor"/>
                                                                 <fontDescription key="fontDescription" name="Papyrus" family="Papyrus" pointSize="21"/>
-                                                                <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                                                                <textInputTraits key="textInputTraits" keyboardType="numberPad" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
                                                                 <connections>
                                                                     <action selector="tileTapped:" destination="BYZ-38-t0r" eventType="editingChanged" id="AyX-hq-gKq"/>
                                                                 </connections>
@@ -72,37 +72,37 @@
                                                         </subviews>
                                                     </stackView>
                                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="FWV-C8-pqa">
-                                                        <rect key="frame" x="0.0" y="26" width="139.5" height="21"/>
+                                                        <rect key="frame" x="0.0" y="40" width="86" height="35"/>
                                                         <subviews>
                                                             <textField opaque="NO" clipsSubviews="YES" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="justified" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Kma-9M-rjV">
-                                                                <rect key="frame" x="0.0" y="0.0" width="43" height="21"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="25.5" height="35"/>
                                                                 <color key="backgroundColor" cocoaTouchSystemColor="lightTextColor"/>
                                                                 <accessibility key="accessibilityConfiguration" identifier="1,0"/>
                                                                 <nil key="textColor"/>
                                                                 <fontDescription key="fontDescription" name="Papyrus" family="Papyrus" pointSize="21"/>
-                                                                <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                                                                <textInputTraits key="textInputTraits" keyboardType="numberPad" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
                                                                 <connections>
                                                                     <action selector="tileTapped:" destination="BYZ-38-t0r" eventType="editingChanged" id="SvU-o2-vBV"/>
                                                                 </connections>
                                                             </textField>
                                                             <textField opaque="NO" clipsSubviews="YES" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="justified" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="wiv-yU-kIJ">
-                                                                <rect key="frame" x="48" y="0.0" width="43" height="21"/>
+                                                                <rect key="frame" x="30.5" y="0.0" width="25" height="35"/>
                                                                 <color key="backgroundColor" cocoaTouchSystemColor="lightTextColor"/>
                                                                 <accessibility key="accessibilityConfiguration" identifier="1,1"/>
                                                                 <nil key="textColor"/>
                                                                 <fontDescription key="fontDescription" name="Papyrus" family="Papyrus" pointSize="21"/>
-                                                                <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                                                                <textInputTraits key="textInputTraits" keyboardType="numberPad" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
                                                                 <connections>
                                                                     <action selector="tileTapped:" destination="BYZ-38-t0r" eventType="editingChanged" id="Ojv-gU-3tF"/>
                                                                 </connections>
                                                             </textField>
                                                             <textField opaque="NO" clipsSubviews="YES" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="justified" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="NvH-9Z-6QD">
-                                                                <rect key="frame" x="96" y="0.0" width="43.5" height="21"/>
+                                                                <rect key="frame" x="60.5" y="0.0" width="25.5" height="35"/>
                                                                 <color key="backgroundColor" cocoaTouchSystemColor="lightTextColor"/>
                                                                 <accessibility key="accessibilityConfiguration" identifier="1,2"/>
                                                                 <nil key="textColor"/>
                                                                 <fontDescription key="fontDescription" name="Papyrus" family="Papyrus" pointSize="21"/>
-                                                                <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                                                                <textInputTraits key="textInputTraits" keyboardType="numberPad" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
                                                                 <connections>
                                                                     <action selector="tileTapped:" destination="BYZ-38-t0r" eventType="editingChanged" id="P3s-bg-Pa6"/>
                                                                 </connections>
@@ -110,36 +110,37 @@
                                                         </subviews>
                                                     </stackView>
                                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="yg7-Z0-O27">
-                                                        <rect key="frame" x="0.0" y="52" width="139.5" height="20.5"/>
+                                                        <rect key="frame" x="0.0" y="80" width="86" height="35.5"/>
                                                         <subviews>
                                                             <textField opaque="NO" clipsSubviews="YES" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="justified" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="PVo-lJ-gSe">
-                                                                <rect key="frame" x="0.0" y="0.0" width="43" height="20.5"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="25.5" height="35.5"/>
                                                                 <color key="backgroundColor" cocoaTouchSystemColor="lightTextColor"/>
                                                                 <accessibility key="accessibilityConfiguration" identifier="2,0"/>
                                                                 <nil key="textColor"/>
                                                                 <fontDescription key="fontDescription" name="Papyrus" family="Papyrus" pointSize="21"/>
-                                                                <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                                                                <textInputTraits key="textInputTraits" keyboardType="numberPad" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
                                                                 <connections>
                                                                     <action selector="tileTapped:" destination="BYZ-38-t0r" eventType="editingChanged" id="dzQ-GO-hJH"/>
                                                                 </connections>
                                                             </textField>
                                                             <textField opaque="NO" clipsSubviews="YES" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="justified" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="64N-ZS-pWY">
-                                                                <rect key="frame" x="48" y="0.0" width="43" height="20.5"/>
+                                                                <rect key="frame" x="30.5" y="0.0" width="25" height="35.5"/>
                                                                 <color key="backgroundColor" cocoaTouchSystemColor="lightTextColor"/>
                                                                 <accessibility key="accessibilityConfiguration" identifier="2,1"/>
                                                                 <nil key="textColor"/>
                                                                 <fontDescription key="fontDescription" name="Papyrus" family="Papyrus" pointSize="21"/>
-                                                                <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                                                                <textInputTraits key="textInputTraits" keyboardType="numberPad" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
                                                                 <connections>
                                                                     <action selector="tileTapped:" destination="BYZ-38-t0r" eventType="editingChanged" id="A9b-6p-JFG"/>
                                                                 </connections>
                                                             </textField>
                                                             <textField opaque="NO" clipsSubviews="YES" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="justified" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="elc-dw-VTM">
-                                                                <rect key="frame" x="96" y="0.0" width="43.5" height="20.5"/>
+                                                                <rect key="frame" x="60.5" y="0.0" width="25.5" height="35.5"/>
                                                                 <color key="backgroundColor" cocoaTouchSystemColor="lightTextColor"/>
+                                                                <accessibility key="accessibilityConfiguration" identifier="2,2"/>
                                                                 <nil key="textColor"/>
                                                                 <fontDescription key="fontDescription" name="Papyrus" family="Papyrus" pointSize="21"/>
-                                                                <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                                                                <textInputTraits key="textInputTraits" keyboardType="numberPad" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
                                                                 <connections>
                                                                     <action selector="tileTapped:" destination="BYZ-38-t0r" eventType="editingChanged" id="xj6-cv-GDa"/>
                                                                 </connections>
@@ -149,40 +150,40 @@
                                                 </subviews>
                                             </stackView>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="DSX-7T-VGz">
-                                                <rect key="frame" x="154.5" y="0.0" width="139" height="72.5"/>
+                                                <rect key="frame" x="101" y="0.0" width="86" height="115.5"/>
                                                 <subviews>
                                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="RTk-WN-rgN">
-                                                        <rect key="frame" x="0.0" y="0.0" width="139" height="21"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="86" height="35"/>
                                                         <subviews>
                                                             <textField opaque="NO" clipsSubviews="YES" contentMode="center" horizontalHuggingPriority="249" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="justified" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="n1B-qw-LEb">
-                                                                <rect key="frame" x="0.0" y="0.0" width="43" height="21"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="25.5" height="35"/>
                                                                 <color key="backgroundColor" cocoaTouchSystemColor="lightTextColor"/>
                                                                 <accessibility key="accessibilityConfiguration" identifier="0,3"/>
                                                                 <nil key="textColor"/>
                                                                 <fontDescription key="fontDescription" name="Papyrus" family="Papyrus" pointSize="20"/>
-                                                                <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                                                                <textInputTraits key="textInputTraits" keyboardType="numberPad" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
                                                                 <connections>
                                                                     <action selector="tileTapped:" destination="BYZ-38-t0r" eventType="editingChanged" id="izo-V8-wTt"/>
                                                                 </connections>
                                                             </textField>
                                                             <textField opaque="NO" clipsSubviews="YES" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="justified" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="rLU-b0-ycu">
-                                                                <rect key="frame" x="48" y="0.0" width="43" height="21"/>
+                                                                <rect key="frame" x="30.5" y="0.0" width="25" height="35"/>
                                                                 <color key="backgroundColor" cocoaTouchSystemColor="lightTextColor"/>
                                                                 <accessibility key="accessibilityConfiguration" identifier="0,4"/>
                                                                 <nil key="textColor"/>
                                                                 <fontDescription key="fontDescription" name="Papyrus" family="Papyrus" pointSize="20"/>
-                                                                <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                                                                <textInputTraits key="textInputTraits" keyboardType="numberPad" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
                                                                 <connections>
                                                                     <action selector="tileTapped:" destination="BYZ-38-t0r" eventType="editingChanged" id="3z5-IX-0f1"/>
                                                                 </connections>
                                                             </textField>
                                                             <textField opaque="NO" clipsSubviews="YES" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="justified" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="gYg-tj-3kf">
-                                                                <rect key="frame" x="96" y="0.0" width="43" height="21"/>
+                                                                <rect key="frame" x="60.5" y="0.0" width="25.5" height="35"/>
                                                                 <color key="backgroundColor" cocoaTouchSystemColor="lightTextColor"/>
                                                                 <accessibility key="accessibilityConfiguration" identifier="0,5"/>
                                                                 <nil key="textColor"/>
                                                                 <fontDescription key="fontDescription" name="Papyrus" family="Papyrus" pointSize="20"/>
-                                                                <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                                                                <textInputTraits key="textInputTraits" keyboardType="numberPad" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
                                                                 <connections>
                                                                     <action selector="tileTapped:" destination="BYZ-38-t0r" eventType="editingChanged" id="ba4-43-O6F"/>
                                                                 </connections>
@@ -190,37 +191,37 @@
                                                         </subviews>
                                                     </stackView>
                                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="CdD-X0-Bos">
-                                                        <rect key="frame" x="0.0" y="26" width="139" height="21"/>
+                                                        <rect key="frame" x="0.0" y="40" width="86" height="35"/>
                                                         <subviews>
                                                             <textField opaque="NO" clipsSubviews="YES" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="justified" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="A9R-KE-6E5">
-                                                                <rect key="frame" x="0.0" y="0.0" width="43" height="21"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="25.5" height="35"/>
                                                                 <color key="backgroundColor" cocoaTouchSystemColor="lightTextColor"/>
                                                                 <accessibility key="accessibilityConfiguration" identifier="1,3"/>
                                                                 <nil key="textColor"/>
                                                                 <fontDescription key="fontDescription" name="Papyrus" family="Papyrus" pointSize="20"/>
-                                                                <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                                                                <textInputTraits key="textInputTraits" keyboardType="numberPad" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
                                                                 <connections>
                                                                     <action selector="tileTapped:" destination="BYZ-38-t0r" eventType="editingChanged" id="y3l-IQ-4UD"/>
                                                                 </connections>
                                                             </textField>
                                                             <textField opaque="NO" clipsSubviews="YES" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="justified" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="bb3-Y8-Ig8">
-                                                                <rect key="frame" x="48" y="0.0" width="43" height="21"/>
+                                                                <rect key="frame" x="30.5" y="0.0" width="25" height="35"/>
                                                                 <color key="backgroundColor" cocoaTouchSystemColor="lightTextColor"/>
                                                                 <accessibility key="accessibilityConfiguration" identifier="1,4"/>
                                                                 <nil key="textColor"/>
                                                                 <fontDescription key="fontDescription" name="Papyrus" family="Papyrus" pointSize="20"/>
-                                                                <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                                                                <textInputTraits key="textInputTraits" keyboardType="numberPad" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
                                                                 <connections>
                                                                     <action selector="tileTapped:" destination="BYZ-38-t0r" eventType="editingChanged" id="LVT-Ul-OyJ"/>
                                                                 </connections>
                                                             </textField>
                                                             <textField opaque="NO" clipsSubviews="YES" contentMode="center" horizontalHuggingPriority="249" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="justified" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="so8-Ko-ql2">
-                                                                <rect key="frame" x="96" y="0.0" width="43" height="21"/>
+                                                                <rect key="frame" x="60.5" y="0.0" width="25.5" height="35"/>
                                                                 <color key="backgroundColor" cocoaTouchSystemColor="lightTextColor"/>
                                                                 <accessibility key="accessibilityConfiguration" identifier="1,5"/>
                                                                 <nil key="textColor"/>
                                                                 <fontDescription key="fontDescription" name="Papyrus" family="Papyrus" pointSize="20"/>
-                                                                <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                                                                <textInputTraits key="textInputTraits" keyboardType="numberPad" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
                                                                 <connections>
                                                                     <action selector="tileTapped:" destination="BYZ-38-t0r" eventType="editingChanged" id="mzM-AC-fF0"/>
                                                                 </connections>
@@ -228,36 +229,37 @@
                                                         </subviews>
                                                     </stackView>
                                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="CLP-s6-5x7">
-                                                        <rect key="frame" x="0.0" y="52" width="139" height="20.5"/>
+                                                        <rect key="frame" x="0.0" y="80" width="86" height="35.5"/>
                                                         <subviews>
                                                             <textField opaque="NO" clipsSubviews="YES" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="justified" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="msX-sZ-j1f">
-                                                                <rect key="frame" x="0.0" y="0.0" width="43" height="20.5"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="25.5" height="35.5"/>
                                                                 <color key="backgroundColor" cocoaTouchSystemColor="lightTextColor"/>
                                                                 <accessibility key="accessibilityConfiguration" identifier="2,3"/>
                                                                 <nil key="textColor"/>
                                                                 <fontDescription key="fontDescription" name="Papyrus" family="Papyrus" pointSize="20"/>
-                                                                <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                                                                <textInputTraits key="textInputTraits" keyboardType="numberPad" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
                                                                 <connections>
                                                                     <action selector="tileTapped:" destination="BYZ-38-t0r" eventType="editingChanged" id="lmH-uy-piA"/>
                                                                 </connections>
                                                             </textField>
                                                             <textField opaque="NO" clipsSubviews="YES" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="justified" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="eHQ-dS-WMN">
-                                                                <rect key="frame" x="48" y="0.0" width="43" height="20.5"/>
+                                                                <rect key="frame" x="30.5" y="0.0" width="25" height="35.5"/>
                                                                 <color key="backgroundColor" cocoaTouchSystemColor="lightTextColor"/>
                                                                 <accessibility key="accessibilityConfiguration" identifier="2,4"/>
                                                                 <nil key="textColor"/>
                                                                 <fontDescription key="fontDescription" name="Papyrus" family="Papyrus" pointSize="20"/>
-                                                                <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                                                                <textInputTraits key="textInputTraits" keyboardType="numberPad" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
                                                                 <connections>
                                                                     <action selector="tileTapped:" destination="BYZ-38-t0r" eventType="editingChanged" id="rHW-bL-CzG"/>
                                                                 </connections>
                                                             </textField>
                                                             <textField opaque="NO" clipsSubviews="YES" contentMode="center" horizontalHuggingPriority="249" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="justified" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="SJF-GI-Nzt">
-                                                                <rect key="frame" x="96" y="0.0" width="43" height="20.5"/>
+                                                                <rect key="frame" x="60.5" y="0.0" width="25.5" height="35.5"/>
                                                                 <color key="backgroundColor" cocoaTouchSystemColor="lightTextColor"/>
+                                                                <accessibility key="accessibilityConfiguration" identifier="2,5"/>
                                                                 <nil key="textColor"/>
                                                                 <fontDescription key="fontDescription" name="Papyrus" family="Papyrus" pointSize="20"/>
-                                                                <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                                                                <textInputTraits key="textInputTraits" keyboardType="numberPad" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
                                                                 <connections>
                                                                     <action selector="tileTapped:" destination="BYZ-38-t0r" eventType="editingChanged" id="o4N-wa-J4O"/>
                                                                 </connections>
@@ -267,40 +269,40 @@
                                                 </subviews>
                                             </stackView>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="ihd-0l-Hgi">
-                                                <rect key="frame" x="308.5" y="0.0" width="139.5" height="72.5"/>
+                                                <rect key="frame" x="202" y="0.0" width="86" height="115.5"/>
                                                 <subviews>
                                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="TB7-5d-lts">
-                                                        <rect key="frame" x="0.0" y="0.0" width="139.5" height="21"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="86" height="35"/>
                                                         <subviews>
                                                             <textField opaque="NO" clipsSubviews="YES" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="justified" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="4kx-mC-NRw">
-                                                                <rect key="frame" x="0.0" y="0.0" width="43.5" height="21"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="25.5" height="35"/>
                                                                 <color key="backgroundColor" cocoaTouchSystemColor="lightTextColor"/>
                                                                 <accessibility key="accessibilityConfiguration" identifier="0,6"/>
                                                                 <nil key="textColor"/>
                                                                 <fontDescription key="fontDescription" name="Papyrus" family="Papyrus" pointSize="20"/>
-                                                                <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                                                                <textInputTraits key="textInputTraits" keyboardType="numberPad" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
                                                                 <connections>
                                                                     <action selector="tileTapped:" destination="BYZ-38-t0r" eventType="editingChanged" id="kUQ-RF-6Fz"/>
                                                                 </connections>
                                                             </textField>
                                                             <textField opaque="NO" clipsSubviews="YES" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="justified" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="0zG-dQ-JRX">
-                                                                <rect key="frame" x="48.5" y="0.0" width="43" height="21"/>
+                                                                <rect key="frame" x="30.5" y="0.0" width="25" height="35"/>
                                                                 <color key="backgroundColor" cocoaTouchSystemColor="lightTextColor"/>
                                                                 <accessibility key="accessibilityConfiguration" identifier="0,7"/>
                                                                 <nil key="textColor"/>
                                                                 <fontDescription key="fontDescription" name="Papyrus" family="Papyrus" pointSize="20"/>
-                                                                <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                                                                <textInputTraits key="textInputTraits" keyboardType="numberPad" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
                                                                 <connections>
                                                                     <action selector="tileTapped:" destination="BYZ-38-t0r" eventType="editingChanged" id="D0I-F3-QiW"/>
                                                                 </connections>
                                                             </textField>
                                                             <textField opaque="NO" clipsSubviews="YES" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="justified" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="IS1-a6-rNy">
-                                                                <rect key="frame" x="96.5" y="0.0" width="43" height="21"/>
+                                                                <rect key="frame" x="60.5" y="0.0" width="25.5" height="35"/>
                                                                 <color key="backgroundColor" cocoaTouchSystemColor="lightTextColor"/>
                                                                 <accessibility key="accessibilityConfiguration" identifier="0,8"/>
                                                                 <nil key="textColor"/>
                                                                 <fontDescription key="fontDescription" name="Papyrus" family="Papyrus" pointSize="20"/>
-                                                                <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                                                                <textInputTraits key="textInputTraits" keyboardType="numberPad" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
                                                                 <connections>
                                                                     <action selector="tileTapped:" destination="BYZ-38-t0r" eventType="editingChanged" id="ZDJ-uh-mcT"/>
                                                                 </connections>
@@ -308,37 +310,37 @@
                                                         </subviews>
                                                     </stackView>
                                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="196-2I-Hxr">
-                                                        <rect key="frame" x="0.0" y="26" width="139.5" height="21"/>
+                                                        <rect key="frame" x="0.0" y="40" width="86" height="35"/>
                                                         <subviews>
                                                             <textField opaque="NO" clipsSubviews="YES" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="justified" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="uCR-7v-8YK">
-                                                                <rect key="frame" x="0.0" y="0.0" width="43.5" height="21"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="25.5" height="35"/>
                                                                 <color key="backgroundColor" cocoaTouchSystemColor="lightTextColor"/>
                                                                 <accessibility key="accessibilityConfiguration" identifier="1,6"/>
                                                                 <nil key="textColor"/>
                                                                 <fontDescription key="fontDescription" name="Papyrus" family="Papyrus" pointSize="20"/>
-                                                                <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                                                                <textInputTraits key="textInputTraits" keyboardType="numberPad" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
                                                                 <connections>
                                                                     <action selector="tileTapped:" destination="BYZ-38-t0r" eventType="editingChanged" id="ZJo-7q-o85"/>
                                                                 </connections>
                                                             </textField>
                                                             <textField opaque="NO" clipsSubviews="YES" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="justified" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="lpV-Da-lvk">
-                                                                <rect key="frame" x="48.5" y="0.0" width="43" height="21"/>
+                                                                <rect key="frame" x="30.5" y="0.0" width="25" height="35"/>
                                                                 <color key="backgroundColor" cocoaTouchSystemColor="lightTextColor"/>
                                                                 <accessibility key="accessibilityConfiguration" identifier="1,7"/>
                                                                 <nil key="textColor"/>
                                                                 <fontDescription key="fontDescription" name="Papyrus" family="Papyrus" pointSize="20"/>
-                                                                <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                                                                <textInputTraits key="textInputTraits" keyboardType="numberPad" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
                                                                 <connections>
                                                                     <action selector="tileTapped:" destination="BYZ-38-t0r" eventType="editingChanged" id="XLh-xk-TU6"/>
                                                                 </connections>
                                                             </textField>
                                                             <textField opaque="NO" clipsSubviews="YES" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="justified" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Kef-4I-Agf">
-                                                                <rect key="frame" x="96.5" y="0.0" width="43" height="21"/>
+                                                                <rect key="frame" x="60.5" y="0.0" width="25.5" height="35"/>
                                                                 <color key="backgroundColor" cocoaTouchSystemColor="lightTextColor"/>
                                                                 <accessibility key="accessibilityConfiguration" identifier="1,8"/>
                                                                 <nil key="textColor"/>
                                                                 <fontDescription key="fontDescription" name="Papyrus" family="Papyrus" pointSize="20"/>
-                                                                <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                                                                <textInputTraits key="textInputTraits" keyboardType="numberPad" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
                                                                 <connections>
                                                                     <action selector="tileTapped:" destination="BYZ-38-t0r" eventType="editingChanged" id="IjQ-6y-2NJ"/>
                                                                 </connections>
@@ -346,36 +348,37 @@
                                                         </subviews>
                                                     </stackView>
                                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="QXb-4u-baq">
-                                                        <rect key="frame" x="0.0" y="52" width="139.5" height="20.5"/>
+                                                        <rect key="frame" x="0.0" y="80" width="86" height="35.5"/>
                                                         <subviews>
                                                             <textField opaque="NO" clipsSubviews="YES" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="justified" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="FcA-gF-7gO">
-                                                                <rect key="frame" x="0.0" y="0.0" width="43.5" height="20.5"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="25.5" height="35.5"/>
                                                                 <color key="backgroundColor" cocoaTouchSystemColor="lightTextColor"/>
                                                                 <accessibility key="accessibilityConfiguration" identifier="2,6"/>
                                                                 <nil key="textColor"/>
                                                                 <fontDescription key="fontDescription" name="Papyrus" family="Papyrus" pointSize="20"/>
-                                                                <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                                                                <textInputTraits key="textInputTraits" keyboardType="numberPad" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
                                                                 <connections>
                                                                     <action selector="tileTapped:" destination="BYZ-38-t0r" eventType="editingChanged" id="hws-xT-bmO"/>
                                                                 </connections>
                                                             </textField>
                                                             <textField opaque="NO" clipsSubviews="YES" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="justified" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="fZZ-AA-5fw">
-                                                                <rect key="frame" x="48.5" y="0.0" width="43" height="20.5"/>
+                                                                <rect key="frame" x="30.5" y="0.0" width="25" height="35.5"/>
                                                                 <color key="backgroundColor" cocoaTouchSystemColor="lightTextColor"/>
                                                                 <accessibility key="accessibilityConfiguration" identifier="2,7"/>
                                                                 <nil key="textColor"/>
                                                                 <fontDescription key="fontDescription" name="Papyrus" family="Papyrus" pointSize="20"/>
-                                                                <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                                                                <textInputTraits key="textInputTraits" keyboardType="numberPad" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
                                                                 <connections>
                                                                     <action selector="tileTapped:" destination="BYZ-38-t0r" eventType="editingChanged" id="DJs-ZK-3MR"/>
                                                                 </connections>
                                                             </textField>
                                                             <textField opaque="NO" clipsSubviews="YES" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="justified" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="HeL-BI-OES">
-                                                                <rect key="frame" x="96.5" y="0.0" width="43" height="20.5"/>
+                                                                <rect key="frame" x="60.5" y="0.0" width="25.5" height="35.5"/>
                                                                 <color key="backgroundColor" cocoaTouchSystemColor="lightTextColor"/>
+                                                                <accessibility key="accessibilityConfiguration" identifier="2,8"/>
                                                                 <nil key="textColor"/>
                                                                 <fontDescription key="fontDescription" name="Papyrus" family="Papyrus" pointSize="20"/>
-                                                                <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                                                                <textInputTraits key="textInputTraits" keyboardType="numberPad" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
                                                                 <connections>
                                                                     <action selector="tileTapped:" destination="BYZ-38-t0r" eventType="editingChanged" id="Sdj-86-NhY"/>
                                                                 </connections>
@@ -387,43 +390,43 @@
                                         </subviews>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="bTN-I4-OHH">
-                                        <rect key="frame" x="0.0" y="87.5" width="448" height="73"/>
+                                        <rect key="frame" x="0.0" y="130.5" width="288" height="115"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="Kah-J1-TVG">
-                                                <rect key="frame" x="0.0" y="0.0" width="139.5" height="73"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="86" height="115"/>
                                                 <subviews>
                                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="DUb-ht-Y1R">
-                                                        <rect key="frame" x="0.0" y="0.0" width="139.5" height="21"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="86" height="35"/>
                                                         <subviews>
                                                             <textField opaque="NO" clipsSubviews="YES" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="justified" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="iqD-Pl-gzu">
-                                                                <rect key="frame" x="0.0" y="0.0" width="43" height="21"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="25.5" height="35"/>
                                                                 <color key="backgroundColor" cocoaTouchSystemColor="lightTextColor"/>
                                                                 <accessibility key="accessibilityConfiguration" identifier="3,0"/>
                                                                 <nil key="textColor"/>
                                                                 <fontDescription key="fontDescription" name="Papyrus" family="Papyrus" pointSize="17"/>
-                                                                <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                                                                <textInputTraits key="textInputTraits" keyboardType="numberPad" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
                                                                 <connections>
                                                                     <action selector="tileTapped:" destination="BYZ-38-t0r" eventType="editingChanged" id="jjl-Ab-1Up"/>
                                                                 </connections>
                                                             </textField>
                                                             <textField opaque="NO" clipsSubviews="YES" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="justified" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="KRp-1X-MAj">
-                                                                <rect key="frame" x="48" y="0.0" width="43" height="21"/>
+                                                                <rect key="frame" x="30.5" y="0.0" width="25" height="35"/>
                                                                 <color key="backgroundColor" cocoaTouchSystemColor="lightTextColor"/>
                                                                 <accessibility key="accessibilityConfiguration" identifier="3,1"/>
                                                                 <nil key="textColor"/>
                                                                 <fontDescription key="fontDescription" name="Papyrus" family="Papyrus" pointSize="17"/>
-                                                                <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                                                                <textInputTraits key="textInputTraits" keyboardType="numberPad" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
                                                                 <connections>
                                                                     <action selector="tileTapped:" destination="BYZ-38-t0r" eventType="editingChanged" id="yWO-DQ-jdD"/>
                                                                 </connections>
                                                             </textField>
                                                             <textField opaque="NO" clipsSubviews="YES" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="justified" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="iYe-ne-2Pw">
-                                                                <rect key="frame" x="96" y="0.0" width="43.5" height="21"/>
+                                                                <rect key="frame" x="60.5" y="0.0" width="25.5" height="35"/>
                                                                 <color key="backgroundColor" cocoaTouchSystemColor="lightTextColor"/>
                                                                 <accessibility key="accessibilityConfiguration" identifier="3,2"/>
                                                                 <nil key="textColor"/>
                                                                 <fontDescription key="fontDescription" name="Papyrus" family="Papyrus" pointSize="17"/>
-                                                                <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                                                                <textInputTraits key="textInputTraits" keyboardType="numberPad" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
                                                                 <connections>
                                                                     <action selector="tileTapped:" destination="BYZ-38-t0r" eventType="editingChanged" id="H24-Nm-aIz"/>
                                                                 </connections>
@@ -431,37 +434,37 @@
                                                         </subviews>
                                                     </stackView>
                                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="ZYj-yi-Wbo">
-                                                        <rect key="frame" x="0.0" y="26" width="139.5" height="21"/>
+                                                        <rect key="frame" x="0.0" y="40" width="86" height="35"/>
                                                         <subviews>
                                                             <textField opaque="NO" clipsSubviews="YES" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="justified" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="1QU-gm-kp1">
-                                                                <rect key="frame" x="0.0" y="0.0" width="43" height="21"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="25.5" height="35"/>
                                                                 <color key="backgroundColor" cocoaTouchSystemColor="lightTextColor"/>
                                                                 <accessibility key="accessibilityConfiguration" identifier="4,0"/>
                                                                 <nil key="textColor"/>
                                                                 <fontDescription key="fontDescription" name="Papyrus" family="Papyrus" pointSize="17"/>
-                                                                <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                                                                <textInputTraits key="textInputTraits" keyboardType="numberPad" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
                                                                 <connections>
                                                                     <action selector="tileTapped:" destination="BYZ-38-t0r" eventType="editingChanged" id="BKf-Kl-Nk7"/>
                                                                 </connections>
                                                             </textField>
                                                             <textField opaque="NO" clipsSubviews="YES" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="justified" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="3qU-sS-FGe">
-                                                                <rect key="frame" x="48" y="0.0" width="43" height="21"/>
+                                                                <rect key="frame" x="30.5" y="0.0" width="25" height="35"/>
                                                                 <color key="backgroundColor" cocoaTouchSystemColor="lightTextColor"/>
                                                                 <accessibility key="accessibilityConfiguration" identifier="4,1"/>
                                                                 <nil key="textColor"/>
                                                                 <fontDescription key="fontDescription" name="Papyrus" family="Papyrus" pointSize="17"/>
-                                                                <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                                                                <textInputTraits key="textInputTraits" keyboardType="numberPad" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
                                                                 <connections>
                                                                     <action selector="tileTapped:" destination="BYZ-38-t0r" eventType="editingChanged" id="OVJ-Jj-CHQ"/>
                                                                 </connections>
                                                             </textField>
                                                             <textField opaque="NO" clipsSubviews="YES" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="justified" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="lUF-8G-FwM">
-                                                                <rect key="frame" x="96" y="0.0" width="43.5" height="21"/>
+                                                                <rect key="frame" x="60.5" y="0.0" width="25.5" height="35"/>
                                                                 <color key="backgroundColor" cocoaTouchSystemColor="lightTextColor"/>
                                                                 <accessibility key="accessibilityConfiguration" identifier="4,2"/>
                                                                 <nil key="textColor"/>
                                                                 <fontDescription key="fontDescription" name="Papyrus" family="Papyrus" pointSize="17"/>
-                                                                <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                                                                <textInputTraits key="textInputTraits" keyboardType="numberPad" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
                                                                 <connections>
                                                                     <action selector="tileTapped:" destination="BYZ-38-t0r" eventType="editingChanged" id="vxh-Xx-5d3"/>
                                                                 </connections>
@@ -469,36 +472,37 @@
                                                         </subviews>
                                                     </stackView>
                                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="iWG-ad-Bdp">
-                                                        <rect key="frame" x="0.0" y="52" width="139.5" height="21"/>
+                                                        <rect key="frame" x="0.0" y="80" width="86" height="35"/>
                                                         <subviews>
                                                             <textField opaque="NO" clipsSubviews="YES" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="justified" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="S31-5q-hld">
-                                                                <rect key="frame" x="0.0" y="0.0" width="43" height="21"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="25.5" height="35"/>
                                                                 <color key="backgroundColor" cocoaTouchSystemColor="lightTextColor"/>
                                                                 <accessibility key="accessibilityConfiguration" identifier="5,0"/>
                                                                 <nil key="textColor"/>
                                                                 <fontDescription key="fontDescription" name="Papyrus" family="Papyrus" pointSize="17"/>
-                                                                <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                                                                <textInputTraits key="textInputTraits" keyboardType="numberPad" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
                                                                 <connections>
                                                                     <action selector="tileTapped:" destination="BYZ-38-t0r" eventType="editingChanged" id="kxy-qw-4bG"/>
                                                                 </connections>
                                                             </textField>
                                                             <textField opaque="NO" clipsSubviews="YES" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="justified" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="6rR-2k-Vg7">
-                                                                <rect key="frame" x="48" y="0.0" width="43" height="21"/>
+                                                                <rect key="frame" x="30.5" y="0.0" width="25" height="35"/>
                                                                 <color key="backgroundColor" cocoaTouchSystemColor="lightTextColor"/>
                                                                 <accessibility key="accessibilityConfiguration" identifier="5,1"/>
                                                                 <nil key="textColor"/>
                                                                 <fontDescription key="fontDescription" name="Papyrus" family="Papyrus" pointSize="17"/>
-                                                                <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                                                                <textInputTraits key="textInputTraits" keyboardType="numberPad" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
                                                                 <connections>
                                                                     <action selector="tileTapped:" destination="BYZ-38-t0r" eventType="editingChanged" id="zR9-I3-B26"/>
                                                                 </connections>
                                                             </textField>
                                                             <textField opaque="NO" clipsSubviews="YES" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="justified" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="5kb-F5-nEC">
-                                                                <rect key="frame" x="96" y="0.0" width="43.5" height="21"/>
+                                                                <rect key="frame" x="60.5" y="0.0" width="25.5" height="35"/>
                                                                 <color key="backgroundColor" cocoaTouchSystemColor="lightTextColor"/>
+                                                                <accessibility key="accessibilityConfiguration" identifier="5,2"/>
                                                                 <nil key="textColor"/>
                                                                 <fontDescription key="fontDescription" name="Papyrus" family="Papyrus" pointSize="17"/>
-                                                                <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                                                                <textInputTraits key="textInputTraits" keyboardType="numberPad" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
                                                                 <connections>
                                                                     <action selector="tileTapped:" destination="BYZ-38-t0r" eventType="editingChanged" id="Bbu-8E-P6F"/>
                                                                 </connections>
@@ -508,40 +512,40 @@
                                                 </subviews>
                                             </stackView>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="cVN-8i-8Ot">
-                                                <rect key="frame" x="154.5" y="0.0" width="139" height="73"/>
+                                                <rect key="frame" x="101" y="0.0" width="86" height="115"/>
                                                 <subviews>
                                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="Ft5-Sc-y1W">
-                                                        <rect key="frame" x="0.0" y="0.0" width="139" height="21"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="86" height="35"/>
                                                         <subviews>
                                                             <textField opaque="NO" clipsSubviews="YES" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="justified" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="6ag-jX-tos">
-                                                                <rect key="frame" x="0.0" y="0.0" width="43" height="21"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="25.5" height="35"/>
                                                                 <color key="backgroundColor" cocoaTouchSystemColor="lightTextColor"/>
                                                                 <accessibility key="accessibilityConfiguration" identifier="3,3"/>
                                                                 <nil key="textColor"/>
                                                                 <fontDescription key="fontDescription" name="Papyrus" family="Papyrus" pointSize="17"/>
-                                                                <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                                                                <textInputTraits key="textInputTraits" keyboardType="numberPad" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
                                                                 <connections>
                                                                     <action selector="tileTapped:" destination="BYZ-38-t0r" eventType="editingChanged" id="kmq-id-KLI"/>
                                                                 </connections>
                                                             </textField>
                                                             <textField opaque="NO" clipsSubviews="YES" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="justified" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="rQQ-sx-eC6">
-                                                                <rect key="frame" x="48" y="0.0" width="43" height="21"/>
+                                                                <rect key="frame" x="30.5" y="0.0" width="25" height="35"/>
                                                                 <color key="backgroundColor" cocoaTouchSystemColor="lightTextColor"/>
                                                                 <accessibility key="accessibilityConfiguration" identifier="3,4"/>
                                                                 <nil key="textColor"/>
                                                                 <fontDescription key="fontDescription" name="Papyrus" family="Papyrus" pointSize="17"/>
-                                                                <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                                                                <textInputTraits key="textInputTraits" keyboardType="numberPad" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
                                                                 <connections>
                                                                     <action selector="tileTapped:" destination="BYZ-38-t0r" eventType="editingChanged" id="EDQ-rZ-vXj"/>
                                                                 </connections>
                                                             </textField>
                                                             <textField opaque="NO" clipsSubviews="YES" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="justified" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="pbq-fp-kPe">
-                                                                <rect key="frame" x="96" y="0.0" width="43" height="21"/>
+                                                                <rect key="frame" x="60.5" y="0.0" width="25.5" height="35"/>
                                                                 <color key="backgroundColor" cocoaTouchSystemColor="lightTextColor"/>
                                                                 <accessibility key="accessibilityConfiguration" identifier="3,5"/>
                                                                 <nil key="textColor"/>
                                                                 <fontDescription key="fontDescription" name="Papyrus" family="Papyrus" pointSize="17"/>
-                                                                <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                                                                <textInputTraits key="textInputTraits" keyboardType="numberPad" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
                                                                 <connections>
                                                                     <action selector="tileTapped:" destination="BYZ-38-t0r" eventType="editingChanged" id="Rd2-UP-NLb"/>
                                                                 </connections>
@@ -549,37 +553,37 @@
                                                         </subviews>
                                                     </stackView>
                                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="XAq-Fv-aBa">
-                                                        <rect key="frame" x="0.0" y="26" width="139" height="21"/>
+                                                        <rect key="frame" x="0.0" y="40" width="86" height="35"/>
                                                         <subviews>
                                                             <textField opaque="NO" clipsSubviews="YES" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="justified" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="45p-W8-h8R">
-                                                                <rect key="frame" x="0.0" y="0.0" width="43" height="21"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="25.5" height="35"/>
                                                                 <color key="backgroundColor" cocoaTouchSystemColor="lightTextColor"/>
                                                                 <accessibility key="accessibilityConfiguration" identifier="4,3"/>
                                                                 <nil key="textColor"/>
                                                                 <fontDescription key="fontDescription" name="Papyrus" family="Papyrus" pointSize="17"/>
-                                                                <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                                                                <textInputTraits key="textInputTraits" keyboardType="numberPad" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
                                                                 <connections>
                                                                     <action selector="tileTapped:" destination="BYZ-38-t0r" eventType="editingChanged" id="6Ad-RJ-p65"/>
                                                                 </connections>
                                                             </textField>
                                                             <textField opaque="NO" clipsSubviews="YES" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="justified" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="pSv-FZ-6MK">
-                                                                <rect key="frame" x="48" y="0.0" width="43" height="21"/>
+                                                                <rect key="frame" x="30.5" y="0.0" width="25" height="35"/>
                                                                 <color key="backgroundColor" cocoaTouchSystemColor="lightTextColor"/>
                                                                 <accessibility key="accessibilityConfiguration" identifier="4,4"/>
                                                                 <nil key="textColor"/>
                                                                 <fontDescription key="fontDescription" name="Papyrus" family="Papyrus" pointSize="17"/>
-                                                                <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                                                                <textInputTraits key="textInputTraits" keyboardType="numberPad" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
                                                                 <connections>
                                                                     <action selector="tileTapped:" destination="BYZ-38-t0r" eventType="editingChanged" id="0qi-nj-1y6"/>
                                                                 </connections>
                                                             </textField>
                                                             <textField opaque="NO" clipsSubviews="YES" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="justified" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Cg0-qW-yll">
-                                                                <rect key="frame" x="96" y="0.0" width="43" height="21"/>
+                                                                <rect key="frame" x="60.5" y="0.0" width="25.5" height="35"/>
                                                                 <color key="backgroundColor" cocoaTouchSystemColor="lightTextColor"/>
                                                                 <accessibility key="accessibilityConfiguration" identifier="4,5"/>
                                                                 <nil key="textColor"/>
                                                                 <fontDescription key="fontDescription" name="Papyrus" family="Papyrus" pointSize="17"/>
-                                                                <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                                                                <textInputTraits key="textInputTraits" keyboardType="numberPad" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
                                                                 <connections>
                                                                     <action selector="tileTapped:" destination="BYZ-38-t0r" eventType="editingChanged" id="WLb-tV-kdH"/>
                                                                 </connections>
@@ -587,36 +591,37 @@
                                                         </subviews>
                                                     </stackView>
                                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="zvf-Nl-WXG">
-                                                        <rect key="frame" x="0.0" y="52" width="139" height="21"/>
+                                                        <rect key="frame" x="0.0" y="80" width="86" height="35"/>
                                                         <subviews>
                                                             <textField opaque="NO" clipsSubviews="YES" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="justified" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="XwF-s1-5zC">
-                                                                <rect key="frame" x="0.0" y="0.0" width="43" height="21"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="25.5" height="35"/>
                                                                 <color key="backgroundColor" cocoaTouchSystemColor="lightTextColor"/>
                                                                 <accessibility key="accessibilityConfiguration" identifier="5,3"/>
                                                                 <nil key="textColor"/>
                                                                 <fontDescription key="fontDescription" name="Papyrus" family="Papyrus" pointSize="17"/>
-                                                                <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                                                                <textInputTraits key="textInputTraits" keyboardType="numberPad" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
                                                                 <connections>
                                                                     <action selector="tileTapped:" destination="BYZ-38-t0r" eventType="editingChanged" id="fDi-kY-3SZ"/>
                                                                 </connections>
                                                             </textField>
                                                             <textField opaque="NO" clipsSubviews="YES" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="justified" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Adg-Q0-Rcu">
-                                                                <rect key="frame" x="48" y="0.0" width="43" height="21"/>
+                                                                <rect key="frame" x="30.5" y="0.0" width="25" height="35"/>
                                                                 <color key="backgroundColor" cocoaTouchSystemColor="lightTextColor"/>
                                                                 <accessibility key="accessibilityConfiguration" identifier="5,4"/>
                                                                 <nil key="textColor"/>
                                                                 <fontDescription key="fontDescription" name="Papyrus" family="Papyrus" pointSize="17"/>
-                                                                <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                                                                <textInputTraits key="textInputTraits" keyboardType="numberPad" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
                                                                 <connections>
                                                                     <action selector="tileTapped:" destination="BYZ-38-t0r" eventType="editingChanged" id="B4i-TH-LhS"/>
                                                                 </connections>
                                                             </textField>
                                                             <textField opaque="NO" clipsSubviews="YES" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="justified" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="YN3-pd-AVb">
-                                                                <rect key="frame" x="96" y="0.0" width="43" height="21"/>
+                                                                <rect key="frame" x="60.5" y="0.0" width="25.5" height="35"/>
                                                                 <color key="backgroundColor" cocoaTouchSystemColor="lightTextColor"/>
+                                                                <accessibility key="accessibilityConfiguration" identifier="5,5"/>
                                                                 <nil key="textColor"/>
                                                                 <fontDescription key="fontDescription" name="Papyrus" family="Papyrus" pointSize="17"/>
-                                                                <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                                                                <textInputTraits key="textInputTraits" keyboardType="numberPad" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
                                                                 <connections>
                                                                     <action selector="tileTapped:" destination="BYZ-38-t0r" eventType="editingChanged" id="9q3-HZ-Ze5"/>
                                                                 </connections>
@@ -626,40 +631,40 @@
                                                 </subviews>
                                             </stackView>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="lWQ-Wt-jQi">
-                                                <rect key="frame" x="308.5" y="0.0" width="139.5" height="73"/>
+                                                <rect key="frame" x="202" y="0.0" width="86" height="115"/>
                                                 <subviews>
                                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="sEk-VG-0ms">
-                                                        <rect key="frame" x="0.0" y="0.0" width="139.5" height="21"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="86" height="35"/>
                                                         <subviews>
                                                             <textField opaque="NO" clipsSubviews="YES" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="justified" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="QEi-r1-Yt2">
-                                                                <rect key="frame" x="0.0" y="0.0" width="43.5" height="21"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="25.5" height="35"/>
                                                                 <color key="backgroundColor" cocoaTouchSystemColor="lightTextColor"/>
                                                                 <accessibility key="accessibilityConfiguration" identifier="3,6"/>
                                                                 <nil key="textColor"/>
                                                                 <fontDescription key="fontDescription" name="Papyrus" family="Papyrus" pointSize="17"/>
-                                                                <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                                                                <textInputTraits key="textInputTraits" keyboardType="numberPad" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
                                                                 <connections>
                                                                     <action selector="tileTapped:" destination="BYZ-38-t0r" eventType="editingChanged" id="bhp-Wf-rBE"/>
                                                                 </connections>
                                                             </textField>
                                                             <textField opaque="NO" clipsSubviews="YES" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="justified" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="y24-Mc-85P">
-                                                                <rect key="frame" x="48.5" y="0.0" width="43" height="21"/>
+                                                                <rect key="frame" x="30.5" y="0.0" width="25" height="35"/>
                                                                 <color key="backgroundColor" cocoaTouchSystemColor="lightTextColor"/>
                                                                 <accessibility key="accessibilityConfiguration" identifier="3,7"/>
                                                                 <nil key="textColor"/>
                                                                 <fontDescription key="fontDescription" name="Papyrus" family="Papyrus" pointSize="17"/>
-                                                                <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                                                                <textInputTraits key="textInputTraits" keyboardType="numberPad" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
                                                                 <connections>
                                                                     <action selector="tileTapped:" destination="BYZ-38-t0r" eventType="editingChanged" id="em5-Uz-Dpp"/>
                                                                 </connections>
                                                             </textField>
                                                             <textField opaque="NO" clipsSubviews="YES" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="justified" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="dG8-pL-cYC">
-                                                                <rect key="frame" x="96.5" y="0.0" width="43" height="21"/>
+                                                                <rect key="frame" x="60.5" y="0.0" width="25.5" height="35"/>
                                                                 <color key="backgroundColor" cocoaTouchSystemColor="lightTextColor"/>
                                                                 <accessibility key="accessibilityConfiguration" identifier="3,8"/>
                                                                 <nil key="textColor"/>
                                                                 <fontDescription key="fontDescription" name="Papyrus" family="Papyrus" pointSize="17"/>
-                                                                <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                                                                <textInputTraits key="textInputTraits" keyboardType="numberPad" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
                                                                 <connections>
                                                                     <action selector="tileTapped:" destination="BYZ-38-t0r" eventType="editingChanged" id="9EY-QD-9Rz"/>
                                                                 </connections>
@@ -667,37 +672,37 @@
                                                         </subviews>
                                                     </stackView>
                                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="NDK-Z1-9lZ">
-                                                        <rect key="frame" x="0.0" y="26" width="139.5" height="21"/>
+                                                        <rect key="frame" x="0.0" y="40" width="86" height="35"/>
                                                         <subviews>
                                                             <textField opaque="NO" clipsSubviews="YES" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="justified" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="5c6-Ij-0Il">
-                                                                <rect key="frame" x="0.0" y="0.0" width="43.5" height="21"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="25.5" height="35"/>
                                                                 <color key="backgroundColor" cocoaTouchSystemColor="lightTextColor"/>
                                                                 <accessibility key="accessibilityConfiguration" identifier="4,6"/>
                                                                 <nil key="textColor"/>
                                                                 <fontDescription key="fontDescription" name="Papyrus" family="Papyrus" pointSize="17"/>
-                                                                <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                                                                <textInputTraits key="textInputTraits" keyboardType="numberPad" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
                                                                 <connections>
                                                                     <action selector="tileTapped:" destination="BYZ-38-t0r" eventType="editingChanged" id="uGz-WX-EP6"/>
                                                                 </connections>
                                                             </textField>
                                                             <textField opaque="NO" clipsSubviews="YES" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="justified" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="WIt-dx-83F">
-                                                                <rect key="frame" x="48.5" y="0.0" width="43" height="21"/>
+                                                                <rect key="frame" x="30.5" y="0.0" width="25" height="35"/>
                                                                 <color key="backgroundColor" cocoaTouchSystemColor="lightTextColor"/>
                                                                 <accessibility key="accessibilityConfiguration" identifier="4,7"/>
                                                                 <nil key="textColor"/>
                                                                 <fontDescription key="fontDescription" name="Papyrus" family="Papyrus" pointSize="17"/>
-                                                                <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                                                                <textInputTraits key="textInputTraits" keyboardType="numberPad" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
                                                                 <connections>
                                                                     <action selector="tileTapped:" destination="BYZ-38-t0r" eventType="editingChanged" id="TMs-Uo-yzU"/>
                                                                 </connections>
                                                             </textField>
                                                             <textField opaque="NO" clipsSubviews="YES" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="justified" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="LU3-LY-uFe">
-                                                                <rect key="frame" x="96.5" y="0.0" width="43" height="21"/>
+                                                                <rect key="frame" x="60.5" y="0.0" width="25.5" height="35"/>
                                                                 <color key="backgroundColor" cocoaTouchSystemColor="lightTextColor"/>
                                                                 <accessibility key="accessibilityConfiguration" identifier="4,8"/>
                                                                 <nil key="textColor"/>
                                                                 <fontDescription key="fontDescription" name="Papyrus" family="Papyrus" pointSize="17"/>
-                                                                <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                                                                <textInputTraits key="textInputTraits" keyboardType="numberPad" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
                                                                 <connections>
                                                                     <action selector="tileTapped:" destination="BYZ-38-t0r" eventType="editingChanged" id="Gzf-zC-8TE"/>
                                                                 </connections>
@@ -705,36 +710,37 @@
                                                         </subviews>
                                                     </stackView>
                                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="vSI-EH-hoC">
-                                                        <rect key="frame" x="0.0" y="52" width="139.5" height="21"/>
+                                                        <rect key="frame" x="0.0" y="80" width="86" height="35"/>
                                                         <subviews>
                                                             <textField opaque="NO" clipsSubviews="YES" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="justified" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Nlp-ec-WZb">
-                                                                <rect key="frame" x="0.0" y="0.0" width="43.5" height="21"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="25.5" height="35"/>
                                                                 <color key="backgroundColor" cocoaTouchSystemColor="lightTextColor"/>
                                                                 <accessibility key="accessibilityConfiguration" identifier="5,6"/>
                                                                 <nil key="textColor"/>
                                                                 <fontDescription key="fontDescription" name="Papyrus" family="Papyrus" pointSize="17"/>
-                                                                <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                                                                <textInputTraits key="textInputTraits" keyboardType="numberPad" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
                                                                 <connections>
                                                                     <action selector="tileTapped:" destination="BYZ-38-t0r" eventType="editingChanged" id="5Wn-f6-xg2"/>
                                                                 </connections>
                                                             </textField>
                                                             <textField opaque="NO" clipsSubviews="YES" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="justified" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="f7c-4l-lYc">
-                                                                <rect key="frame" x="48.5" y="0.0" width="43" height="21"/>
+                                                                <rect key="frame" x="30.5" y="0.0" width="25" height="35"/>
                                                                 <color key="backgroundColor" cocoaTouchSystemColor="lightTextColor"/>
                                                                 <accessibility key="accessibilityConfiguration" identifier="5,7"/>
                                                                 <nil key="textColor"/>
                                                                 <fontDescription key="fontDescription" name="Papyrus" family="Papyrus" pointSize="17"/>
-                                                                <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                                                                <textInputTraits key="textInputTraits" keyboardType="numberPad" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
                                                                 <connections>
                                                                     <action selector="tileTapped:" destination="BYZ-38-t0r" eventType="editingChanged" id="zMp-sD-lX8"/>
                                                                 </connections>
                                                             </textField>
                                                             <textField opaque="NO" clipsSubviews="YES" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="justified" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="dvr-de-Obc">
-                                                                <rect key="frame" x="96.5" y="0.0" width="43" height="21"/>
+                                                                <rect key="frame" x="60.5" y="0.0" width="25.5" height="35"/>
                                                                 <color key="backgroundColor" cocoaTouchSystemColor="lightTextColor"/>
+                                                                <accessibility key="accessibilityConfiguration" identifier="5,8"/>
                                                                 <nil key="textColor"/>
                                                                 <fontDescription key="fontDescription" name="Papyrus" family="Papyrus" pointSize="17"/>
-                                                                <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                                                                <textInputTraits key="textInputTraits" keyboardType="numberPad" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
                                                                 <connections>
                                                                     <action selector="tileTapped:" destination="BYZ-38-t0r" eventType="editingChanged" id="gMM-wF-d9V"/>
                                                                 </connections>
@@ -746,43 +752,43 @@
                                         </subviews>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="y3C-rS-etb">
-                                        <rect key="frame" x="0.0" y="175.5" width="448" height="72.5"/>
+                                        <rect key="frame" x="0.0" y="260.5" width="288" height="115.5"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="Xl1-F7-5QJ">
-                                                <rect key="frame" x="0.0" y="0.0" width="139.5" height="72.5"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="86" height="115.5"/>
                                                 <subviews>
                                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="QrK-9N-N5W">
-                                                        <rect key="frame" x="0.0" y="0.0" width="139.5" height="20.5"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="86" height="35.5"/>
                                                         <subviews>
                                                             <textField opaque="NO" clipsSubviews="YES" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="justified" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="jAK-2g-zhC">
-                                                                <rect key="frame" x="0.0" y="0.0" width="43" height="20.5"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="25.5" height="35.5"/>
                                                                 <color key="backgroundColor" cocoaTouchSystemColor="lightTextColor"/>
                                                                 <accessibility key="accessibilityConfiguration" identifier="6,0"/>
                                                                 <nil key="textColor"/>
                                                                 <fontDescription key="fontDescription" name="Papyrus" family="Papyrus" pointSize="17"/>
-                                                                <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                                                                <textInputTraits key="textInputTraits" keyboardType="numberPad" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
                                                                 <connections>
                                                                     <action selector="tileTapped:" destination="BYZ-38-t0r" eventType="editingChanged" id="BRa-f4-d6B"/>
                                                                 </connections>
                                                             </textField>
                                                             <textField opaque="NO" clipsSubviews="YES" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="justified" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="f6r-Jn-Pqs">
-                                                                <rect key="frame" x="48" y="0.0" width="43" height="20.5"/>
+                                                                <rect key="frame" x="30.5" y="0.0" width="25" height="35.5"/>
                                                                 <color key="backgroundColor" cocoaTouchSystemColor="lightTextColor"/>
                                                                 <accessibility key="accessibilityConfiguration" identifier="6,1"/>
                                                                 <nil key="textColor"/>
                                                                 <fontDescription key="fontDescription" name="Papyrus" family="Papyrus" pointSize="17"/>
-                                                                <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                                                                <textInputTraits key="textInputTraits" keyboardType="numberPad" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
                                                                 <connections>
                                                                     <action selector="tileTapped:" destination="BYZ-38-t0r" eventType="editingChanged" id="LGA-7Z-mKq"/>
                                                                 </connections>
                                                             </textField>
                                                             <textField opaque="NO" clipsSubviews="YES" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="justified" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="bn1-xL-hdS">
-                                                                <rect key="frame" x="96" y="0.0" width="43.5" height="20.5"/>
+                                                                <rect key="frame" x="60.5" y="0.0" width="25.5" height="35.5"/>
                                                                 <color key="backgroundColor" cocoaTouchSystemColor="lightTextColor"/>
                                                                 <accessibility key="accessibilityConfiguration" identifier="6,2"/>
                                                                 <nil key="textColor"/>
                                                                 <fontDescription key="fontDescription" name="Papyrus" family="Papyrus" pointSize="17"/>
-                                                                <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                                                                <textInputTraits key="textInputTraits" keyboardType="numberPad" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
                                                                 <connections>
                                                                     <action selector="tileTapped:" destination="BYZ-38-t0r" eventType="editingChanged" id="gIF-UF-l8a"/>
                                                                 </connections>
@@ -790,37 +796,37 @@
                                                         </subviews>
                                                     </stackView>
                                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="SdU-6c-U08">
-                                                        <rect key="frame" x="0.0" y="25.5" width="139.5" height="21"/>
+                                                        <rect key="frame" x="0.0" y="40.5" width="86" height="35"/>
                                                         <subviews>
                                                             <textField opaque="NO" clipsSubviews="YES" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="justified" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ztU-Ld-nVE">
-                                                                <rect key="frame" x="0.0" y="0.0" width="43" height="21"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="25.5" height="35"/>
                                                                 <color key="backgroundColor" cocoaTouchSystemColor="lightTextColor"/>
                                                                 <accessibility key="accessibilityConfiguration" identifier="7,0"/>
                                                                 <nil key="textColor"/>
                                                                 <fontDescription key="fontDescription" name="Papyrus" family="Papyrus" pointSize="17"/>
-                                                                <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                                                                <textInputTraits key="textInputTraits" keyboardType="numberPad" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
                                                                 <connections>
                                                                     <action selector="tileTapped:" destination="BYZ-38-t0r" eventType="editingChanged" id="mk9-Dm-97W"/>
                                                                 </connections>
                                                             </textField>
                                                             <textField opaque="NO" clipsSubviews="YES" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="justified" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="YjK-26-jBp">
-                                                                <rect key="frame" x="48" y="0.0" width="43" height="21"/>
+                                                                <rect key="frame" x="30.5" y="0.0" width="25" height="35"/>
                                                                 <color key="backgroundColor" cocoaTouchSystemColor="lightTextColor"/>
                                                                 <accessibility key="accessibilityConfiguration" identifier="7,1"/>
                                                                 <nil key="textColor"/>
                                                                 <fontDescription key="fontDescription" name="Papyrus" family="Papyrus" pointSize="17"/>
-                                                                <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                                                                <textInputTraits key="textInputTraits" keyboardType="numberPad" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
                                                                 <connections>
                                                                     <action selector="tileTapped:" destination="BYZ-38-t0r" eventType="editingChanged" id="4iG-a4-c7H"/>
                                                                 </connections>
                                                             </textField>
                                                             <textField opaque="NO" clipsSubviews="YES" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="justified" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="sra-Rx-hfA">
-                                                                <rect key="frame" x="96" y="0.0" width="43.5" height="21"/>
+                                                                <rect key="frame" x="60.5" y="0.0" width="25.5" height="35"/>
                                                                 <color key="backgroundColor" cocoaTouchSystemColor="lightTextColor"/>
                                                                 <accessibility key="accessibilityConfiguration" identifier="7,2"/>
                                                                 <nil key="textColor"/>
                                                                 <fontDescription key="fontDescription" name="Papyrus" family="Papyrus" pointSize="17"/>
-                                                                <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                                                                <textInputTraits key="textInputTraits" keyboardType="numberPad" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
                                                                 <connections>
                                                                     <action selector="tileTapped:" destination="BYZ-38-t0r" eventType="editingChanged" id="XxF-gu-BRL"/>
                                                                 </connections>
@@ -828,36 +834,37 @@
                                                         </subviews>
                                                     </stackView>
                                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="KrI-5I-JvG">
-                                                        <rect key="frame" x="0.0" y="51.5" width="139.5" height="21"/>
+                                                        <rect key="frame" x="0.0" y="80.5" width="86" height="35"/>
                                                         <subviews>
                                                             <textField opaque="NO" clipsSubviews="YES" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="justified" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="LEc-c6-pUL">
-                                                                <rect key="frame" x="0.0" y="0.0" width="43" height="21"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="25.5" height="35"/>
                                                                 <color key="backgroundColor" cocoaTouchSystemColor="lightTextColor"/>
                                                                 <accessibility key="accessibilityConfiguration" identifier="8,0"/>
                                                                 <nil key="textColor"/>
                                                                 <fontDescription key="fontDescription" name="Papyrus" family="Papyrus" pointSize="17"/>
-                                                                <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                                                                <textInputTraits key="textInputTraits" keyboardType="numberPad" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
                                                                 <connections>
                                                                     <action selector="tileTapped:" destination="BYZ-38-t0r" eventType="editingChanged" id="Kyh-ZJ-XLi"/>
                                                                 </connections>
                                                             </textField>
                                                             <textField opaque="NO" clipsSubviews="YES" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="justified" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="wjS-fI-snA">
-                                                                <rect key="frame" x="48" y="0.0" width="43" height="21"/>
+                                                                <rect key="frame" x="30.5" y="0.0" width="25" height="35"/>
                                                                 <color key="backgroundColor" cocoaTouchSystemColor="lightTextColor"/>
                                                                 <accessibility key="accessibilityConfiguration" identifier="8,1"/>
                                                                 <nil key="textColor"/>
                                                                 <fontDescription key="fontDescription" name="Papyrus" family="Papyrus" pointSize="17"/>
-                                                                <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                                                                <textInputTraits key="textInputTraits" keyboardType="numberPad" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
                                                                 <connections>
                                                                     <action selector="tileTapped:" destination="BYZ-38-t0r" eventType="editingChanged" id="zQn-7D-TPc"/>
                                                                 </connections>
                                                             </textField>
                                                             <textField opaque="NO" clipsSubviews="YES" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="justified" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="EX3-tu-IMS">
-                                                                <rect key="frame" x="96" y="0.0" width="43.5" height="21"/>
+                                                                <rect key="frame" x="60.5" y="0.0" width="25.5" height="35"/>
                                                                 <color key="backgroundColor" cocoaTouchSystemColor="lightTextColor"/>
+                                                                <accessibility key="accessibilityConfiguration" identifier="8,2"/>
                                                                 <nil key="textColor"/>
                                                                 <fontDescription key="fontDescription" name="Papyrus" family="Papyrus" pointSize="17"/>
-                                                                <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                                                                <textInputTraits key="textInputTraits" keyboardType="numberPad" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
                                                                 <connections>
                                                                     <action selector="tileTapped:" destination="BYZ-38-t0r" eventType="editingChanged" id="Lf4-cc-9Sz"/>
                                                                 </connections>
@@ -867,40 +874,40 @@
                                                 </subviews>
                                             </stackView>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="XDp-Q6-vja">
-                                                <rect key="frame" x="154.5" y="0.0" width="139" height="72.5"/>
+                                                <rect key="frame" x="101" y="0.0" width="86" height="115.5"/>
                                                 <subviews>
                                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="M6t-BR-qbV">
-                                                        <rect key="frame" x="0.0" y="0.0" width="139" height="20.5"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="86" height="35.5"/>
                                                         <subviews>
                                                             <textField opaque="NO" clipsSubviews="YES" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="justified" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="sUI-UP-jNP">
-                                                                <rect key="frame" x="0.0" y="0.0" width="43" height="20.5"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="25.5" height="35.5"/>
                                                                 <color key="backgroundColor" cocoaTouchSystemColor="lightTextColor"/>
                                                                 <accessibility key="accessibilityConfiguration" identifier="6,3"/>
                                                                 <nil key="textColor"/>
                                                                 <fontDescription key="fontDescription" name="Papyrus" family="Papyrus" pointSize="17"/>
-                                                                <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                                                                <textInputTraits key="textInputTraits" keyboardType="numberPad" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
                                                                 <connections>
                                                                     <action selector="tileTapped:" destination="BYZ-38-t0r" eventType="editingChanged" id="ndW-Zl-Ljv"/>
                                                                 </connections>
                                                             </textField>
                                                             <textField opaque="NO" clipsSubviews="YES" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="justified" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="MQo-t2-Mjl">
-                                                                <rect key="frame" x="48" y="0.0" width="43" height="20.5"/>
+                                                                <rect key="frame" x="30.5" y="0.0" width="25" height="35.5"/>
                                                                 <color key="backgroundColor" cocoaTouchSystemColor="lightTextColor"/>
                                                                 <accessibility key="accessibilityConfiguration" identifier="6,4"/>
                                                                 <nil key="textColor"/>
                                                                 <fontDescription key="fontDescription" name="Papyrus" family="Papyrus" pointSize="17"/>
-                                                                <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                                                                <textInputTraits key="textInputTraits" keyboardType="numberPad" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
                                                                 <connections>
                                                                     <action selector="tileTapped:" destination="BYZ-38-t0r" eventType="editingChanged" id="cjp-sT-Nsh"/>
                                                                 </connections>
                                                             </textField>
                                                             <textField opaque="NO" clipsSubviews="YES" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="justified" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="TNw-m5-RKf">
-                                                                <rect key="frame" x="96" y="0.0" width="43" height="20.5"/>
+                                                                <rect key="frame" x="60.5" y="0.0" width="25.5" height="35.5"/>
                                                                 <color key="backgroundColor" cocoaTouchSystemColor="lightTextColor"/>
                                                                 <accessibility key="accessibilityConfiguration" identifier="6,5"/>
                                                                 <nil key="textColor"/>
                                                                 <fontDescription key="fontDescription" name="Papyrus" family="Papyrus" pointSize="17"/>
-                                                                <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                                                                <textInputTraits key="textInputTraits" keyboardType="numberPad" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
                                                                 <connections>
                                                                     <action selector="tileTapped:" destination="BYZ-38-t0r" eventType="editingChanged" id="sSi-nc-xQB"/>
                                                                 </connections>
@@ -908,37 +915,37 @@
                                                         </subviews>
                                                     </stackView>
                                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="1S3-ji-nZ2">
-                                                        <rect key="frame" x="0.0" y="25.5" width="139" height="21"/>
+                                                        <rect key="frame" x="0.0" y="40.5" width="86" height="35"/>
                                                         <subviews>
                                                             <textField opaque="NO" clipsSubviews="YES" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="justified" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="seR-Gb-4b9">
-                                                                <rect key="frame" x="0.0" y="0.0" width="43" height="21"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="25.5" height="35"/>
                                                                 <color key="backgroundColor" cocoaTouchSystemColor="lightTextColor"/>
                                                                 <accessibility key="accessibilityConfiguration" identifier="7,3"/>
                                                                 <nil key="textColor"/>
                                                                 <fontDescription key="fontDescription" name="Papyrus" family="Papyrus" pointSize="17"/>
-                                                                <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                                                                <textInputTraits key="textInputTraits" keyboardType="numberPad" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
                                                                 <connections>
                                                                     <action selector="tileTapped:" destination="BYZ-38-t0r" eventType="editingChanged" id="nAD-py-rcC"/>
                                                                 </connections>
                                                             </textField>
                                                             <textField opaque="NO" clipsSubviews="YES" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="justified" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="jT5-VL-ZDi">
-                                                                <rect key="frame" x="48" y="0.0" width="43" height="21"/>
+                                                                <rect key="frame" x="30.5" y="0.0" width="25" height="35"/>
                                                                 <color key="backgroundColor" cocoaTouchSystemColor="lightTextColor"/>
                                                                 <accessibility key="accessibilityConfiguration" identifier="7,4"/>
                                                                 <nil key="textColor"/>
                                                                 <fontDescription key="fontDescription" name="Papyrus" family="Papyrus" pointSize="17"/>
-                                                                <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                                                                <textInputTraits key="textInputTraits" keyboardType="numberPad" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
                                                                 <connections>
                                                                     <action selector="tileTapped:" destination="BYZ-38-t0r" eventType="editingChanged" id="syR-NU-5bW"/>
                                                                 </connections>
                                                             </textField>
                                                             <textField opaque="NO" clipsSubviews="YES" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="justified" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="dkn-o7-0ae">
-                                                                <rect key="frame" x="96" y="0.0" width="43" height="21"/>
+                                                                <rect key="frame" x="60.5" y="0.0" width="25.5" height="35"/>
                                                                 <color key="backgroundColor" cocoaTouchSystemColor="lightTextColor"/>
                                                                 <accessibility key="accessibilityConfiguration" identifier="7,5"/>
                                                                 <nil key="textColor"/>
                                                                 <fontDescription key="fontDescription" name="Papyrus" family="Papyrus" pointSize="17"/>
-                                                                <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                                                                <textInputTraits key="textInputTraits" keyboardType="numberPad" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
                                                                 <connections>
                                                                     <action selector="tileTapped:" destination="BYZ-38-t0r" eventType="editingChanged" id="IPR-iq-wH1"/>
                                                                 </connections>
@@ -946,36 +953,37 @@
                                                         </subviews>
                                                     </stackView>
                                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="c6X-Kf-5Hs">
-                                                        <rect key="frame" x="0.0" y="51.5" width="139" height="21"/>
+                                                        <rect key="frame" x="0.0" y="80.5" width="86" height="35"/>
                                                         <subviews>
                                                             <textField opaque="NO" clipsSubviews="YES" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="justified" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Q8g-8o-5Ae">
-                                                                <rect key="frame" x="0.0" y="0.0" width="43" height="21"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="25.5" height="35"/>
                                                                 <color key="backgroundColor" cocoaTouchSystemColor="lightTextColor"/>
                                                                 <accessibility key="accessibilityConfiguration" identifier="8,3"/>
                                                                 <nil key="textColor"/>
                                                                 <fontDescription key="fontDescription" name="Papyrus" family="Papyrus" pointSize="17"/>
-                                                                <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                                                                <textInputTraits key="textInputTraits" keyboardType="numberPad" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
                                                                 <connections>
                                                                     <action selector="tileTapped:" destination="BYZ-38-t0r" eventType="editingChanged" id="Dhg-Np-Y0e"/>
                                                                 </connections>
                                                             </textField>
                                                             <textField opaque="NO" clipsSubviews="YES" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="justified" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="40y-yT-3eN">
-                                                                <rect key="frame" x="48" y="0.0" width="43" height="21"/>
+                                                                <rect key="frame" x="30.5" y="0.0" width="25" height="35"/>
                                                                 <color key="backgroundColor" cocoaTouchSystemColor="lightTextColor"/>
                                                                 <accessibility key="accessibilityConfiguration" identifier="8,4"/>
                                                                 <nil key="textColor"/>
                                                                 <fontDescription key="fontDescription" name="Papyrus" family="Papyrus" pointSize="17"/>
-                                                                <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                                                                <textInputTraits key="textInputTraits" keyboardType="numberPad" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
                                                                 <connections>
                                                                     <action selector="tileTapped:" destination="BYZ-38-t0r" eventType="editingChanged" id="ax9-oi-SMS"/>
                                                                 </connections>
                                                             </textField>
                                                             <textField opaque="NO" clipsSubviews="YES" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="justified" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="gzc-pe-k06">
-                                                                <rect key="frame" x="96" y="0.0" width="43" height="21"/>
+                                                                <rect key="frame" x="60.5" y="0.0" width="25.5" height="35"/>
                                                                 <color key="backgroundColor" cocoaTouchSystemColor="lightTextColor"/>
+                                                                <accessibility key="accessibilityConfiguration" identifier="8,5"/>
                                                                 <nil key="textColor"/>
                                                                 <fontDescription key="fontDescription" name="Papyrus" family="Papyrus" pointSize="17"/>
-                                                                <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                                                                <textInputTraits key="textInputTraits" keyboardType="numberPad" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
                                                                 <connections>
                                                                     <action selector="tileTapped:" destination="BYZ-38-t0r" eventType="editingChanged" id="ufK-mL-rGE"/>
                                                                 </connections>
@@ -985,40 +993,40 @@
                                                 </subviews>
                                             </stackView>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="W0S-kD-qga">
-                                                <rect key="frame" x="308.5" y="0.0" width="139.5" height="72.5"/>
+                                                <rect key="frame" x="202" y="0.0" width="86" height="115.5"/>
                                                 <subviews>
                                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="2zb-cq-lfj">
-                                                        <rect key="frame" x="0.0" y="0.0" width="139.5" height="20.5"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="86" height="35.5"/>
                                                         <subviews>
                                                             <textField opaque="NO" clipsSubviews="YES" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="justified" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="E1E-yH-PyH">
-                                                                <rect key="frame" x="0.0" y="0.0" width="43.5" height="20.5"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="25.5" height="35.5"/>
                                                                 <color key="backgroundColor" cocoaTouchSystemColor="lightTextColor"/>
                                                                 <accessibility key="accessibilityConfiguration" identifier="6,6"/>
                                                                 <nil key="textColor"/>
                                                                 <fontDescription key="fontDescription" name="Papyrus" family="Papyrus" pointSize="17"/>
-                                                                <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                                                                <textInputTraits key="textInputTraits" keyboardType="numberPad" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
                                                                 <connections>
                                                                     <action selector="tileTapped:" destination="BYZ-38-t0r" eventType="editingChanged" id="ZLd-Xg-fgZ"/>
                                                                 </connections>
                                                             </textField>
                                                             <textField opaque="NO" clipsSubviews="YES" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="justified" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="AeV-68-4W0">
-                                                                <rect key="frame" x="48.5" y="0.0" width="43" height="20.5"/>
+                                                                <rect key="frame" x="30.5" y="0.0" width="25" height="35.5"/>
                                                                 <color key="backgroundColor" cocoaTouchSystemColor="lightTextColor"/>
                                                                 <accessibility key="accessibilityConfiguration" identifier="6,7"/>
                                                                 <nil key="textColor"/>
                                                                 <fontDescription key="fontDescription" name="Papyrus" family="Papyrus" pointSize="17"/>
-                                                                <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                                                                <textInputTraits key="textInputTraits" keyboardType="numberPad" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
                                                                 <connections>
                                                                     <action selector="tileTapped:" destination="BYZ-38-t0r" eventType="editingChanged" id="geh-vk-HpB"/>
                                                                 </connections>
                                                             </textField>
                                                             <textField opaque="NO" clipsSubviews="YES" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="justified" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="i4B-pR-toV">
-                                                                <rect key="frame" x="96.5" y="0.0" width="43" height="20.5"/>
+                                                                <rect key="frame" x="60.5" y="0.0" width="25.5" height="35.5"/>
                                                                 <color key="backgroundColor" cocoaTouchSystemColor="lightTextColor"/>
                                                                 <accessibility key="accessibilityConfiguration" identifier="6,8"/>
                                                                 <nil key="textColor"/>
                                                                 <fontDescription key="fontDescription" name="Papyrus" family="Papyrus" pointSize="17"/>
-                                                                <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                                                                <textInputTraits key="textInputTraits" keyboardType="numberPad" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
                                                                 <connections>
                                                                     <action selector="tileTapped:" destination="BYZ-38-t0r" eventType="editingChanged" id="3qk-vO-bfn"/>
                                                                 </connections>
@@ -1026,37 +1034,37 @@
                                                         </subviews>
                                                     </stackView>
                                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="oMe-Au-Uz8">
-                                                        <rect key="frame" x="0.0" y="25.5" width="139.5" height="21"/>
+                                                        <rect key="frame" x="0.0" y="40.5" width="86" height="35"/>
                                                         <subviews>
                                                             <textField opaque="NO" clipsSubviews="YES" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="justified" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="WtV-Ud-Pco">
-                                                                <rect key="frame" x="0.0" y="0.0" width="43.5" height="21"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="25.5" height="35"/>
                                                                 <color key="backgroundColor" cocoaTouchSystemColor="lightTextColor"/>
                                                                 <accessibility key="accessibilityConfiguration" identifier="7,6"/>
                                                                 <nil key="textColor"/>
                                                                 <fontDescription key="fontDescription" name="Papyrus" family="Papyrus" pointSize="17"/>
-                                                                <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                                                                <textInputTraits key="textInputTraits" keyboardType="numberPad" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
                                                                 <connections>
                                                                     <action selector="tileTapped:" destination="BYZ-38-t0r" eventType="editingChanged" id="tk7-tw-m8v"/>
                                                                 </connections>
                                                             </textField>
                                                             <textField opaque="NO" clipsSubviews="YES" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="justified" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="B6z-no-dqD">
-                                                                <rect key="frame" x="48.5" y="0.0" width="43" height="21"/>
+                                                                <rect key="frame" x="30.5" y="0.0" width="25" height="35"/>
                                                                 <color key="backgroundColor" cocoaTouchSystemColor="lightTextColor"/>
                                                                 <accessibility key="accessibilityConfiguration" identifier="7,7"/>
                                                                 <nil key="textColor"/>
                                                                 <fontDescription key="fontDescription" name="Papyrus" family="Papyrus" pointSize="17"/>
-                                                                <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                                                                <textInputTraits key="textInputTraits" keyboardType="numberPad" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
                                                                 <connections>
                                                                     <action selector="tileTapped:" destination="BYZ-38-t0r" eventType="editingChanged" id="JG0-sc-rrR"/>
                                                                 </connections>
                                                             </textField>
                                                             <textField opaque="NO" clipsSubviews="YES" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="justified" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="hY0-d7-Fut">
-                                                                <rect key="frame" x="96.5" y="0.0" width="43" height="21"/>
+                                                                <rect key="frame" x="60.5" y="0.0" width="25.5" height="35"/>
                                                                 <color key="backgroundColor" cocoaTouchSystemColor="lightTextColor"/>
                                                                 <accessibility key="accessibilityConfiguration" identifier="7,8"/>
                                                                 <nil key="textColor"/>
                                                                 <fontDescription key="fontDescription" name="Papyrus" family="Papyrus" pointSize="17"/>
-                                                                <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                                                                <textInputTraits key="textInputTraits" keyboardType="numberPad" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
                                                                 <connections>
                                                                     <action selector="tileTapped:" destination="BYZ-38-t0r" eventType="editingChanged" id="R7u-lF-Z1v"/>
                                                                 </connections>
@@ -1064,37 +1072,37 @@
                                                         </subviews>
                                                     </stackView>
                                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="wa3-t8-ImI">
-                                                        <rect key="frame" x="0.0" y="51.5" width="139.5" height="21"/>
+                                                        <rect key="frame" x="0.0" y="80.5" width="86" height="35"/>
                                                         <subviews>
                                                             <textField opaque="NO" clipsSubviews="YES" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="justified" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="YzA-0h-PZR">
-                                                                <rect key="frame" x="0.0" y="0.0" width="43.5" height="21"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="25.5" height="35"/>
                                                                 <color key="backgroundColor" cocoaTouchSystemColor="lightTextColor"/>
                                                                 <accessibility key="accessibilityConfiguration" identifier="8,6"/>
                                                                 <nil key="textColor"/>
                                                                 <fontDescription key="fontDescription" name="Papyrus" family="Papyrus" pointSize="17"/>
-                                                                <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                                                                <textInputTraits key="textInputTraits" keyboardType="numberPad" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
                                                                 <connections>
                                                                     <action selector="tileTapped:" destination="BYZ-38-t0r" eventType="editingChanged" id="wjq-fk-7Jq"/>
                                                                 </connections>
                                                             </textField>
                                                             <textField opaque="NO" clipsSubviews="YES" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="justified" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="H2b-he-Qdr">
-                                                                <rect key="frame" x="48.5" y="0.0" width="43" height="21"/>
+                                                                <rect key="frame" x="30.5" y="0.0" width="25" height="35"/>
                                                                 <color key="backgroundColor" cocoaTouchSystemColor="lightTextColor"/>
                                                                 <accessibility key="accessibilityConfiguration" identifier="8,7"/>
                                                                 <nil key="textColor"/>
                                                                 <fontDescription key="fontDescription" name="Papyrus" family="Papyrus" pointSize="17"/>
-                                                                <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                                                                <textInputTraits key="textInputTraits" keyboardType="numberPad" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
                                                                 <connections>
                                                                     <action selector="tileTapped:" destination="BYZ-38-t0r" eventType="editingChanged" id="yUt-au-Tlh"/>
                                                                 </connections>
                                                             </textField>
                                                             <textField opaque="NO" clipsSubviews="YES" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="justified" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Zjl-YL-aPi">
-                                                                <rect key="frame" x="96.5" y="0.0" width="43" height="21"/>
+                                                                <rect key="frame" x="60.5" y="0.0" width="25.5" height="35"/>
                                                                 <color key="backgroundColor" cocoaTouchSystemColor="lightTextColor"/>
                                                                 <accessibility key="accessibilityConfiguration" identifier="8,8"/>
                                                                 <nil key="textColor"/>
                                                                 <fontDescription key="fontDescription" name="Papyrus" family="Papyrus" pointSize="17"/>
-                                                                <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                                                                <textInputTraits key="textInputTraits" keyboardType="numberPad" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
                                                                 <connections>
                                                                     <action selector="tileTapped:" destination="BYZ-38-t0r" eventType="editingChanged" id="nCl-Kl-oag"/>
                                                                 </connections>
@@ -1233,11 +1241,11 @@
                         <viewControllerLayoutGuide type="bottom" id="GoK-zR-kNM"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="JoG-Dm-iSf">
-                        <rect key="frame" x="0.0" y="0.0" width="480" height="320"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="redraw" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="congrats" adjustsImageSizeForAccessibilityContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gCX-hI-lwO" customClass="FLAnimatedImageView">
-                                <rect key="frame" x="-4" y="0.0" width="488" height="340"/>
+                                <rect key="frame" x="-4" y="20" width="328" height="460"/>
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" red="0.99607843139999996" green="0.99607843139999996" blue="0.93333333330000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -1266,41 +1274,41 @@
                         <viewControllerLayoutGuide type="bottom" id="8NU-gP-mlN"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="vQh-xN-Hrh">
-                        <rect key="frame" x="0.0" y="0.0" width="480" height="320"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="noG-gJ-taH">
-                                <rect key="frame" x="16" y="10" width="448" height="300"/>
+                                <rect key="frame" x="16" y="90" width="288" height="300"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="hwL-hB-dbr">
-                                        <rect key="frame" x="0.0" y="43.5" width="448" height="213"/>
+                                        <rect key="frame" x="0.0" y="16.5" width="288" height="267"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="3mA-I7-poD">
-                                                <rect key="frame" x="0.0" y="0.0" width="419.5" height="162"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="288" height="216"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="         LEVEL" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gix-67-ELV">
-                                                        <rect key="frame" x="0.0" y="68" width="89.5" height="26.5"/>
+                                                        <rect key="frame" x="0.0" y="95" width="89.5" height="26.5"/>
                                                         <fontDescription key="fontDescription" name="Papyrus" family="Papyrus" pointSize="17"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <pickerView contentMode="scaleToFill" horizontalCompressionResistancePriority="749" translatesAutoresizingMaskIntoConstraints="NO" id="Qhp-yo-TSM">
-                                                        <rect key="frame" x="99.5" y="0.0" width="320" height="162"/>
+                                                        <rect key="frame" x="99.5" y="0.0" width="188.5" height="216"/>
                                                         <accessibility key="accessibilityConfiguration" hint="EASY"/>
                                                     </pickerView>
                                                 </subviews>
                                             </stackView>
                                             <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="6Z5-TQ-HUr">
-                                                <rect key="frame" x="0.0" y="182" width="398" height="31"/>
+                                                <rect key="frame" x="0.0" y="236" width="238" height="31"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="         MUSIC" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Z75-ev-WXc">
-                                                        <rect key="frame" x="0.0" y="2.5" width="339" height="26.5"/>
+                                                        <rect key="frame" x="0.0" y="2.5" width="179" height="26.5"/>
                                                         <fontDescription key="fontDescription" name="Papyrus" family="Papyrus" pointSize="17"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="E2I-hO-Qe3">
-                                                        <rect key="frame" x="349" y="0.0" width="51" height="31"/>
+                                                        <rect key="frame" x="189" y="0.0" width="51" height="31"/>
                                                         <connections>
                                                             <action selector="musicSwitchToggle:" destination="YKW-pI-Tmp" eventType="valueChanged" id="k7o-9X-lVz"/>
                                                         </connections>
@@ -1355,7 +1363,7 @@
                         <viewControllerLayoutGuide type="bottom" id="sab-YV-P2r"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="ZOd-xg-0s0">
-                        <rect key="frame" x="0.0" y="0.0" width="480" height="320"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="numbers" translatesAutoresizingMaskIntoConstraints="NO" id="ZfQ-se-t4M">
@@ -1363,7 +1371,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EFd-Gf-98e">
-                                <rect key="frame" x="90" y="10" width="300" height="300"/>
+                                <rect key="frame" x="10" y="90" width="300" height="300"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="fS2-N0-VbX">
                                         <rect key="frame" x="20" y="20" width="260" height="260"/>
@@ -1464,7 +1472,7 @@
                 <navigationController storyboardIdentifier="SudokuNavigationController" automaticallyAdjustsScrollViewInsets="NO" id="w4p-xA-93B" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="1Be-RM-yis">
-                        <rect key="frame" x="0.0" y="0.0" width="480" height="32"/>
+                        <rect key="frame" x="0.0" y="20" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -1482,7 +1490,7 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="x6T-Bd-qoQ" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="bgo-om-x9K">
-                        <rect key="frame" x="0.0" y="0.0" width="480" height="32"/>
+                        <rect key="frame" x="0.0" y="20" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
